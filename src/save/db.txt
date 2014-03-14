@@ -1,0 +1,6 @@
+deck.name|GlobalDataBase
+deck.desc|Toute les cartes du jeu sont ici
+deck.check|false
+Akwabu|Ce petit personnage pourra vous sortir d'affaire|monstre|500|500|0|1
+Gardien des ombres|Adepte de la magie noir ceci est votre chance|monstre|2400|2000|0|2
+Defonseur|Les bourrins à côté c'est rien|monstre|3000|1000|0|2

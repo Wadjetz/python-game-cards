@@ -4,9 +4,7 @@ Created on 14 mars 2014
 @author: quenti77
 '''
 import pygame
-
 from ihm.log import Log
-
 
 class Game(object):
     '''
@@ -19,4 +17,8 @@ class Game(object):
         '''
         Constructor
         '''
+        from data.Deck import Deck
         pygame.init()
+        
+        globalDeck = Deck()
+        globalDeck.load("../save/db.txt")
