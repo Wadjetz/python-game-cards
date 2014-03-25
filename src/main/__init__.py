@@ -1,11 +1,13 @@
 '''
-Created on 14 mars 2014
+A main script
 
+@version: 0.1
 @author: quenti77
 '''
-from ihm.log import Log
+import pygame
+
 from game.Game import Game
 
 if __name__ == '__main__':
-    jeu = Game()
-    jeu.play()
+    game = Game()
+    game.play()

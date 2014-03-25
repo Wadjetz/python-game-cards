@@ -1,13 +1,13 @@
 '''
-Created on 21 mars 2014
+Package pour la gestion du jeu
+Gestion des events
 
+@version: 0.1
 @author: quenti77
 '''
+
 import pygame
 from pygame.constants import *
-
-from ihm.log import Log
-
 
 class Event(object):
     '''
