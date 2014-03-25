@@ -19,6 +19,7 @@ class Event(object):
         Constructeur
         '''
         self.quit = False
+        self.resize = False
         self.keyboard = []
         self.posX = 0
         self.posY = 0
@@ -53,6 +54,6 @@ class Event(object):
                 self.posRelX = event.rel[0]
                 self.posRelY = event.rel[1]
             elif (event.type == VIDEORESIZE):
-                print("Resize : ", event.w, event.h)
                 self.width = event.w
                 self.height = event.h
+                self.resize = True

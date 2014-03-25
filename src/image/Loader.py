@@ -19,12 +19,13 @@ class Loader(object):
         self.anim = []
         self.titles = []
     
-    def addAnimationByPath(self, name, path):
+    def addAnimationByPath(self, name, path, x = 0, y = 0):
         '''
         @param name:Le nom de l'animation
         @param path: chemin du sprite
         '''
         ts = Sprite(path)
+        ts.setPosition(x, y)
         ta = Animation(ts)
         self.addAnimation(name, ta)
     
@@ -49,11 +50,13 @@ class Loader(object):
         '''
         @param name: Le nom de l'animation à retirer
         '''
+        result = []
+        
         for item in self.anim:
             if (item['name'] == name):
-                return item['value']
+                result.append(item['value'])
         
-        return None
+        return result
     
     def update(self, screen):
         '''

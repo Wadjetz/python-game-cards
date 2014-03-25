@@ -22,7 +22,7 @@ class Game(object):
         '''
         self.event = Event()
         self.loader = Loader()
-        self.mainWindow = pygame.display.set_mode((800, 600), pygame.DOUBLEBUF | pygame.HWSURFACE)
+        self.mainWindow = pygame.display.set_mode((800, 600), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self.mainScene = TestScene(self.loader)
         
         pygame.init()
@@ -34,6 +34,11 @@ class Game(object):
         
         while (self.mainScene is not None):
             self.event.update()
+            
+            if (self.event.resize == True):
+                self.event.resize = False
+                pygame.display.set_mode((self.event.width, self.event.height), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+            
             self.mainScene = self.mainScene.update(self.event, self.loader)
             
             if pygame.time.get_ticks() >= next_:

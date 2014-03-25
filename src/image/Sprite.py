@@ -15,19 +15,23 @@ class Sprite(object):
     
     def __init__(self, path):
         '''
+        @param path: le chemin vers le fichier
         Constructeur de la class Sprite
         '''
         self.x = 0
         self.y = 0
         self.w = 0
         self.h = 0
-        self.a = 0
         
         self.path = None
         self.image = None
         self.loadSprite(path)
     
     def loadSprite(self, path):
+        '''
+        @param path: le chemin vers le fichier
+        Charge l'image
+        '''
         self.path = path
         self.image = pygame.image.load(path)
         
@@ -42,19 +46,27 @@ class Sprite(object):
         print(taille)
     
     def setPosition(self, x, y):
+        '''
+        @param x: position X de l'image
+        @param y: position Y de l'image
+        Définit les positions de l'image 
+        '''
         self.x = x
         self.y = y
     
     def setSize(self, w, h):
+        '''
+        @param w: largeur de l'image
+        @param h: hauteur de l'image
+        Définit la taille de l'image 
+        '''
         self.w = int(w)
         self.h = int(h)
         
-        self.image = pygame.transform.scale(self.image, (self.w, self.h))
-    
-    def setAngle(self, angle):
-        self.a = angle
-        
-        self.image = pygame.transform.rotate(self.image, angle)
+        self.image = pygame.transform.smoothscale(self.image, (self.w, self.h))
     
     def update(self, screen):
+        '''
+        @param screen: Update a sprite on the screen
+        '''
         screen.blit(self.image, (self.x, self.y))
