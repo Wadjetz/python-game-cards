@@ -3,17 +3,17 @@ Created on 11 mars 2014
 
 @author: egor
 '''
-from EgorGame.Carte import Carte
+from engine.Entity import Entity
 
 
-class CarteServiteur(Carte):
+class CarteServiteur(Entity):
     '''
     classdocs
     '''
 
 
-    def __init__(self, params):
+    def __init__(self, name, description, vie, mana, degats):
         '''
         Constructor
         '''
-        
+        Entity.__init__(self, name, description, vie, mana, degats)

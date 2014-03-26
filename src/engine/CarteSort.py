@@ -3,20 +3,19 @@ Created on 11 mars 2014
 
 @author: egor
 '''
+from engine.Entity import Entity
 
-class Carte(object):
+class CarteSort(Entity):
     '''
     classdocs
     '''
 
-    def __init__(self, name, nbPointVie, degats, nbPointMana):
+    def __init__(self, name, description, vie, mana, degats):
         '''
         Constructor
         '''
-        self.name = name
-        self.nbPointVie = nbPointVie
-        self.degats = degats
-        self.nbPointMana = nbPointMana
+        Entity.__init__(self, name, description, vie, mana, degats)
+        
 
     def display(self):
         print(self.toString())

@@ -4,10 +4,10 @@ Created on 11 mars 2014
 
 @author: egor
 '''
-from moteur.Carte import Carte
-from moteur.Pioche import Pioche
-from moteur.Player import Player
-from moteur.Terrain import Terrain
+from engine.Carte import Carte
+from engine.Pioche import Pioche
+from engine.Player import Player
+from engine.Terrain import Terrain
 
 
 def main():

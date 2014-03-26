@@ -4,17 +4,21 @@ Created on 11 mars 2014
 @author: egor
 '''
 
-class Player(object):
+from engine.Entity import Entity
+
+class Player(Entity):
     '''
     classdocs
     '''
 
-    def __init__(self, name):
+    def __init__(self, name, name, description, vie, mana, degats):
         '''
         Constructor
         '''
+        
+        Entity.__init__(self, name, description, vie, mana, degats)
+        
         self.action = True
-        self.name = name
         self.vie = 30
         self.mana = 1
         

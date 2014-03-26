@@ -3,16 +3,15 @@ Created on 11 mars 2014
 
 @author: egor
 '''
-from EgorGame.Player import Player
+from engine.Entity import Entity
 
-class Serviteur(Player):
+class Serviteur(Entity):
     '''
-    classdocs
+    Serviteur
     '''
 
-
-    def __init__(self, params):
+    def __init__(self, name, name, description, vie, mana, degats):
         '''
         Constructor
         '''
-        
+        Entity.__init__(self, name, description, vie, mana, degats)
