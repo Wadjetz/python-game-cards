@@ -26,7 +26,11 @@ class Sprite(object):
         self.path = None
         self.image = None
         self.imageShown = None
-        self.loadSprite(path)
+        
+        if isinstance(path, str):
+            self.loadSprite(path)
+        else:
+            self.loadBySprite(path)
     
     def loadSprite(self, path):
         '''
@@ -46,7 +50,18 @@ class Sprite(object):
         taille = pygame.Surface.get_size(self.image)
         self.w = taille[0]
         self.h = taille[1]
-        print(taille)
+    
+    def loadBySprite(self, sprite):
+        '''
+        @param param: 
+        '''
+        self.path = ""
+        self.image = sprite
+        self.imageShown = sprite
+        
+        taille = pygame.Surface.get_size(self.image)
+        self.w = taille[0]
+        self.h = taille[1]
     
     def setPosition(self, x, y):
         '''
@@ -61,7 +76,7 @@ class Sprite(object):
         '''
         @param w: largeur de l'image
         @param h: hauteur de l'image
-        Définit la taille de l'image 
+        Définit la taille de l'image
         '''
         self.w = int(w)
         self.h = int(h)

@@ -29,6 +29,9 @@ class Game(object):
         pygame.display.set_caption("Python Game Cards")
     
     def play(self):
+        '''
+        Démarre le jeu
+        '''
         laps = 20
         next_ = pygame.time.get_ticks() + laps
         

@@ -5,6 +5,7 @@ Chargement des ressources, vérifications, etc.
 @version: 0.1
 @author: quenti77
 '''
+import pygame
 
 from image.Animation import Animation
 from image.Sprite import Sprite
@@ -37,6 +38,16 @@ class Loader(object):
         if animation is not None:
             tempAnim = { 'name': name, 'value': animation}
             self.anim.append(tempAnim)
+            
+    def addFont(self, name, title, size):
+        '''
+        @param name: Le nom dans le tableau
+        @param title: Le nom de la font
+        @param size: la taille de la font
+        Ajoute une font a la liste des fonts
+        '''
+        tempFont = { 'name': name, 'value': pygame.font.Font(title, size)}
+        self.titles.append(tempFont)
     
     def removeAnimation(self, name):
         '''
@@ -46,16 +57,45 @@ class Loader(object):
             if (item['name'] == name):
                 self.anim.remove(item)
     
+    def removeFont(self, name):
+        '''
+        @param name: Le nom de la font à retirer
+        '''
+        for item in self.titles:
+            if (item['name'] == name):
+                self.titles.remove(item)
+    
     def clearAnimation(self):
+        '''
+        Efface toute les animations du tableau
+        '''
         self.anim.clear()
+        
+    def clearFont(self):
+        '''
+        Efface toute les fonts du tableau
+        '''
+        self.titles.clear()
     
     def getAnimation(self, name):
         '''
-        @param name: Le nom de l'animation à retirer
+        @param name: Le nom de l'animation à récupérer
         '''
         result = []
         
         for item in self.anim:
+            if (item['name'] == name):
+                result.append(item['value'])
+        
+        return result
+    
+    def getFont(self, name):
+        '''
+        @param name: Le nom de la font à récupérer
+        '''
+        result = []
+        
+        for item in self.titles:
             if (item['name'] == name):
                 result.append(item['value'])
         
