@@ -20,6 +20,3 @@ class CarteSort(Entity):
     def display(self):
         print(self.toString())
         
-    def toString(self):
-        return self.name + ":[vie=" + str(self.nbPointVie) + ", mana=" + str(self.nbPointMana) + ", degats=" + str(self.degats) + "]"
-        

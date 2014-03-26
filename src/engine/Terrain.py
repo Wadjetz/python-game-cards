@@ -12,7 +12,7 @@ class Terrain(object):
     serviteursPlayer1 = []
     serviteursPlayer2 = []
 
-    def __init__(self, pioche, player1 ,player2):
+    def __init__(self, pioche, player1, player2):
         '''
         Constructor
         '''
@@ -22,6 +22,8 @@ class Terrain(object):
         self.player2 = player2
     
     def nextTour(self):
+        self.tour = self.tour + 1
+        
         print()
     
     
@@ -31,4 +33,7 @@ class Terrain(object):
     def toString(self):
         txt = "TOUR=" + str(self.tour)
         return txt
+    
+    def piocheCarte(self):
+        return self.pioche.getCarte();
         

@@ -8,19 +8,17 @@ from engine.Entity import Entity
 
 class Player(Entity):
     '''
-    classdocs
+    Joueur Principale
+    @param main: Les cartes utilisable par le joueur
     '''
-
-    def __init__(self, name, name, description, vie, mana, degats):
+    def __init__(self, name):
         '''
         Constructor
         '''
         
-        Entity.__init__(self, name, description, vie, mana, degats)
-        
+        Entity.__init__(self, name, "description", 30, 1, 5)
         self.action = True
-        self.vie = 30
-        self.mana = 1
+        self.main = []
         
     def attaque(self, jouer, carte):
         jouer.degats(carte.degats)
@@ -34,3 +32,18 @@ class Player(Entity):
         
     def toString(self):
         return self.name + ":[vie=" + str(self.vie) + ", mana=" + str(self.mana) + ", action=" + str(self.action) + "]"
+    
+    def nextTour(self, tour):
+        if (tour > 10):
+            self.mana = 10
+        else:
+            self.mana = tour
+        
+            
+    def piocheCarte(self, terrain):
+        if (isinstance(self.main, "list") == True and isinstance(terrain, "Terrain")):
+            self.main.append(terrain.piocheCarte())
+            print("OK !!")
+        
+        
+        

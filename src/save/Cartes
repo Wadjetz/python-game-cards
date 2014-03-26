@@ -1,0 +1,16 @@
+Sort|Boule de feu|Lance une BdF|-1|3|6
+Sort|Boule de glace|Lance une BdG|-1|3|6
+Sort|Eclaire|Lance un eclaire|-1|3|6
+Sort|Boule de neige|Lance une BdN|-1|1|1
+
+Serv|Pion|Chaire a Canon|1|1|1
+Serv|Ouvrier|Chaire a Canon|1|1|1
+Serv|Paysan|Chaire a Canon|1|1|1
+Serv|Boulanger|Chaire a Canon|1|1|1
+Serv|Boucher|Chaire a Canon|1|1|1
+
+Serv|Sentinelle|Soldat qui assure la garde.|3|2|3
+Serv|Soldat|Personne qui sert dans une armée.|3|2|3
+Serv|Archer|Celui qui pratique le tir à l’arc.|3|2|3
+
+Serv|Sergent|Sous-officier, sous-officière militaire.|4|3|4

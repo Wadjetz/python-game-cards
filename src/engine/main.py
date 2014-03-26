@@ -4,31 +4,26 @@ Created on 11 mars 2014
 
 @author: egor
 '''
-from engine.Carte import Carte
 from engine.Pioche import Pioche
+from engine import Terrain
 from engine.Player import Player
-from engine.Terrain import Terrain
+#from engine.Player import Player
+#from engine.Terrain import Terrain
 
 
 def main():
-    
+    print("Game Run")
     pioche = Pioche()
     
     
-    laMainJouer1 = [Carte("Pion", 6, 10, 3), Carte("Pion", 6, 22, 3), Carte("Pion", 6, 22, 3), Carte("Pion", 6, 22, 3),Carte("Pion", 6, 22, 3)]
-    laMainJouer2 = [Carte("Pion", 6, 22, 3), Carte("Pion", 6, 22, 3), Carte("Pion", 6, 22, 3), Carte("Pion", 6, 22, 3),Carte("Pion", 6, 22, 3)]
+    player1 = Player("Egor")
+    player2 = Player("Quentin")
     
-    jouer1 = Player("Egor")
-    jouer2 = Player("Connard")
+    terran = Terrain(pioche, player1, player2)
     
-    terrain = Terrain(pioche, jouer1, jouer2)
+    print(pioche.getCarte().toString())
+    print(pioche.getCarte().toString())
     
-    jouer1.display()
-    jouer2.display()
-    
-    jouer1.attaque(jouer2, laMainJouer1[0])
-    
-    jouer1.display()
-    jouer2.display()
+
 
 if __name__ == '__main__':main()
