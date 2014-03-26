@@ -6,15 +6,14 @@ Gestion des scene du jeu
 @author: quenti77
 '''
 
-class Scene(object):
+from scene.Scene import Scene
+
+class LoadScene(Scene):
     '''
-    Une scene de base
+    Une scene pour le chargement des données
     '''
     
     def __init__(self):
         '''
-        Constructeur
+        Constructeur de la class LoadScene
         '''
-    
-    def update(self, e, l):
-        return self
