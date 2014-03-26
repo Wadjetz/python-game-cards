@@ -46,6 +46,9 @@ class Loader(object):
             if (item['name'] == name):
                 self.anim.remove(item)
     
+    def clearAnimation(self):
+        self.anim.clear()
+    
     def getAnimation(self, name):
         '''
         @param name: Le nom de l'animation à retirer

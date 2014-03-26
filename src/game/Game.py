@@ -41,7 +41,8 @@ class Game(object):
             
             self.mainScene = self.mainScene.update(self.event, self.loader)
             
-            if pygame.time.get_ticks() >= next_:
+            tick = pygame.time.get_ticks()
+            if tick > next_:
                 next_ += laps
                 if self.mainScene is not None:
                     self.loader.update(self.mainWindow)

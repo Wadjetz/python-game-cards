@@ -25,6 +25,7 @@ class Sprite(object):
         
         self.path = None
         self.image = None
+        self.imageShown = None
         self.loadSprite(path)
     
     def loadSprite(self, path):
@@ -39,6 +40,8 @@ class Sprite(object):
             self.image = self.image.convert()
         else:
             self.image = self.image.convert_alpha()
+        
+        self.imageShown = self.image
         
         taille = pygame.Surface.get_size(self.image)
         self.w = taille[0]
@@ -63,10 +66,10 @@ class Sprite(object):
         self.w = int(w)
         self.h = int(h)
         
-        self.image = pygame.transform.smoothscale(self.image, (self.w, self.h))
+        self.imageShown = pygame.transform.smoothscale(self.image, (self.w, self.h))
     
     def update(self, screen):
         '''
         @param screen: Update a sprite on the screen
         '''
-        screen.blit(self.image, (self.x, self.y))
+        screen.blit(self.imageShown, (self.x, self.y))
