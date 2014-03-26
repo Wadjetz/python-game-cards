@@ -24,10 +24,23 @@ class LoadScene(Scene):
         '''
         Constructeur de la class LoadScene
         '''
-        l.addAnimationByPath("bg", '../img/background.jpg')
-        l.addAnimationByPath("arrow", "../img/arrows.png")
+        self.__screen = pygame.display.get_surface().get_size()
+        self.loader = []
+        self.actual = 0
+        self.file = ""
         
-        l.addFont("mainTitle", "../img/LSANS.TTF", 15)
+        for i in range(1, 10000):
+            self.loader.append(i * 2)
+        
+        l.addAnimationByPath("bg", '../img/background.jpg')
+        
+        font = l.getFont("mainTitle")
+        if font[0] is not None:
+            l.removeAnimation("titleLoad")
+            ts = Sprite(font[0].render("Loading file :" + str(self.file), 1, (255,255,0)))
+            ta = Animation(ts)
+            ta.newPos((self.__screen[0] / 2 - ts.image.get_size()[0]), 10, ts.image.get_size()[0], ts.image.get_size()[1], 1)
+            l.addAnimation("titleLoad", ta)
         
         self.counter = 0.0
     
@@ -37,18 +50,27 @@ class LoadScene(Scene):
         @param l: le gestionnaire d'image
         @return: Scene à renvoyer
         '''
-        self.counter += 0.1
         
-        font = l.getFont("mainTitle")
-        if font[0] is not None:
-            l.removeAnimation("title")
-            ts = Sprite(font[0].render("Compteur = " + str(self.counter), 1, (255,255,0)))
-            ta = Animation(ts)
-            l.addAnimation("title", ta)
-        
+        try:
+            self.file = self.loader[self.actual]
+            self.actual += 1
+        except:
+            self.file = "OK"
+    
         a = l.getAnimation('bg')
         if a is not None:
             a[0].newPos(0, 0, e.width, e.height, 0)
+            font = l.getFont("mainTitle")
+            
+            if font[0] is not None:
+                l.removeAnimation("titleLoad")
+                if (self.file == "OK"):
+                    ts = Sprite(font[0].render("Loading file finished", 1, (255,255,0)))
+                else:
+                    ts = Sprite(font[0].render("Loading file :" + str(self.file), 1, (255,255,0)))
+                ta = Animation(ts)
+                ta.newPos((e.width / 2 - 100), 10, ts.image.get_size()[0], ts.image.get_size()[1], 0)
+                l.addAnimation("titleLoad", ta)
         
         if (e.quit):
             return None
@@ -59,7 +81,7 @@ class LoadScene(Scene):
             for b in a:
                 b.newPos(e.posX, e.posY, b.pos[2], b.pos[3], 20)
         
-        if (e.keyboard[pygame.K_q]):
+        if (e.keyboard[pygame.K_a]):
             from scene.TestScene import TestScene
             l.clearAnimation()
             newScene = TestScene(l)

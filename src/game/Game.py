@@ -7,9 +7,11 @@ Gestion des events
 '''
 
 import pygame
+
 from game.Event import Event
 from image.Loader import Loader
 from scene.TestScene import TestScene
+
 
 class Game(object):
     '''
@@ -27,6 +29,8 @@ class Game(object):
         
         pygame.init()
         pygame.display.set_caption("Python Game Cards")
+        
+        self.loader.addFont("mainTitle", "../img/arial.ttf", 20)
     
     def play(self):
         '''
