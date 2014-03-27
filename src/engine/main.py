@@ -5,24 +5,36 @@ Created on 11 mars 2014
 @author: egor
 '''
 from engine.Pioche import Pioche
-from engine import Terrain
 from engine.Player import Player
-#from engine.Player import Player
-#from engine.Terrain import Terrain
+from engine.Terrain import Terrain
 
 
 def main():
     print("Game Run")
+    
     pioche = Pioche()
     
+    #On Cree les joueurs
+    player1 = Player(1, "Egor")
+    player2 = Player(2, "Quentin")
     
-    player1 = Player("Egor")
-    player2 = Player("Quentin")
+    terrain = Terrain(pioche, player1, player2)
     
-    terran = Terrain(pioche, player1, player2)
+    #les joueur pioches 4 cartes
+    for i in range(4):
+        player1.piocheCarte(terrain)
+        player2.piocheCarte(terrain)
+        
+
+    print(player1.toString())
+    print(player2.toString())
     
-    print(pioche.getCarte().toString())
-    print(pioche.getCarte().toString())
+    ID_carte = input("Id de la carte a utiliser")
+    player1.useCarte(player1.getCarte(ID_carte), player2)
+    
+    
+    print(player1.toString())
+    print(player2.toString())
     
 
 

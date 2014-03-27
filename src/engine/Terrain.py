@@ -35,5 +35,6 @@ class Terrain(object):
         return txt
     
     def piocheCarte(self):
-        return self.pioche.getCarte();
+        carte = self.pioche.getCarte();
+        return carte
         

@@ -1,16 +1,16 @@
-Sort|Boule de feu|Lance une BdF|-1|3|6
-Sort|Boule de glace|Lance une BdG|-1|3|6
-Sort|Eclaire|Lance un eclaire|-1|3|6
-Sort|Boule de neige|Lance une BdN|-1|1|1
+Sort|1001|Boule de feu|Lance une BdF|-1|3|6
+Sort|1002|Boule de glace|Lance une BdG|-1|3|6
+Sort|1003|Eclaire|Lance un eclaire|-1|3|6
+Sort|1004|Boule de neige|Lance une BdN|-1|1|1
 
-Serv|Pion|Chaire a Canon|1|1|1
-Serv|Ouvrier|Chaire a Canon|1|1|1
-Serv|Paysan|Chaire a Canon|1|1|1
-Serv|Boulanger|Chaire a Canon|1|1|1
-Serv|Boucher|Chaire a Canon|1|1|1
+Serv|1005|Pion|Chaire a Canon|1|1|1
+Serv|1006|Ouvrier|Chaire a Canon|1|1|1
+Serv|1007|Paysan|Chaire a Canon|1|1|1
+Serv|1008|Boulanger|Chaire a Canon|1|1|1
+Serv|1009|Boucher|Chaire a Canon|1|1|1
 
-Serv|Sentinelle|Soldat qui assure la garde.|3|2|3
-Serv|Soldat|Personne qui sert dans une armée.|3|2|3
-Serv|Archer|Celui qui pratique le tir à l’arc.|3|2|3
+Serv|1010|Sentinelle|Soldat qui assure la garde.|3|2|3
+Serv|1011|Soldat|Personne qui sert dans une armée.|3|2|3
+Serv|1012|Archer|Celui qui pratique le tir à l’arc.|3|2|3
 
-Serv|Sergent|Sous-officier, sous-officière militaire.|4|3|4
+Serv|1013|Sergent|Sous-officier, sous-officière militaire.|4|3|4
