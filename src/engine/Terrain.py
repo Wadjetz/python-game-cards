@@ -3,7 +3,6 @@ Created on 11 mars 2014
 
 @author: egor
 '''
-<<<<<<< HEAD
 from engine.Pioche import Pioche
 from engine.Player import Player
 from engine.Serviteur import Serviteur
@@ -15,23 +14,10 @@ class Terrain:
     '''
 
     def __init__(self, namePlayer1, namePlayer2):
-=======
-
-class Terrain(object):
-    '''
-    classdocs
-    '''
-    
-    serviteursPlayer1 = []
-    serviteursPlayer2 = []
-
-    def __init__(self, pioche, player1, player2):
->>>>>>> FETCH_HEAD
         '''
         Constructor
         '''
         self.tour = 1
-<<<<<<< HEAD
         self.pioche = Pioche()
         self.player1 = Player(1, namePlayer1)
         self.player2 = Player(2, namePlayer2)
@@ -93,26 +79,3 @@ class Terrain(object):
         for i in self.serviteursPlayer2:
             txt += i.toString() + "\n"
         return txt
-=======
-        self.pioche = pioche
-        self.player1 = player1
-        self.player2 = player2
-    
-    def nextTour(self):
-        self.tour = self.tour + 1
-        
-        print()
-    
-    
-    def display(self):
-        print(self.display())
-        
-    def toString(self):
-        txt = "TOUR=" + str(self.tour)
-        return txt
-    
-    def piocheCarte(self):
-        carte = self.pioche.getCarte();
-        return carte
-        
->>>>>>> FETCH_HEAD

@@ -4,9 +4,7 @@ Created on 11 mars 2014
 
 @author: egor
 '''
-
 from engine.Terrain import Terrain
-
 
 def main():
     print("Game Run")

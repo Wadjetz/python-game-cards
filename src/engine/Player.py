@@ -3,18 +3,9 @@ Created on 11 mars 2014
 
 @author: egor
 '''
-<<<<<<< HEAD
 from engine.CarteServiteur import CarteServiteur
 from engine.CarteSort import CarteSort
 from engine.Entity import Entity
-=======
-
-from engine.CarteServiteur import CarteServiteur
-from engine.CarteSort import CarteSort
-from engine.Entity import Entity
-from engine.Terrain import Terrain
-
->>>>>>> FETCH_HEAD
 
 class Player(Entity):
     '''
@@ -38,11 +29,7 @@ class Player(Entity):
         string = " Main = {\n"
         for key in self.main:
             carte = self.main[key]
-<<<<<<< HEAD
             string += "\t"+ "ID=" + carte.toString() + "\n"
-=======
-            string += "\t"+ "ID=" + key + " " + carte.toString() + "\n"
->>>>>>> FETCH_HEAD
         return Entity.toString(self) + string + "}\n"
     
     def nextTour(self, tour):
@@ -59,15 +46,9 @@ class Player(Entity):
         '''
         Piche une nouvelle carte
         '''
-<<<<<<< HEAD
         if (isinstance(self.main, dict) == True):
             
             carte = terrain.piocheCarte()
-=======
-        if (isinstance(self.main, dict) == True and isinstance(terrain, Terrain)):
-            carte = terrain.piocheCarte()
-            print(carte)
->>>>>>> FETCH_HEAD
             self.main[carte.ID] = carte
         else:
             print("Maivaise instance (piocheCarte)")
@@ -79,18 +60,12 @@ class Player(Entity):
         @param carte: la carte a utiliser
         @param cible: Cible de l'utilisation soit le terrain ou un joueur ou un serviteur
         '''
-<<<<<<< HEAD
         print(self.name + " - useCarte " + carte.name)
         if (isinstance(carte, CarteServiteur) == True):
             #print("if (isinstance(carte, CarteServiteur) == True):")
             return carte.getServiteur(self)
         if (isinstance(carte, CarteSort) == True):
             #print("if (isinstance(carte, CarteSort) == True):")
-=======
-        if (isinstance(carte, CarteServiteur) == True):
-            return carte.getServiteur(self)
-        if (isinstance(carte, CarteSort) == True):
->>>>>>> FETCH_HEAD
             return carte.attaque(cible)
         
         self.__remouveCarte(carte)
