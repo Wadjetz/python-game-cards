@@ -30,8 +30,8 @@ class Entity():
         L'entite attaque
         @param jouer: Le joueur a attaquer
         '''
+        print(self.name + ": J'attque " + jouer.name + " de +" + self.degats + " degats")
         jouer.recevoirDegets(self.degats)
-        print("J'attque" + jouer.name)
         return jouer.name + " prend " + self.degats + " degats"
 
     def recevoirDegets(self, degats):
@@ -39,7 +39,8 @@ class Entity():
         L'entite recois des degats
         @param degats: Les degats
         '''
-        self.vie -= degats
+        print(self.name + ": ca fait mal : -" + str(degats))
+        self.vie =int(self.vie) - int(degats)
         
     def toString(self):
         return str(self.ID) + "::" + self.name + " [vie=" + str(self.vie) + ", mana=" + str(self.mana) + ", degats=" + str(self.mana) + "]"

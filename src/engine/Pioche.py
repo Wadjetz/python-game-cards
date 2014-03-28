@@ -18,6 +18,9 @@ class Pioche(object):
         self.__load()
     
     def __load(self):
+        '''
+        Charge les cartes stocker dans un fichier
+        '''
         fichier = open("../save/Cartes", "r")
         
         for line in fichier:
@@ -33,7 +36,11 @@ class Pioche(object):
         fichier.close()
     
     def getCarte(self):
+        '''
+        Recupere un carte au hasard dans le total des cartes
+        '''
         return random.choice(self.decks)
+        
         
     def toString(self):
         return self.decks

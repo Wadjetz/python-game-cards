@@ -25,16 +25,21 @@ def main():
         player1.piocheCarte(terrain)
         player2.piocheCarte(terrain)
         
-
-    print(player1.toString())
-    print(player2.toString())
+    stop = False
     
-    ID_carte = input("Id de la carte a utiliser")
-    player1.useCarte(player1.getCarte(ID_carte), player2)
+    while stop == False:
+        print(player1.toString())
+        print(player2.toString())
+        
+        ID_carte = input(player1.name + ": Attaque entrer l'Id de la carte a utiliser")
+        player1.useCarte(player1.getCarte(ID_carte), player2)
+        
+        ID_carte = input(player2.name + ": Attaque entrer l'Id de la carte a utiliser")
+        player2.useCarte(player2.getCarte(ID_carte), player1)
+        
     
-    
-    print(player1.toString())
-    print(player2.toString())
+    #print(player1.toString())
+    #print(player2.toString())
     
 
 
