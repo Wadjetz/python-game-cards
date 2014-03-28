@@ -3,8 +3,11 @@ Created on 11 mars 2014
 
 @author: egor
 '''
+from copy import copy
 import random
+
 from engine import CarteServiteur, CarteSort
+
 
 class Pioche(object):
     '''
@@ -39,8 +42,10 @@ class Pioche(object):
         '''
         Recupere un carte au hasard dans le total des cartes
         '''
-        return random.choice(self.decks)
-        
+        i = random.randrange(len(self.decks))
+        tmp = copy(self.decks[i])
+        del self.decks[i]
+        return tmp
         
     def toString(self):
         return self.decks

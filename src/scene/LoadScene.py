@@ -8,7 +8,10 @@ Gestion des scene du jeu
 from image.Animation import Animation
 from image.Sprite import Sprite
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> FETCH_HEAD
 try:
     import pygame
     from scene.Scene import Scene
@@ -24,6 +27,7 @@ class LoadScene(Scene):
         '''
         Constructeur de la class LoadScene
         '''
+<<<<<<< HEAD
         self.__screen = pygame.display.get_surface().get_size()
         self.loader = []
         self.actual = 0
@@ -43,6 +47,9 @@ class LoadScene(Scene):
             l.addAnimation("titleLoad", ta)
         
         self.counter = 0.0
+=======
+        
+>>>>>>> FETCH_HEAD
     
     def update(self, e, l):
         '''
@@ -51,6 +58,7 @@ class LoadScene(Scene):
         @return: Scene à renvoyer
         '''
         
+<<<<<<< HEAD
         try:
             self.file = self.loader[self.actual]
             self.actual += 1
@@ -87,5 +95,7 @@ class LoadScene(Scene):
             newScene = TestScene(l)
             return newScene
         
+=======
+>>>>>>> FETCH_HEAD
         return self
         

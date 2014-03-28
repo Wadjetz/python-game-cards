@@ -26,10 +26,10 @@ class Pioche(object):
         for line in fichier:
             line = line.rstrip("\n")
             tab = line.split("|")
-            if (tab[0] == "Serv" and len(tab) == 7):
+            if (tab[0] == "Sort" and len(tab) == 7):
                 carte = CarteServiteur.CarteServiteur(tab[1], tab[2], tab[3], tab[4], tab[5], tab[6])
                 self.decks.append(carte)
-            if (tab[0] == "Sort" and len(tab) == 7):
+            if (tab[0] == "Serv" and len(tab) == 7):
                 carte = CarteSort.CarteSort(tab[1], tab[2], tab[3], tab[4], tab[5], tab[6])
                 self.decks.append(carte)
             
