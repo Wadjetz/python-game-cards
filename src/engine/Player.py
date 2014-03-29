@@ -54,21 +54,20 @@ class Player(Entity):
             print("Maivaise instance (piocheCarte)")
             
             
-    def useCarte(self, carte, cible):
+    def useCarte(self, ID_carte, cible):
         '''
         Utilise une carte de ca main
         @param carte: la carte a utiliser
         @param cible: Cible de l'utilisation soit le terrain ou un joueur ou un serviteur
         '''
-        print(self.name + " - useCarte " + carte.name)
+        res = ""
+        carte = self.getCarte(ID_carte)
         if (isinstance(carte, CarteServiteur) == True):
-            #print("if (isinstance(carte, CarteServiteur) == True):")
-            return carte.getServiteur(self)
+            res = carte.getServiteur(self)
         if (isinstance(carte, CarteSort) == True):
-            #print("if (isinstance(carte, CarteSort) == True):")
-            return carte.attaque(cible)
-        
-        self.__remouveCarte(carte)
+            res = carte.attaque(cible)
+        self.deleteCarte(ID_carte)
+        return res
             
     def getCarte(self, ID_carte):
         '''
@@ -80,16 +79,6 @@ class Player(Entity):
         else:
             print("J'ai pas cette carte (getCarte)")
     
-    def __remouveCarte(self, ID_carte):
-        '''
-        Supprime un carte de la main du joueur
-        @param ID_carte: Id de la carte
-        '''
-        del ID_carte
+    def deleteCarte(self, ID_carte):
         if self.main.has_key(str(ID_carte)):
-            print(str(ID_carte) + " delete")
             del self.main[str(ID_carte)]
-        else:
-            print("J'ai pas cette carte (__remouveCarte)")
-        
-        
