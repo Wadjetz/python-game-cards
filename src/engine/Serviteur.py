@@ -19,21 +19,18 @@ class Serviteur(Entity):
         Entity.__init__(self, ID, name, description, vie, mana, degats)
         self.parent = parent
         
-    def attaque(self, jouer):
+    def servAttaque(self, ID_cible, playerCible):
         '''
         L'entite attaque si c'est un serviteur il s'inflige mutuellement les degats
         @param jouer: Le joueur a attaquer
         '''
         if self.action == True:
-            if (isinstance(self.main, Serviteur) == True):
-                jouer.recevoirDegets(self.degats)
-                self.recevoirDegets(jouer.degats)
-                self.action = False
-            else:
-                jouer.recevoirDegets(self.degats)
-                self.action = False
+            servCible = playerCible.getServiteur(ID_cible)
+            self.attaque(servCible)
+            servCible.attaque(self)
+            self.action = False
         else:
-            print("Tu peux pas attaquer")
+            raise Exception("Tu peux pas attaquer")
             
     def toString(self):
         return Entity.toString(self)

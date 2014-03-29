@@ -20,7 +20,7 @@ class CarteServiteur(Entity):
         Entity.__init__(self, ID, name, description, vie, mana, degats)
     
     def getServiteur(self, parent):
-        return Serviteur(int(self.ID)+1000, self.name, self.description, self.vie, self.mana, self.degats, parent)
+        return Serviteur(int(self.ID)+10000, self.name, self.description, self.vie, self.mana, self.degats, parent)
     
     def toString(self):
         return Entity.toString(self)

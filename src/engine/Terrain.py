@@ -4,10 +4,10 @@ Created on 11 mars 2014
 
 @author: egor
 '''
+from engine.Entity import Entity
 from engine.Pioche import Pioche
 from engine.Player import Player
-from engine.Serviteur import Serviteur
-from engine.Entity import Entity
+
 
 class Terrain:
     '''
@@ -22,8 +22,6 @@ class Terrain:
         self.pioche = Pioche()
         self.player1 = Player(1, namePlayer1)
         self.player2 = Player(2, namePlayer2)
-        self.serviteursPlayer1 = []
-        self.serviteursPlayer2 = []
         
         for i in range(4):
             self.player1.piocheCarte(self)
@@ -51,8 +49,8 @@ class Terrain:
 
         while stop == False:
             print(self.toString())
-            self.playerAction(self.player1, self.player2, self.serviteursPlayer1)
-            self.playerAction(self.player2, self.player1 ,self.serviteursPlayer2)
+            self.playerAction(self.player1, self.player2)
+            self.playerAction(self.player2, self.player1)
             
             self.tour = self.tour + 1
             
@@ -65,7 +63,7 @@ class Terrain:
             #self.player2.piocheCarte(self)
             
             
-    def playerAction(self, player, playerTarget, playerServiteur):
+    def playerAction(self, player, playerTarget):
         '''
         Action du joueur
         @param player: Joueur
@@ -74,31 +72,78 @@ class Terrain:
         '''
         validator = True
         while validator:
-            ID_carte = raw_input(player.name + " Attaque : entrer l'Id de la carte a utiliser = ")
-            carte = player.getCarte(ID_carte)
-            if isinstance(carte, Entity):
-                #print("J'ai choisi la carte " + carte.toString())
-                #print(player.name + " a " + str(player.mana) + " mana et " + carte.name + " a besoin " + str(carte.mana) + " mana")
-                if int(player.mana) >= int(carte.mana):
-                    res = player.useCarte(ID_carte, playerTarget)
-                    if isinstance(res, Serviteur) == True:
-                        playerServiteur.append(res)
-                        print(playerServiteur)
+            ID = self.inputAction(player.name + " : entrer l'Id de la carte ou serviteur a utiliser (0 pour passer) ")
+            if int(ID) == 0:
+                validator = False
+            elif int(ID) > 10000 and int(ID) < 20000:
+                try:
+                    player.useCarte(ID, playerTarget)
                     validator = False
-                else:
-                    print("Je n'ai pas suffisamment de mana")
+                except Exception as e:
+                    print(e)
+            elif int(ID) > 20000:
+                try:
+                    ID_cible = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
+                    
+                    player.useServiteur(ID, ID_cible, playerTarget)
+                    validator = False
+                except Exception as e:
+                    print(e)
             else:
-                print("Saisie incorrecte (isinstance(carte, Entity):)")
+                print("Saisie incorrecte ()")
+
+    def verifActionJoueur(self, joueur):
+        '''
+        Verifie si l'utilisateur peut encore faire des actions
+        @param joueur: Le joueur
+        '''
+        if int(joueur.mana) == 0: # Si le joueur n'a plus de mana
+            return False
+        if joueur.action == False: # Si il a deja attaquer
+            return False
+        if self.verifActionServiteur(joueur) == False:
+            return False
+        return True
+    
+    def verifActionServiteur(self, joueur):
+        '''
+        Verifie si l'utilisateur peut utiliser un serviteur
+        @return: True si l'utilisateur peut encore utiliser un serviteur. False si non
+        '''
+        flag = False
+            
+        for serv in joueur.serviteurs:
+            if serv.action == True:
+                flag = True
+                
+        return flag 
+    
+    def inputAction(self, message):
+        '''
+        Demande de saisie utilisateur
+        @param message: prompt
+        @return: int 
+        '''
+        ID = -1
+        try:
+            ID = input(message + "[int]#")
+            ID = int(ID)
+        except EOFError:
+            print("Saisie incorrecte " + str(EOFError.message))
+            ID = -1
+        except SyntaxError:
+            print("Saisie incorrecte " + str(SyntaxError.message))
+            ID = -1
+        except NameError:
+            print("Saisie incorrecte " + str(NameError.message))
+            ID = -1
+        except ValueError:
+            print("Saisie incorrecte " + str(ValueError.message))
+            ID = -1
+        return ID
         
     def toString(self):
-        txt = "TOUR=" + str(self.tour) + "\n"
-        txt += self.player1.toString()
-        txt += "Les Serviteur de " + self.player1.name + "\n"
-        for i in self.serviteursPlayer1:
-            txt += i.toString() + "\n"
-        txt += "\n================================\n"
-        txt += self.player2.toString()
-        txt += "Les Serviteur de " + self.player2.name + "\n"
-        for i in self.serviteursPlayer2:
-            txt += i.toString() + "\n"
+        txt = "@@@@@@@@@@@@@@@ --------------- TOUR " + str(self.tour) + " --------------- @@@@@@@@@@@@@@@\n"
+        txt += "ID=" + self.player1.toString()
+        txt += "ID=" + self.player2.toString()
         return txt

@@ -21,18 +21,9 @@ class Player(Entity):
         Entity.__init__(self, ID, name, "description", 30, 1, 5)
         self.action = True
         self.main = {}
-
+        self.serviteurs = {}
         
-    def toString(self):
-        '''
-        Affiche les cartes que possede le joueur
-        '''
-        string = " Main = {\n"
-        for key in self.main:
-            carte = self.main[key]
-            string += "\t"+ "ID=" + carte.toString() + "\n"
-        return Entity.toString(self) + string + "}\n"
-    
+        
     def nextTour(self, tour):
         '''
         Passe au tour suivant et augmente le mana en fonction du tour
@@ -43,39 +34,80 @@ class Player(Entity):
         else:
             self.mana = tour
         
+        servDeath = []
+        
+        for key in self.serviteurs:
+            if self.serviteurs[key].vie <= 0:
+                print("Est mort " + self.serviteurs[key].toString())
+                servDeath.append(key)
+        
+        for id in servDeath:
+            del self.serviteurs[id]
+        
+        if self.vie <= 0:
+            print("Est mort " + self.toString())
+        
     def piocheCarte(self, terrain):
         '''
         Piche une nouvelle carte
+        @param terrain: Le terraint
         '''
-        if (isinstance(self.main, dict) == True):
-            
-            carte = terrain.piocheCarte()
-            self.main[carte.ID] = carte
-        else:
-            print("Maivaise instance (piocheCarte)")
-            
-            
+        carte = terrain.piocheCarte()
+        self.main[str(carte.ID)] = carte
+    
     def useCarte(self, ID_carte, cible):
         '''
         Utilise une carte de ca main
-        @param carte: la carte a utiliser
+        @param ID_carte: la carte a utiliser
         @param cible: Cible de l'utilisation soit le terrain ou un joueur ou un serviteur
         '''
-        return self.__activeCarte(ID_carte, cible)
+        carte = ""
+        try:
+            carte = self.getCarte(ID_carte)
+        
+            if int(self.mana) >= int(carte.mana):
+            
+                if (isinstance(carte, CarteServiteur) == True):
+                    serviteur = carte.getServiteur(self)
+                    print(self.name + " invoque " + serviteur.toString())
+                    self.serviteurs[str(serviteur.ID)] = serviteur
+                if (isinstance(carte, CarteSort) == True):
+                    carte.attaque(cible)
+                self.mana = int(self.mana) - int(carte.mana)
+                self.deleteCarte(ID_carte)
+                self.action = False
+            else:
+                raise Exception(self.name + " : Je n'ai pas suffisamment de mana")
+        except Exception as e:
+            raise Exception(e)
     
-    def __activeCarte(self, ID_carte, cible):
+    def useServiteur(self, ID_serv, ID_cible, playerCible):
         '''
-        Active une carte qui renvoie un serviteur ou attaque la cible
+        Le joueur attaque avec un serviteur
+        @param ID_serv: Id du serviteur
+        @param ID_cible: Id de la cible
+        @param cible: Joueur adverse
         '''
-        res = ""
-        carte = self.getCarte(ID_carte)
-        if (isinstance(carte, CarteServiteur) == True):
-            res = carte.getServiteur(self)
-        if (isinstance(carte, CarteSort) == True):
-            res = carte.attaque(cible)
-        self.mana = int(self.mana) - int(carte.mana)
-        self.deleteCarte(ID_carte)
-        return res
+        try:
+            serv = self.getServiteur(ID_serv)
+            if int(ID_cible) > 0 and int(ID_cible) < 3: # On attaque un joueur
+                serv = self.serviteurs[str(ID_serv)]
+                serv.attaque(playerCible)
+            else:
+                serv = self.serviteurs[str(ID_serv)]
+                serv.servAttaque(ID_cible, playerCible)
+        except Exception as e:
+            raise Exception(e)
+    
+    def getServiteur(self, ID_serv):
+        '''
+        Inflige les degats a un serviteur
+        '''
+        if self.serviteurs.has_key(str(ID_serv)):
+            return self.serviteurs[str(ID_serv)]
+        else:
+            raise Exception(self.name + " : j'ai pas ce serviteur " + str(ID_serv))
+            
     
     def getCarte(self, ID_carte):
         '''
@@ -85,8 +117,28 @@ class Player(Entity):
         if self.main.has_key(str(ID_carte)):
             return self.main[str(ID_carte)]
         else:
-            print("J'ai pas cette carte (getCarte)")
+            raise Exception(self.name + " : j'ai pas cette carte " + str(ID_carte) )
     
     def deleteCarte(self, ID_carte):
         if self.main.has_key(str(ID_carte)):
             del self.main[str(ID_carte)]
+    
+    def recevoirDegetsServiteur(self, ID_serv, serviteurAttaquant):
+        '''
+        Le serviteur du joueur recois des degats
+        @param ID_serv: Id du serviteur a attaquer
+        @param serviteurAttaquant: serviteur qui attaque
+        '''
+    
+    def toString(self):
+        '''
+        Affiche les cartes que possede le joueur
+        '''
+        string = " Main = {\n"
+        for key in self.main:
+            carte = self.main[key]
+            string += "\t"+ "ID=" + carte.toString() + "\n"
+        string += "\tLes Serviteur de " + self.name + "\n"
+        for s in self.serviteurs:
+            string += "\tID=" + self.serviteurs[s].toString() + "\n"
+        return Entity.toString(self) + string + "}\n"
