@@ -1,3 +1,4 @@
+# -*- coding : utf-8 -*-
 '''
 Created on 11 mars 2014
 
@@ -60,15 +61,22 @@ class Player(Entity):
         @param carte: la carte a utiliser
         @param cible: Cible de l'utilisation soit le terrain ou un joueur ou un serviteur
         '''
+        return self.__activeCarte(ID_carte, cible)
+    
+    def __activeCarte(self, ID_carte, cible):
+        '''
+        Active une carte qui renvoie un serviteur ou attaque la cible
+        '''
         res = ""
         carte = self.getCarte(ID_carte)
         if (isinstance(carte, CarteServiteur) == True):
             res = carte.getServiteur(self)
         if (isinstance(carte, CarteSort) == True):
             res = carte.attaque(cible)
+        self.mana = int(self.mana) - int(carte.mana)
         self.deleteCarte(ID_carte)
         return res
-            
+    
     def getCarte(self, ID_carte):
         '''
         Recupere la carte dans la main du joueur

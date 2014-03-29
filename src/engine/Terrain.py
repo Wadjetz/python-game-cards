@@ -1,3 +1,4 @@
+# -*- coding : utf-8 -*-
 '''
 Created on 11 mars 2014
 
@@ -7,8 +8,6 @@ from engine.Pioche import Pioche
 from engine.Player import Player
 from engine.Serviteur import Serviteur
 from engine.Entity import Entity
-from matplotlib.pyparsing import empty
-
 
 class Terrain:
     '''
@@ -62,14 +61,14 @@ class Terrain:
             
             print("Tous le monde Pioche une carte")
             
-            self.player1.piocheCarte(self)
-            self.player2.piocheCarte(self)
+            #self.player1.piocheCarte(self)
+            #self.player2.piocheCarte(self)
             
             
     def playerAction(self, player, playerTarget, playerServiteur):
         '''
         Action du joueur
-        @param player: Joueur qui jou
+        @param player: Joueur
         @param playerTarget: Joueur adverse
         @param playerServiteurparam: Les serviteurs du joueur
         '''
@@ -78,20 +77,18 @@ class Terrain:
             ID_carte = raw_input(player.name + " Attaque : entrer l'Id de la carte a utiliser = ")
             carte = player.getCarte(ID_carte)
             if isinstance(carte, Entity):
-                print("J'ai choisi la carte " + carte.toString())
-                print(player.name + " j'ai " + str(player.mana) + " mana et " + carte.name + " a " + str(carte.mana) + " mana")
-                if carte.mana >= player.mana:
-                    print("Je n'ai pas suffisamment de mana")
-                else:
+                #print("J'ai choisi la carte " + carte.toString())
+                #print(player.name + " a " + str(player.mana) + " mana et " + carte.name + " a besoin " + str(carte.mana) + " mana")
+                if int(player.mana) >= int(carte.mana):
                     res = player.useCarte(ID_carte, playerTarget)
                     if isinstance(res, Serviteur) == True:
                         playerServiteur.append(res)
-                    else:
-                        print(res)
+                        print(playerServiteur)
                     validator = False
+                else:
+                    print("Je n'ai pas suffisamment de mana")
             else:
                 print("Saisie incorrecte (isinstance(carte, Entity):)")
-            print("Recommencer")
         
     def toString(self):
         txt = "TOUR=" + str(self.tour) + "\n"
