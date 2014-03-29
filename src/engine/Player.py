@@ -34,19 +34,20 @@ class Player(Entity):
         else:
             self.mana = tour
         
+        if self.health <= 0:
+            print("Est mort " + self.toString())
+    
+    def enterrerServiteurs(self):
         servDeath = []
         
         for key in self.serviteurs:
-            if self.serviteurs[key].vie <= 0:
-                print("Est mort " + self.serviteurs[key].toString())
+            if self.serviteurs[key].health <= 0:
+                print(self.serviteurs[key].name + " est mort { " + self.serviteurs[key].toString() + " }")
                 servDeath.append(key)
         
         for id in servDeath:
             del self.serviteurs[id]
-        
-        if self.vie <= 0:
-            print("Est mort " + self.toString())
-        
+    
     def piocheCarte(self, terrain):
         '''
         Piche une nouvelle carte
@@ -55,7 +56,7 @@ class Player(Entity):
         carte = terrain.piocheCarte()
         self.main[str(carte.ID)] = carte
     
-    def useCarte(self, ID_carte, cible):
+    def useCarte(self, ID_carte, cible, ID_cible):
         '''
         Utilise une carte de ca main
         @param ID_carte: la carte a utiliser
@@ -72,7 +73,10 @@ class Player(Entity):
                     print(self.name + " invoque " + serviteur.toString())
                     self.serviteurs[str(serviteur.ID)] = serviteur
                 if (isinstance(carte, CarteSort) == True):
-                    carte.attaque(cible)
+                    if int(ID_cible) > 0 and int(ID_cible) < 3:
+                        carte.attaque(cible)
+                    if int(ID_cible) > 20000:
+                        print("Attaque Serviteur(bientot)")
                 self.mana = int(self.mana) - int(carte.mana)
                 self.deleteCarte(ID_carte)
                 self.action = False

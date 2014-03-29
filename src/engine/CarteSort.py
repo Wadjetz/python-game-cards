@@ -10,11 +10,11 @@ class CarteSort(Entity):
     classdocs
     '''
 
-    def __init__(self, ID, name, description, vie, mana, degats):
+    def __init__(self, ID, name, description, health, mana, degats):
         '''
         Constructor
         '''
-        Entity.__init__(self, ID, name, description, vie, mana, degats)
+        Entity.__init__(self, ID, name, description, health, mana, degats)
         
 
     def toString(self):

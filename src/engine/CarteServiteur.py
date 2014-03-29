@@ -13,14 +13,14 @@ class CarteServiteur(Entity):
     '''
 
 
-    def __init__(self, ID, name, description, vie, mana, degats):
+    def __init__(self, ID, name, description, health, mana, degats):
         '''
         Constructor
         '''
-        Entity.__init__(self, ID, name, description, vie, mana, degats)
+        Entity.__init__(self, ID, name, description, health, mana, degats)
     
     def getServiteur(self, parent):
-        return Serviteur(int(self.ID)+10000, self.name, self.description, self.vie, self.mana, self.degats, parent)
+        return Serviteur(int(self.ID)+10000, self.name, self.description, self.health, self.mana, self.degats, parent)
     
     def toString(self):
         return Entity.toString(self)

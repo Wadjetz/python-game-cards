@@ -12,11 +12,11 @@ class Serviteur(Entity):
     @param autres: Voir la classe mere : Entity
     '''
 
-    def __init__(self, ID, name, description, vie, mana, degats, parent):
+    def __init__(self, ID, name, description, health, mana, degats, parent):
         '''
         Constructor
         '''
-        Entity.__init__(self, ID, name, description, vie, mana, degats)
+        Entity.__init__(self, ID, name, description, health, mana, degats)
         self.parent = parent
         
     def servAttaque(self, ID_cible, playerCible):

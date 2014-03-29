@@ -34,6 +34,9 @@ class Terrain:
         '''
         self.tour = self.tour + 1
         
+    def enterrerServiteurs(self):
+        self.player1.enterrerServiteurs()
+        self.player2.enterrerServiteurs()
     
     def piocheCarte(self):
         '''
@@ -48,7 +51,7 @@ class Terrain:
         stop = False
 
         while stop == False:
-            print(self.toString())
+            #print(self.toString())
             self.playerAction(self.player1, self.player2)
             self.playerAction(self.player2, self.player1)
             
@@ -72,12 +75,21 @@ class Terrain:
         '''
         validator = True
         while validator:
+            print(self.toString())
             ID = self.inputAction(player.name + " : entrer l'Id de la carte ou serviteur a utiliser (0 pour passer) ")
             if int(ID) == 0:
                 validator = False
+            elif int(ID) > 0 and int(ID) < 3:
+                if int(player.mana) >= 2:
+                    player.attaque(playerTarget)
+                    player.mana = player.mana - 2 # L'attaque du joueur coute 2 mana
+                    validator = False
+                else:
+                    print(player.name + " : Je n'ai pas suffisamment de mana")
             elif int(ID) > 10000 and int(ID) < 20000:
                 try:
-                    player.useCarte(ID, playerTarget)
+                    ID_cible = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
+                    player.useCarte(ID, playerTarget, ID_cible)
                     validator = False
                 except Exception as e:
                     print(e)
@@ -91,6 +103,7 @@ class Terrain:
                     print(e)
             else:
                 print("Saisie incorrecte ()")
+            self.enterrerServiteurs()
 
     def verifActionJoueur(self, joueur):
         '''
@@ -143,7 +156,7 @@ class Terrain:
         return ID
         
     def toString(self):
-        txt = "@@@@@@@@@@@@@@@ --------------- TOUR " + str(self.tour) + " --------------- @@@@@@@@@@@@@@@\n"
+        txt = "\n\n@@@@@@@@@@@@@@@ --------------- TOUR " + str(self.tour) + " --------------- @@@@@@@@@@@@@@@\n"
         txt += "ID=" + self.player1.toString()
         txt += "ID=" + self.player2.toString()
-        return txt
+        return txt + "\n"

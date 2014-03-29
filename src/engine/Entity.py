@@ -9,19 +9,19 @@ class Entity():
     Entite basique du jeux
     '''
 
-    def __init__(self, ID, name, description, vie, mana, degats):
+    def __init__(self, ID, name, description, health, mana, degats):
         '''
         Constructor
         @param name: Nom
         @param description: Description
-        @param vie: Nombre total de point vie
+        @param health: Nombre total de point vie
         @param mana: Nombre de point de mana
         @param degats: Degats
         '''
         self.ID = int(ID)
         self.name = name
         self.description = description
-        self.vie = int(vie)
+        self.health = int(health)
         self.mana = int(mana)
         self.degats = int(degats)
         self.action = True
@@ -39,9 +39,9 @@ class Entity():
         L'entite recois des degats
         @param degats: Les degats
         '''
-        print(self.name + " : ca fait mal : " + str(self.vie) + " - " + str(degats) + " = " + str(self.vie - degats) + " vie")
-        self.vie =int(self.vie) - int(degats)
+        print(self.name + " : ca fait mal : " + str(self.health) + " - " + str(degats) + " = " + str(self.health - degats) + " vie")
+        self.health =int(self.health) - int(degats)
         
     def toString(self):
-        return str(self.ID) + "::" + self.name + " [vie=" + str(self.vie) + ", mana=" + str(self.mana) + ", degats=" + str(self.mana) + ", action=" + str(self.action) + "]"
+        return str(self.ID) + "::" + self.name + " [vie=" + str(self.health) + ", mana=" + str(self.mana) + ", degats=" + str(self.mana) + ", action=" + str(self.action) + "]"
         
