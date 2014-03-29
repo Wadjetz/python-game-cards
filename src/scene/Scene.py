@@ -18,3 +18,7 @@ class Scene(object):
     
     def update(self, e, l):
         return self
+    
+    def windowResize(self, w, h):
+        w = 0
+        h = 0

@@ -8,10 +8,7 @@ Gestion des scene du jeu
 from image.Animation import Animation
 from image.Sprite import Sprite
 
-<<<<<<< HEAD
 
-=======
->>>>>>> FETCH_HEAD
 try:
     import pygame
     from scene.Scene import Scene
@@ -27,29 +24,27 @@ class LoadScene(Scene):
         '''
         Constructeur de la class LoadScene
         '''
-<<<<<<< HEAD
-        self.__screen = pygame.display.get_surface().get_size()
-        self.loader = []
-        self.actual = 0
-        self.file = ""
+        self.width = pygame.display.get_surface().get_width()
+        self.height = pygame.display.get_surface().get_height()
         
-        for i in range(1, 10000):
-            self.loader.append(i * 2)
+        self.fileCheck = []
+        self.counter = 0
+        self.maxCounter = 0
         
-        l.addAnimationByPath("bg", '../img/background.jpg')
+        l.addAnimationByPath('bg', '../img/background.jpg')
+        self.resizeWindow(l, self.width, self.height)
         
-        font = l.getFont("mainTitle")
-        if font[0] is not None:
-            l.removeAnimation("titleLoad")
-            ts = Sprite(font[0].render("Loading file :" + str(self.file), 1, (255,255,0)))
-            ta = Animation(ts)
-            ta.newPos((self.__screen[0] / 2 - ts.image.get_size()[0]), 10, ts.image.get_size()[0], ts.image.get_size()[1], 1)
-            l.addAnimation("titleLoad", ta)
+        self.__load__()
+    
+    def __load__(self):
+        title = 'Vérification des fichiers :'
         
-        self.counter = 0.0
-=======
+        for i in range(1234):
+            self.fileCheck.append({'title': title, 'file': 'img/background.jpg'})
+            self.fileCheck.append({'title': title, 'file': 'img/LSANS.TTF'})
+            self.fileCheck.append({'title': title, 'file': 'save/db.txt'})
         
->>>>>>> FETCH_HEAD
+        self.maxCounter = len(self.fileCheck)
     
     def update(self, e, l):
         '''
@@ -58,44 +53,31 @@ class LoadScene(Scene):
         @return: Scene à renvoyer
         '''
         
-<<<<<<< HEAD
-        try:
-            self.file = self.loader[self.actual]
-            self.actual += 1
-        except:
-            self.file = "OK"
-    
-        a = l.getAnimation('bg')
-        if a is not None:
-            a[0].newPos(0, 0, e.width, e.height, 0)
-            font = l.getFont("mainTitle")
+        if self.counter < self.maxCounter:
+            texts = l.getFont('mainTitle')
             
-            if font[0] is not None:
-                l.removeAnimation("titleLoad")
-                if (self.file == "OK"):
-                    ts = Sprite(font[0].render("Loading file finished", 1, (255,255,0)))
-                else:
-                    ts = Sprite(font[0].render("Loading file :" + str(self.file), 1, (255,255,0)))
-                ta = Animation(ts)
-                ta.newPos((e.width / 2 - 100), 10, ts.image.get_size()[0], ts.image.get_size()[1], 0)
-                l.addAnimation("titleLoad", ta)
+            if len(texts) > 0:
+                percent = (self.counter * 1.0 / self.maxCounter * 100)
+                sprite = Sprite(texts[0].render(self.fileCheck[self.counter]['title'] + " {0:.0f}".format(percent) + " %", 1, (255, 255, 0)))
+                animation = Animation(sprite)
+                animation.newPos((self.width / 2 - sprite.w / 2), self.height - 50, sprite.w, sprite.h, 0)
+                
+                l.removeAnimation('infoTitle')
+                l.addAnimation('infoTitle', animation)
+            
+            self.counter += 1
+        else:
+            return None
         
         if (e.quit):
             return None
         
-        if (e.button[1]):
-            a = l.getAnimation('arrow')
-            
-            for b in a:
-                b.newPos(e.posX, e.posY, b.pos[2], b.pos[3], 20)
-        
-        if (e.keyboard[pygame.K_a]):
-            from scene.TestScene import TestScene
-            l.clearAnimation()
-            newScene = TestScene(l)
-            return newScene
-        
-=======
->>>>>>> FETCH_HEAD
         return self
+    
+    def resizeWindow(self, l, w, h):
+        self.width = w
+        self.height = h
         
+        backgrounds = l.getAnimation('bg')
+        if len(backgrounds) > 0:
+            backgrounds[0].newPos(0, 0, self.width, self.height, 0)
