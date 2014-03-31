@@ -12,7 +12,6 @@ class CarteServiteur(Entity):
     classdocs
     '''
 
-
     def __init__(self, ID, name, description, vie, mana, degats):
         '''
         Constructor
