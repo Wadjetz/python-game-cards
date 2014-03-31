@@ -3,5 +3,5 @@ deck.desc|Toute les cartes du jeu sont ici
 deck.check|false
 Akwabu|Ce petit personnage pourra vous sortir d'affaire|esclave|1|1|1|0|1
 Gardien des ombres|Adepte de la magie noir ceci est votre chance|esclave|2|4|4|0|4
-Defonseur|Les bourrins à côté c'est rien|esclave|2|6|2|0|4
+Defonseur|Les bourrins ï¿½ cï¿½tï¿½ c'est rien|esclave|2|6|2|0|4
 Mage|Le frere gentil des gardiens des ombres|esclave|2|4|3|2|4

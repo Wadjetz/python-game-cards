@@ -10,8 +10,7 @@ import pygame
 
 from game.Event import Event
 from image.Loader import Loader
-from scene.TestScene import TestScene
-
+from scene.LoadScene import LoadScene
 
 class Game(object):
     '''
@@ -24,13 +23,13 @@ class Game(object):
         '''
         self.event = Event()
         self.loader = Loader()
-        self.mainWindow = pygame.display.set_mode((800, 600), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
-        self.mainScene = TestScene(self.loader)
+        self.mainWindow = pygame.display.set_mode((1152, 769), pygame.HWSURFACE | pygame.DOUBLEBUF)
+        self.mainScene = LoadScene(self.loader)
         
         pygame.init()
         pygame.display.set_caption("Python Game Cards")
         
-        self.loader.addFont("mainTitle", "../img/arial.ttf", 20)
+        self.loader.addFont("mainTitle", "../img/LSANS.ttf", 30)
     
     def play(self):
         '''
@@ -44,7 +43,8 @@ class Game(object):
             
             if (self.event.resize == True):
                 self.event.resize = False
-                pygame.display.set_mode((self.event.width, self.event.height), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+                pygame.display.set_mode((self.event.width, self.event.height), pygame.HWSURFACE | pygame.DOUBLEBUF)
+                self.mainScene.resizeWindow(self.loader, self.event.width, self.event.height)
             
             self.mainScene = self.mainScene.update(self.event, self.loader)
             

@@ -4,31 +4,43 @@ Created on 11 mars 2014
 
 @author: egor
 '''
-from engine.Carte import Carte
 from engine.Pioche import Pioche
 from engine.Player import Player
 from engine.Terrain import Terrain
 
 
 def main():
+    print("Game Run")
     
     pioche = Pioche()
     
+    #On Cree les joueurs
+    player1 = Player(1, "Egor")
+    player2 = Player(2, "Quentin")
     
-    laMainJouer1 = [Carte("Pion", 6, 10, 3), Carte("Pion", 6, 22, 3), Carte("Pion", 6, 22, 3), Carte("Pion", 6, 22, 3),Carte("Pion", 6, 22, 3)]
-    laMainJouer2 = [Carte("Pion", 6, 22, 3), Carte("Pion", 6, 22, 3), Carte("Pion", 6, 22, 3), Carte("Pion", 6, 22, 3),Carte("Pion", 6, 22, 3)]
+    terrain = Terrain(pioche, player1, player2)
     
-    jouer1 = Player("Egor")
-    jouer2 = Player("Connard")
+    #les joueur pioches 4 cartes
+    for i in range(4):
+        player1.piocheCarte(terrain)
+        player2.piocheCarte(terrain)
+        
+    stop = False
     
-    terrain = Terrain(pioche, jouer1, jouer2)
+    while stop == False:
+        print(player1.toString())
+        print(player2.toString())
+        
+        ID_carte = input(player1.name + ": Attaque entrer l'Id de la carte a utiliser")
+        player1.useCarte(player1.getCarte(ID_carte), player2)
+        
+        ID_carte = input(player2.name + ": Attaque entrer l'Id de la carte a utiliser")
+        player2.useCarte(player2.getCarte(ID_carte), player1)
+        
     
-    jouer1.display()
-    jouer2.display()
+    #print(player1.toString())
+    #print(player2.toString())
     
-    jouer1.attaque(jouer2, laMainJouer1[0])
-    
-    jouer1.display()
-    jouer2.display()
+
 
 if __name__ == '__main__':main()
