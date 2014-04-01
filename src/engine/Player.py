@@ -7,8 +7,46 @@ Created on 11 mars 2014
 
 from engine.GameException import GameException
 
+class Entity(object):
+    '''
+    Entite vivant dans le jeu
+    '''
+    def __init__(self, ID, name, health, attack):
+        '''
+        Constructor
+        @param ID: id unique de la carte
+        @param name: Nom
+        @param health: Les points de vie
+        @param attack: Degats
+        '''
+        self.ID = int(ID)
+        self.name = name
+        self.health = int(health)
+        self.attack = int(attack)
+        self.action = False
+        
+    def domage(self, domage):
+        '''
+        Enleve de la vie a l'entite
+        '''
+        self.health = self.health - int(domage)
+        
+    def nextTour(self, tour):
+        '''
+        Tour suivant
+        '''
+        self.action = True
+        
+    def fight(self, ID, ID_target, ennemy):
+        '''
+        '''
+        if self.action:
+            print()
+        else:
+            raise GameException(self.name + " : Je ne peux plus attaquer")
 
-class Player(object):
+
+class Player(Entity):
     '''
     Joueur Principale
     @param main: Les cartes utilisable par le joueur
@@ -20,13 +58,9 @@ class Player(object):
         @param name: Nom
         @param deck: Les carte utilisable par le joueur
         '''
-        self.ID = int(ID)
-        self.name = name
+        Entity.__init__(self, ID, name, 30, 1)
         self.deck = deck
-        self.health = 30
         self.mana = 1
-        self.attack = 1
-        self.action = True
         self.hand = {}
         self.fields = {}
         for i in range(4):
@@ -74,7 +108,7 @@ class Player(object):
         Affiche les informations joueur
         '''
         txt = "ID:" + str(self.ID) + "-" + str(self.name)
-        txt += ":[mana=" + str(self.mana) + ", vie=" + str(self.health) + "] "
+        txt += ":[mana=" + str(self.mana) + ", vie=" + str(self.health) + ", action=" + str(self.action) + "] "
         txt += "Hand = {\n"
         for key in self.hand:
             carte = self.hand[key]
@@ -95,27 +129,8 @@ class Player(object):
             return self.fields[str(ID_serv)]
         except KeyError:
             raise GameException(self.name + " : j'ai pas ce serviteur " + str(ID_serv))
-        
     
-    def fightPlayer(self, ID_target, ennemy):
-        '''
-        L'attaque du joueur
-        '''
-        if int(self.mana) >= 2:
-            if int(ID_target) > 0 and int(ID_target) < 3:
-                print(str(self.name) + " attaque " + str(ennemy.name) + " de " + str(self.attack) + "dmg")
-                ennemy.health = ennemy.health - self.attack
-                self.mana = int(self.mana) - 2 # L'attaque du joueur coute 2 mana
-                self.action = False
-            if (int(ID_target) > 3000000):
-                servant = ennemy.getServiteur(ID_target)
-                servant.health = int(servant.health) - (int(self.attack) + 1)
-                self.mana = int(self.mana) - 2 # L'attaque du joueur coute 2 mana
-                print(self.name + " attaque " + servant.name + " de " + str(self.attack + 1) + "dmg")
-                self.action = False
-        else:
-            raise GameException(self.name + " : Je n'ai pas suffisamment de mana")
-        
+            
     def useCarteSpell(self, ID_card, ID_target, ennemy):
         '''
         Utilise une carte sort
@@ -127,15 +142,38 @@ class Player(object):
         if int(self.mana) >= int(carte.cost):
             if int(ID_target) > 0 and int(ID_target) < 3:
                 print(self.name + " : attaque " + ennemy.name + " de " + str(carte.attack) + "dmg")
-                ennemy.health = ennemy.health - carte.attack
+                ennemy.domage(carte.attack)
             else:
-                print("Attaque sur les serviteurs")
                 servant = ennemy.getServiteur(ID_target)
-                print(servant)
+                print(self.name + " attaque " + servant.name + " de " + str(carte.attack) + "dmg")
+                servant.domage(carte.attack)
             self.mana = int(self.mana) - int(carte.cost)
             self.deleteCarte(ID_card)
         else:
             raise GameException("J'ai pas assais de mana pour utiliser " + str(carte))
+    
+    def fightPlayer(self, ID_target, ennemy):
+        '''
+        L'attaque du joueur
+        '''
+        if self.action:
+            if int(self.mana) >= 2:
+                if int(ID_target) > 0 and int(ID_target) < 3:
+                    print(str(self.name) + " attaque " + str(ennemy.name) + " de " + str(self.attack) + "dmg")
+                    ennemy.domage(self.attack)
+                    self.mana = int(self.mana) - 2 # L'attaque du joueur coute 2 mana
+                    self.action = False
+                if (int(ID_target) > 3000000):
+                    servant = ennemy.getServiteur(ID_target)
+                    servant.domage(int(self.attack) + 1)
+                    self.mana = int(self.mana) - 2 # L'attaque du joueur coute 2 mana
+                    print(self.name + " attaque " + servant.name + " de " + str(self.attack + 1) + "dmg")
+                    self.action = False
+            else:
+                raise GameException(self.name + " : Je n'ai pas suffisamment de mana")
+        else:
+            raise GameException(self.name + " : Je ne peux plus attaquer")
+
     
     def fightServiteur(self, ID_serv, ID_target, ennemy):
         '''
@@ -144,20 +182,23 @@ class Player(object):
         @param ID_cible: Id de la cible
         @param cible: Joueur adverse
         '''
-        
-        servant = self.getServiteur(ID_serv)
-        if int(ID_target) > 0 and int(ID_target) < 3:
-            # Serviteur attaque le joueur ennemie
-            print(servant.name + " attaque " + ennemy.name + " de " + str(servant.attack) + "dmg")
-            ennemy.health = int(ennemy.health) - int(servant.attack)
-            servant.action = False
+        if self.action:
+            servant = self.getServiteur(ID_serv)
+            if int(ID_target) > 0 and int(ID_target) < 3:
+                # Serviteur attaque le joueur ennemie
+                print(servant.name + " attaque " + ennemy.name + " de " + str(servant.attack) + "dmg")
+                ennemy.domage(servant.attack)
+                servant.action = False
+            else:
+                # Serviteur attque un autre serviteur
+                servantEnnemy = ennemy.getServiteur(ID_target)
+                print(servant.name + " attaque " + servantEnnemy.name + " de " + str(servant.attack) + "dmg et " + servantEnnemy.name + " replique de " + str(servantEnnemy.attack))
+                servantEnnemy.domage(servant.attack)
+                servant.domage(servantEnnemy.attack)
+                servant.action = False
         else:
-            # Serviteur attque un autre serviteur
-            servantEnnemy = ennemy.getServiteur(ID_target)
-            print(servant.name + " attaque " + servantEnnemy.name + " de " + str(servant.attack) + "dmg et " + servantEnnemy.name + " replique de " + str(servantEnnemy.attack))
-            servantEnnemy.health = int(servantEnnemy.health) - int(servant.attack)
-            servant.health = int(servant.health) - int(servantEnnemy.attack)
-    
+            raise GameException(self.name + " : Je ne peux plus attaquer")
+        
     def enterrerServiteurs(self):
         '''
         Supprime les serviteur Morts
@@ -181,6 +222,11 @@ class Player(object):
             self.mana = 10
         else:
             self.mana = tour
+        
+        Entity.nextTour(self, tour)
+        
+        for key in self.fields:
+            self.fields[key].nextTour(tour)
         
         if self.health <= 0:
             print(self.name + "Est mort " + self.toString())

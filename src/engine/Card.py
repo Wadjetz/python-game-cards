@@ -37,7 +37,7 @@ class Card():
     def toString(self):
         txt = "ID:" + str(self.ID) + "-" + str(self.name)
         txt += ":[cost=" + str(self.cost) + " mana , degats=" + str(self.attack) + ", damage=" + str(self.damage)
-        txt += ", Type=" + str(self.Type) + ", description=" + str(self.description) + ", dialog=" + str(self.dialog) + "]"
+        #txt += ", Type=" + str(self.Type) + ", description=" + str(self.description) + ", dialog=" + str(self.dialog) + "]"
         return txt
     
     def __str__(self):
@@ -64,7 +64,10 @@ class CardServant(Card):
         return Servant(int(self.ID)+1000000+random.randrange(100000), self.Type, self.name, self.description, self.dialog, self.attack, self.damage, self.health, self.vulnerability)
     
     def toString(self):
-        return Card.toString(self) + "[health=" + str(self.health) + ", vulnerability=" + str(self.vulnerability) + "]"
+        txt = "ID:" + str(self.ID) + "-" + str(self.name)
+        txt += ":[cost=" + str(self.cost) + " mana , degats=" + str(self.attack) + ", damage=" + str(self.damage) + ", health=" + str(self.health) + ", vulnerability=" + str(self.vulnerability) + "]"
+        #txt += ", Type=" + str(self.Type) + ", description=" + str(self.description) + ", dialog=" + str(self.dialog) + "]"
+        return txt
     
     def __str__(self):
         return self.toString()
@@ -84,7 +87,10 @@ class CardSpell(Card):
         
 
     def toString(self):
-        return Card.toString(self) + "[effect=" + str(self.effect) + "]"
+        txt = "ID:" + str(self.ID) + "-" + str(self.name)
+        txt += ":[cost=" + str(self.cost) + " mana , degats=" + str(self.attack) + ", damage=" + str(self.damage) + ", effect=" + str(self.effect) + "]"
+        #txt += ", Type=" + str(self.Type) + ", description=" + str(self.description) + ", dialog=" + str(self.dialog) + "]"
+        return txt
     
     def __str__(self):
         return self.toString()

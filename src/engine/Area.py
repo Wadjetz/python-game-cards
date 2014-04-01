@@ -128,9 +128,12 @@ class Area(object):
                 except GameException as e:
                     print(e)
             elif int(ID) > 3000000:
-                ID_target = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
-                player.fightServiteur(ID, ID_target, ennemy)
-                validator = self.verifActionJoueur(player)
+                try:
+                    ID_target = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
+                    player.fightServiteur(ID, ID_target, ennemy)
+                    validator = self.verifActionJoueur(player)
+                except GameException as e:
+                    print(e)
             else:
                 print("Saisie incorrecte ()")
                 
@@ -143,6 +146,14 @@ class Area(object):
         Verifie si l'utilisateur peut encore faire des actions
         @param joueur: Le joueur
         '''
-        if int(joueur.mana) == 0: # Si le joueur n'a plus de mana
-            return False
-        return True
+        flag = False
+        if int(joueur.mana) > 0: # Si le joueur n'a plus de mana
+            if joueur.action == True:
+                flag = True
+            
+        
+        for key in joueur.fields:
+            if joueur.fields[key].action == True:
+                flag = True
+        
+        return flag

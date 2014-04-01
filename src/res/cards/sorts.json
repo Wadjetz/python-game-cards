@@ -3,30 +3,30 @@
 		"id": 1000001,
 		"type": "Sort",
 		"name": "Boule de feu",
-		"description": "Attaque de 1 degats les serviteur proche",
-		"dialog": "Brule",
-		"cost":1,
+		"description": "Attaque les serviteurs proches",
+		"dialog": "Oh Oh",
+		"cost":6,
 		"attack":6,
-		"damage": "feu",
-		"effect":"proximity"
+		"damage": "Fire",
+		"effect":"Proximity"
 	},{
 		"id": 1000002,
 		"type": "Sort",
-		"name": "Boule de glace",
+		"name": "Lance de glace",
 		"description": "Gelle l'ennemie pendant un tour",
-		"dialog": "Brule",
-		"cost":1,
+		"dialog": "Heu",
+		"cost":6,
 		"attack":6,
-		"damage": "froid",
-		"effect":"frozen"
+		"damage": "Cold",
+		"effect":"Frozen"
 	},{
 		"id": 1000003,
 		"type": "Sort",
 		"name": "Boule de neige",
 		"description": "BdF",
 		"dialog": "Brule",
-		"cost":2,
-		"attack":6,
+		"cost":1,
+		"attack":1,
 		"damage": "froid",
 		"effect":"frozen"
 	},{
@@ -36,7 +36,7 @@
 		"description": "BdF",
 		"dialog": "Brule",
 		"cost":2,
-		"attack":6,
+		"attack":3,
 		"damage": "froid",
 		"effect":"stunned"
 	},{
@@ -47,7 +47,7 @@
 		"dialog": "Brule",
 		"cost":1,
 		"attack":6,
-		"damage": "magie",
+		"damage": "magic",
 		"effect":""
 	},{
 		"id": 1000006,
@@ -66,8 +66,8 @@
 		"description": "1 degats a chaque tour",
 		"dialog": "Brule",
 		"cost":1,
-		"attack":6,
-		"damage": "maladie",
-		"effect":"affliction"
+		"attack":1,
+		"damage": "Maladie",
+		"effect":"Affliction"
 	}
 ]
