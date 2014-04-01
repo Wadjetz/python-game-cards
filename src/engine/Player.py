@@ -31,6 +31,22 @@ class Entity(object):
         '''
         self.health = self.health - int(domage)
         
+    def domageServ(self, domage, typeDomage):
+        '''
+        
+        '''
+        if self.damage == "magic" and typeDomage == "distance":
+            print("CRITIQUE " + str(int(domage) * 2))
+            self.domage(int(domage) * 2)
+        elif self.damage == "distance" and typeDomage == "physical":
+            print("CRITIQUE " + str(int(domage) * 2))
+            self.domage(int(domage) * 2)
+        elif self.damage == "physical" and typeDomage == "magic":
+            print("CRITIQUE " + str(int(domage) * 2))
+            self.domage(int(domage) * 2)
+        else:
+            self.domage(domage)
+        
     def nextTour(self, tour):
         '''
         Tour suivant
@@ -63,6 +79,7 @@ class Player(Entity):
         self.mana = 1
         self.hand = {}
         self.fields = {}
+        self.action = True
         for i in range(4):
             i
             self.piocheCarte()
@@ -146,7 +163,7 @@ class Player(Entity):
             else:
                 servant = ennemy.getServiteur(ID_target)
                 print(self.name + " attaque " + servant.name + " de " + str(carte.attack) + "dmg")
-                servant.domage(carte.attack)
+                servant.domageServ(carte.attack, carte.damage)
             self.mana = int(self.mana) - int(carte.cost)
             self.deleteCarte(ID_card)
         else:
@@ -156,7 +173,7 @@ class Player(Entity):
         '''
         L'attaque du joueur
         '''
-        if self.action:
+        if self.action == True:
             if int(self.mana) >= 2:
                 if int(ID_target) > 0 and int(ID_target) < 3:
                     print(str(self.name) + " attaque " + str(ennemy.name) + " de " + str(self.attack) + "dmg")
@@ -182,8 +199,8 @@ class Player(Entity):
         @param ID_cible: Id de la cible
         @param cible: Joueur adverse
         '''
-        if self.action:
-            servant = self.getServiteur(ID_serv)
+        servant = self.getServiteur(ID_serv)
+        if servant.action == True:
             if int(ID_target) > 0 and int(ID_target) < 3:
                 # Serviteur attaque le joueur ennemie
                 print(servant.name + " attaque " + ennemy.name + " de " + str(servant.attack) + "dmg")
@@ -193,11 +210,12 @@ class Player(Entity):
                 # Serviteur attque un autre serviteur
                 servantEnnemy = ennemy.getServiteur(ID_target)
                 print(servant.name + " attaque " + servantEnnemy.name + " de " + str(servant.attack) + "dmg et " + servantEnnemy.name + " replique de " + str(servantEnnemy.attack))
-                servantEnnemy.domage(servant.attack)
-                servant.domage(servantEnnemy.attack)
+                
+                servantEnnemy.domageServ(servant.attack, servant.damage)
+                servant.domageServ(servantEnnemy.attack, servantEnnemy.damage)
                 servant.action = False
         else:
-            raise GameException(self.name + " : Je ne peux plus attaquer")
+            raise GameException(servant.name + " : Je ne peux plus attaquer")
         
     def enterrerServiteurs(self):
         '''

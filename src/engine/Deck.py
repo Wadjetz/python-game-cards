@@ -67,7 +67,7 @@ class Pioche(object):
         dumpServants = json.load(fileServants)
         for c in dumpServants:
             #ID, Type, name, description, dialog, cost, attack, damage, health, vulnerability
-            carte = CardServant(c["id"], c["type"], c["name"], c["description"], c["dialog"], c["cost"], c["attack"], c["damage"], c["health"], c["vulnerability"])
+            carte = CardServant(c["id"], c["type"], c["name"], c["description"], c["dialog"], c["cost"], c["attack"], c["damage"], c["health"])
             self.totalCards[str(c["id"])] = carte
         fileServants.close()
         

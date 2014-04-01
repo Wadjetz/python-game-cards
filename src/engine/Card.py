@@ -50,22 +50,21 @@ class CardServant(Card):
     '''
 
 
-    def __init__(self, ID, Type, name, description, dialog, cost, attack, damage, health, vulnerability):
+    def __init__(self, ID, Type, name, description, dialog, cost, attack, damage, health):
         '''
         Constructor
         '''
         Card.__init__(self, ID, Type, name, description, dialog, cost, attack, damage)
         self.health = health
-        self.vulnerability = vulnerability
     
     
     def invokeServant(self):
         #ID, Type, name, description, dialog, attack, damage, health, vulnerability
-        return Servant(int(self.ID)+1000000+random.randrange(100000), self.Type, self.name, self.description, self.dialog, self.attack, self.damage, self.health, self.vulnerability)
+        return Servant(int(self.ID)+1000000+random.randrange(100000), self.Type, self.name, self.description, self.dialog, self.attack, self.damage, self.health)
     
     def toString(self):
         txt = "ID:" + str(self.ID) + "-" + str(self.name)
-        txt += ":[cost=" + str(self.cost) + " mana , degats=" + str(self.attack) + ", damage=" + str(self.damage) + ", health=" + str(self.health) + ", vulnerability=" + str(self.vulnerability) + "]"
+        txt += ":[cost=" + str(self.cost) + " mana , degats=" + str(self.attack) + ", damage=" + str(self.damage) + ", health=" + str(self.health) + "]"
         #txt += ", Type=" + str(self.Type) + ", description=" + str(self.description) + ", dialog=" + str(self.dialog) + "]"
         return txt
     

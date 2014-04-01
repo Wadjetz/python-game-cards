@@ -8,7 +8,7 @@ from engine.Player import Entity
 
 class Servant(Entity):
 
-    def __init__(self, ID, Type, name, description, dialog, attack, damage, health, vulnerability):
+    def __init__(self, ID, Type, name, description, dialog, attack, damage, health):
         '''
         Constructor
         @param ID: id unique de la carte
@@ -24,7 +24,6 @@ class Servant(Entity):
         self.description = description
         self.dialog = dialog
         self.damage = damage
-        self.vulnerability = vulnerability
     
     def toString(self):
         txt = "ID:" + str(self.ID) + "-" + str(self.name)

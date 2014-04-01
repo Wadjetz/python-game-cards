@@ -1,87 +1,80 @@
 [
 	{
 		"id": 2000001,
-		"type": "Humain",
+		"type": "Serv",
 		"name": "Soldat",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
-		"health":6,
+		"health":3,
 		"cost":2,
 		"attack":1,
-		"damage": "physique",
-		"vulnerability": "magie"
+		"damage": "physical"
 	},
 	{
 		"id": 2000002,
-		"type": "Humain",
+		"type": "Serv",
 		"name": "Archer",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
-		"health":2,
-		"cost":1,
-		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
+		"health":3,
+		"cost":2,
+		"attack":1,
+		"damage": "distance"
 	},
 	{
 		"id": 2000003,
-		"type": "Humain",
+		"type": "Serv",
 		"name": "Sentinelle",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
-		"health":2,
+		"health":1,
 		"cost":1,
 		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
+		"damage": "physical"
 	},
 	{
 		"id": 2000004,
-		"type": "Humain",
+		"type": "Serv",
 		"name": "Eclaireur",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
-		"health":2,
+		"health":1,
 		"cost":1,
 		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
+		"damage": "physical"
 	},
 	{
 		"id": 2000005,
-		"type": "Humain",
+		"type": "Serv",
 		"name": "Chevalier",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
-		"health":2,
-		"cost":1,
-		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
+		"health":5,
+		"cost":3,
+		"attack":1,
+		"damage": "physical"
 	},
 	{
 		"id": 2000006,
-		"type": "Humain",
+		"type": "Serv",
 		"name": "Defenseur",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
-		"health":2,
-		"cost":1,
-		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
+		"health":6,
+		"cost":3,
+		"attack":1,
+		"damage": "physical"
 	},
 	{
 		"id": 2000007,
-		"type": "Humain",
+		"type": "Serv",
 		"name": "Lancier",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
-		"health":2,
-		"cost":1,
-		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
+		"health":4,
+		"cost":3,
+		"attack":2,
+		"damage": "physical"
 	},
 	{
 		"id": 2000008,
@@ -90,93 +83,30 @@
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
 		"health":2,
-		"cost":1,
+		"cost":3,
 		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
+		"damage": "distance"
 	},
 	{
 		"id": 2000009,
 		"type": "Serv",
-		"name": "Piquier",
+		"name": "Sorcier",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
-		"health":2,
-		"cost":1,
-		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
+		"health":3,
+		"cost":3,
+		"attack":6,
+		"damage": "magic"
 	},
 	{
 		"id": 2000010,
 		"type": "Serv",
-		"name": "Garde",
+		"name": "Magicien",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
 		"health":2,
-		"cost":1,
-		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
-	},
-	{
-		"id": 2000011,
-		"type": "Serv",
-		"name": "Assassin",
-		"description": "chair a canon",
-		"dialog": "Je vais vous tuer lentement",
-		"health":2,
-		"cost":1,
-		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
-	},
-	{
-		"id": 2000012,
-		"type": "Serv",
-		"name": "Corsaire",
-		"description": "chair a canon",
-		"dialog": "Je vais vous tuer lentement",
-		"health":2,
-		"cost":1,
-		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
-	},
-	{
-		"id": 2000013,
-		"type": "Serv",
-		"name": "Bandit",
-		"description": "chair a canon",
-		"dialog": "Je vais vous tuer lentement",
-		"health":2,
-		"cost":1,
-		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
-	},
-	{
-		"id": 2000014,
-		"type": "Serv",
-		"name": "Pirate",
-		"description": "chair a canon",
-		"dialog": "Je vais vous tuer lentement",
-		"health":2,
-		"cost":1,
-		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
-	},
-	{
-		"id": 2000015,
-		"type": "Serv",
-		"name": "Geek",
-		"description": "chair a canon",
-		"dialog": "Je vais vous tuer lentement",
-		"health":2,
-		"cost":1,
-		"attack":3,
-		"damage": "physique",
-		"vulnerability": "magie"
+		"cost":3,
+		"attack":6,
+		"damage": "magic"
 	}
 ]
