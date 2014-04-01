@@ -1,0 +1,73 @@
+[
+	{
+		"id": 1000001,
+		"type": "Sort",
+		"name": "Boule de feu",
+		"description": "Attaque de 1 degats les serviteur proche",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":6,
+		"damage": "feu",
+		"effect":"proximity"
+	},{
+		"id": 1000002,
+		"type": "Sort",
+		"name": "Boule de glace",
+		"description": "Gelle l'ennemie pendant un tour",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":6,
+		"damage": "froid",
+		"effect":"frozen"
+	},{
+		"id": 1000003,
+		"type": "Sort",
+		"name": "Boule de neige",
+		"description": "BdF",
+		"dialog": "Brule",
+		"cost":2,
+		"attack":6,
+		"damage": "froid",
+		"effect":"frozen"
+	},{
+		"id": 1000004,
+		"type": "Sort",
+		"name": "Pique de glace",
+		"description": "BdF",
+		"dialog": "Brule",
+		"cost":2,
+		"attack":6,
+		"damage": "froid",
+		"effect":"stunned"
+	},{
+		"id": 1000005,
+		"type": "Sort",
+		"name": "Boule des arcanes",
+		"description": "BdF",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":6,
+		"damage": "magie",
+		"effect":""
+	},{
+		"id": 1000006,
+		"type": "Sort",
+		"name": "Eclaire",
+		"description": "BdF",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":6,
+		"damage": "electricity",
+		"effect":"stunned"
+	},{
+		"id": 1000007,
+		"type": "Sort",
+		"name": "Malediction",
+		"description": "1 degats a chaque tour",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":6,
+		"damage": "maladie",
+		"effect":"affliction"
+	}
+]
