@@ -23,8 +23,10 @@ class Game(object):
         '''
         self.event = Event()
         self.loader = Loader()
-        self.mainWindow = pygame.display.set_mode((1152, 769), pygame.HWSURFACE | pygame.DOUBLEBUF)
+        self.mainWindow = pygame.display.set_mode((1024, 600), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self.mainScene = LoadScene(self.loader)
+        self.fullscreen = False
+        self.lastSize = [1024, 600]
         
         pygame.init()
         pygame.display.set_caption("Python Game Cards")
@@ -41,9 +43,17 @@ class Game(object):
         while (self.mainScene is not None):
             self.event.update()
             
+            if (self.event.keyboard[pygame.K_F11]):
+                self.event.keyboard[pygame.K_F11] = False
+                self.fullscreen = not self.fullscreen
+                self.event.resize = True
+            
             if (self.event.resize == True):
                 self.event.resize = False
-                pygame.display.set_mode((self.event.width, self.event.height), pygame.HWSURFACE | pygame.DOUBLEBUF)
+                if self.fullscreen:
+                    pygame.display.set_mode((self.event.width, self.event.height), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.FULLSCREEN)
+                else:
+                    pygame.display.set_mode((self.event.width, self.event.height), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
                 self.mainScene.resizeWindow(self.loader, self.event.width, self.event.height)
             
             self.mainScene = self.mainScene.update(self.event, self.loader)

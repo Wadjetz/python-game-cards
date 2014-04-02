@@ -1,13 +1,13 @@
 '''
 Package pour la gestion des scenes
-Gestion des scene du jeu
+Scene de chargement du jeu
 
 @version: 0.1
 @author: quenti77
 '''
 from image.Animation import Animation
 from image.Sprite import Sprite
-
+from scene.MainScene import MainScene
 
 try:
     import pygame
@@ -31,6 +31,8 @@ class LoadScene(Scene):
         self.counter = 0
         self.maxCounter = 0
         
+        l.clearAnimation()
+        
         l.addAnimationByPath('bg', '../img/background.jpg')
         self.resizeWindow(l, self.width, self.height)
         
@@ -38,11 +40,15 @@ class LoadScene(Scene):
     
     def __load__(self):
         title = 'Vérification des fichiers :'
-        
-        for i in range(1234):
-            self.fileCheck.append({'title': title, 'file': 'img/background.jpg'})
-            self.fileCheck.append({'title': title, 'file': 'img/LSANS.TTF'})
-            self.fileCheck.append({'title': title, 'file': 'save/db.txt'})
+        self.fileCheck.append({'title': title, 'file': 'img/background.jpg'})
+        self.fileCheck.append({'title': title, 'file': 'img/background_save.jpg'})
+        self.fileCheck.append({'title': title, 'file': 'img/solo.png'})
+        self.fileCheck.append({'title': title, 'file': 'img/multi.png'})
+        self.fileCheck.append({'title': title, 'file': 'img/options.png'})
+        self.fileCheck.append({'title': title, 'file': 'img/quitter.png'})
+        self.fileCheck.append({'title': title, 'file': 'img/LSANS.TTF'})
+        self.fileCheck.append({'title': title, 'file': 'save/db.txt'})
+        self.fileCheck.append({'title': title, 'file': 'save/Cartes'})
         
         self.maxCounter = len(self.fileCheck)
     
@@ -67,7 +73,8 @@ class LoadScene(Scene):
             
             self.counter += 1
         else:
-            return None
+            nextScene = MainScene(l)
+            return nextScene
         
         if (e.quit):
             return None
