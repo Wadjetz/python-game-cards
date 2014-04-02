@@ -64,7 +64,7 @@ class Player(Entity):
             raise GameException(self.name + " : j'ai pas cette carte " + str(ID))
     
     def deleteCarte(self, ID):
-        if self.hand.has_key(str(ID)):
+        if str(ID) in self.hand:
             del self.hand[str(ID)]
     
     def toString(self):

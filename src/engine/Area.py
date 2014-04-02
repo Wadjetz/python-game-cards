@@ -49,16 +49,13 @@ class Area(object):
             ID = input(message + "[int]#")
             ID = int(ID)
         except EOFError:
-            print("Saisie incorrecte EOFError=" + str(EOFError.message))
-            ID = -1
-        except SyntaxError:
-            print("Saisie incorrecte SyntaxError=" + str(SyntaxError.message))
+            print("Saisie incorrecte EOFError=")
             ID = -1
         except NameError:
-            print("Saisie incorrecte NameError=" + str(NameError.message))
+            print("Saisie incorrecte NameError")
             ID = -1
         except ValueError:
-            print("Saisie incorrecte ValueError=" + str(ValueError.message))
+            print("Saisie incorrecte ValueError")
             ID = -1
         return ID
     
