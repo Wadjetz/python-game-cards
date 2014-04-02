@@ -63,7 +63,6 @@ class GameScene(Scene):
         @return: Scene à renvoyer
         '''
         
-        
         if (e.quit):
             self.quitterCallBack('')
         

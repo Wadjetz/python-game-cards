@@ -29,7 +29,7 @@ class Deck(object):
         Recupere une carte au hasard dans le total des cartes
         '''
         try:
-            keys = self.cards.keys()
+            keys = list(self.cards.keys())
             i = random.randrange(len(keys))
             tmp = copy(self.cards[keys[i]])
             del self.cards[keys[i]]
@@ -90,7 +90,7 @@ class Pioche(object):
         deck = {}
         ids = self.__loadJsonDeck(name)
         for c in ids:
-            if self.totalCards.has_key(str(c)):
+            if str(c) in self.totalCards.keys():
                 deck[c] = self.totalCards[str(c)]
         return deck
         
