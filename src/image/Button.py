@@ -55,5 +55,11 @@ class Button(object):
             self.info[4] = w
             self.info[5] = h
             
-            
+            if self.animationOFF == True:
+                if self.dejaFait == True:
+                    l.removeAnimation(self.imageName)
+                    l.addAnimationByPath(self.imageName, self.imageSelect, (self.info[4] / 2 - self.info[2] / 2), self.info[1])
+                else:
+                    l.removeAnimation(self.imageName)
+                    l.addAnimationByPath(self.imageName, self.imageBase, (self.info[4] / 2 - self.info[2] / 2), self.info[1])
     

@@ -26,14 +26,15 @@ class MainScene(Scene):
         '''
         self.width = pygame.display.get_surface().get_width()
         self.height = pygame.display.get_surface().get_height()
+        self.loader = l
         
         l.clearAnimation()
         
         l.addAnimationByPath('bg', '../img/background.jpg')
-        l.addAnimationByPath('solo', '../img/solo.png', -280, 100)
-        l.addAnimationByPath('multi', '../img/multi.png', -280, 200)
-        l.addAnimationByPath('options', '../img/option.png', -280, 300)
-        l.addAnimationByPath('quitter', '../img/quitter.png', -280, 400)
+        l.addAnimationByPath('solo', '../img/solo.png', self.width / 2 - 140, 100)
+        l.addAnimationByPath('multi', '../img/multi.png', self.width / 2 - 140, 100)
+        l.addAnimationByPath('options', '../img/option.png', self.width / 2 - 140, 100)
+        l.addAnimationByPath('quitter', '../img/quitter.png', self.width / 2 - 140, 100)
         
         self.createButton(l)
         self.resizeWindow(l, self.width, self.height)
@@ -54,7 +55,7 @@ class MainScene(Scene):
         if len(solo) > 0:
             solo[0].newPos(self.width / 2 - 140, 100, 280, 50, 60)
         
-        self.btnSolo = Button('solo', '../img/solo.png', '../img/solo_select.png', self.callbackButton)
+        self.btnSolo = Button('solo', '../img/solo.png', '../img/solo_select.png', self.partieSolo)
         self.btnSolo.loadButton(self.width / 2 - 140, 100, 280, 50, self.width, self.height)
         
         multi = l.getAnimation('multi')
@@ -83,6 +84,10 @@ class MainScene(Scene):
     
     def quitterCallBack(self, nom):
         self.ReturnScene = None
+    
+    def partieSolo(self, nom):
+        from scene.TypePartieScene import TypePartieScene
+        self.ReturnScene = TypePartieScene(self.loader)
     
     def update(self, e, l):
         '''

@@ -40,13 +40,15 @@ class LoadScene(Scene):
     
     def __load__(self):
         title = 'Vérification des fichiers :'
-        for i in range(123):
-            i = i
-            self.fileCheck.append({'title': title, 'file': 'img/background.jpg'})
-            self.fileCheck.append({'title': title, 'file': 'img/solo.png'})
-            self.fileCheck.append({'title': title, 'file': 'img/LSANS.TTF'})
-            self.fileCheck.append({'title': title, 'file': 'save/db.txt'})
-            self.fileCheck.append({'title': title, 'file': 'save/Cartes'})
+        self.fileCheck.append({'title': title, 'file': 'img/background.jpg'})
+        self.fileCheck.append({'title': title, 'file': 'img/background_save.jpg'})
+        self.fileCheck.append({'title': title, 'file': 'img/solo.png'})
+        self.fileCheck.append({'title': title, 'file': 'img/multi.png'})
+        self.fileCheck.append({'title': title, 'file': 'img/options.png'})
+        self.fileCheck.append({'title': title, 'file': 'img/quitter.png'})
+        self.fileCheck.append({'title': title, 'file': 'img/LSANS.TTF'})
+        self.fileCheck.append({'title': title, 'file': 'save/db.txt'})
+        self.fileCheck.append({'title': title, 'file': 'save/Cartes'})
         
         self.maxCounter = len(self.fileCheck)
     
