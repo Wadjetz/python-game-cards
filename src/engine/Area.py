@@ -21,6 +21,7 @@ class Area(object):
         @param namePlayer2: Nom du joueur 2
         '''
         self.tour = 1
+
         self.pioche = Pioche()
         deckPlayer1 = Deck("deck1", self.pioche.getDecks("deck1"))
         deckPlayer2 = Deck("deck1", self.pioche.getDecks("deck2"))
@@ -86,6 +87,13 @@ class Area(object):
                 self.player2.piocheCarte()
             except GameException as e:
                 print(self.player2.name + " " + str(e))
+                
+            if self.player1.health <= 0:
+                print(self.player1.name + " a perdu et " + self.player2.name + " a GAGNER !!!!")
+                stop = True
+            if self.player2.health <= 0:
+                print(self.player2.name + " a perdu et " + self.player1.name + " a GAGNER !!!!")
+                stop = True 
     
     def playerTurn(self, player, ennemy):
         '''
@@ -108,20 +116,20 @@ class Area(object):
                 # Si le joueur a choisie lui meme
                 if int(player.mana) >= 2:
                     ID_target = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
-                    player.fightPlayer(ID_target, ennemy)
-                    player.mana = int(player.mana) - 2 # L'attaque du joueur coute 2 mana
-                    player.action = False
+                    player.fight(ID_target, ennemy)
                     validator = self.verifActionJoueur(player)
                 else:
                     print(player.name + " : Je n'ai pas suffisamment de mana")
-            elif int(ID) > 1000000 and int(ID) < 2000000: # Si le joueur choisie un sort
+            elif int(ID) > 1000000 and int(ID) < 2000000:
+                # Si le joueur choisie un sort
                 try:
                     ID_target = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
                     player.useCarteSpell(ID, ID_target, ennemy)
                     validator = self.verifActionJoueur(player)
                 except GameException as e:
                     print(e)
-            elif int(ID) > 2000000 and int(ID) < 3000000: # Si le joueur a choisie d'invoquer un serviteur
+            elif int(ID) > 2000000 and int(ID) < 3000000:
+                # Si le joueur a choisie d'invoquer un serviteur
                 try:
                     player.invoke(ID)
                     validator = self.verifActionJoueur(player)
@@ -130,7 +138,8 @@ class Area(object):
             elif int(ID) > 3000000:
                 try:
                     ID_target = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
-                    player.fightServiteur(ID, ID_target, ennemy)
+                    servant = player.getServiteur(ID)
+                    servant.fight(ID_target, ennemy)
                     validator = self.verifActionJoueur(player)
                 except GameException as e:
                     print(e)

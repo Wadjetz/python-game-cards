@@ -48,7 +48,7 @@
 		"cost":1,
 		"attack":6,
 		"damage": "magic",
-		"effect":""
+		"effect":"stunned"
 	},{
 		"id": 1000006,
 		"type": "Sort",

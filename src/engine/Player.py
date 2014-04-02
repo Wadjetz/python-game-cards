@@ -5,61 +5,8 @@ Created on 11 mars 2014
 @author: egor
 '''
 
+from engine.Entity import Entity
 from engine.GameException import GameException
-
-class Entity(object):
-    '''
-    Entite vivant dans le jeu
-    '''
-    def __init__(self, ID, name, health, attack):
-        '''
-        Constructor
-        @param ID: id unique de la carte
-        @param name: Nom
-        @param health: Les points de vie
-        @param attack: Degats
-        '''
-        self.ID = int(ID)
-        self.name = name
-        self.health = int(health)
-        self.attack = int(attack)
-        self.action = False
-        
-    def domage(self, domage):
-        '''
-        Enleve de la vie a l'entite
-        '''
-        self.health = self.health - int(domage)
-        
-    def domageServ(self, domage, typeDomage):
-        '''
-        
-        '''
-        if self.damage == "magic" and typeDomage == "distance":
-            print("CRITIQUE " + str(int(domage) * 2))
-            self.domage(int(domage) * 2)
-        elif self.damage == "distance" and typeDomage == "physical":
-            print("CRITIQUE " + str(int(domage) * 2))
-            self.domage(int(domage) * 2)
-        elif self.damage == "physical" and typeDomage == "magic":
-            print("CRITIQUE " + str(int(domage) * 2))
-            self.domage(int(domage) * 2)
-        else:
-            self.domage(domage)
-        
-    def nextTour(self, tour):
-        '''
-        Tour suivant
-        '''
-        self.action = True
-        
-    def fight(self, ID, ID_target, ennemy):
-        '''
-        '''
-        if self.action:
-            print()
-        else:
-            raise GameException(self.name + " : Je ne peux plus attaquer")
 
 
 class Player(Entity):
@@ -163,13 +110,13 @@ class Player(Entity):
             else:
                 servant = ennemy.getServiteur(ID_target)
                 print(self.name + " attaque " + servant.name + " de " + str(carte.attack) + "dmg")
-                servant.domageServ(carte.attack, carte.damage)
+                servant.domage(carte.attack, carte.damage)
             self.mana = int(self.mana) - int(carte.cost)
             self.deleteCarte(ID_card)
         else:
             raise GameException("J'ai pas assais de mana pour utiliser " + str(carte))
     
-    def fightPlayer(self, ID_target, ennemy):
+    def fight(self, ID_target, ennemy):
         '''
         L'attaque du joueur
         '''
@@ -178,45 +125,20 @@ class Player(Entity):
                 if int(ID_target) > 0 and int(ID_target) < 3:
                     print(str(self.name) + " attaque " + str(ennemy.name) + " de " + str(self.attack) + "dmg")
                     ennemy.domage(self.attack)
-                    self.mana = int(self.mana) - 2 # L'attaque du joueur coute 2 mana
-                    self.action = False
                 if (int(ID_target) > 3000000):
                     servant = ennemy.getServiteur(ID_target)
                     servant.domage(int(self.attack) + 1)
-                    self.mana = int(self.mana) - 2 # L'attaque du joueur coute 2 mana
                     print(self.name + " attaque " + servant.name + " de " + str(self.attack + 1) + "dmg")
-                    self.action = False
+                self.action = False
+                self.consumeMana(2)
             else:
                 raise GameException(self.name + " : Je n'ai pas suffisamment de mana")
         else:
             raise GameException(self.name + " : Je ne peux plus attaquer")
-
     
-    def fightServiteur(self, ID_serv, ID_target, ennemy):
-        '''
-        Le joueur attaque avec un serviteur
-        @param ID_serv: Id du serviteur
-        @param ID_cible: Id de la cible
-        @param cible: Joueur adverse
-        '''
-        servant = self.getServiteur(ID_serv)
-        if servant.action == True:
-            if int(ID_target) > 0 and int(ID_target) < 3:
-                # Serviteur attaque le joueur ennemie
-                print(servant.name + " attaque " + ennemy.name + " de " + str(servant.attack) + "dmg")
-                ennemy.domage(servant.attack)
-                servant.action = False
-            else:
-                # Serviteur attque un autre serviteur
-                servantEnnemy = ennemy.getServiteur(ID_target)
-                print(servant.name + " attaque " + servantEnnemy.name + " de " + str(servant.attack) + "dmg et " + servantEnnemy.name + " replique de " + str(servantEnnemy.attack))
-                
-                servantEnnemy.domageServ(servant.attack, servant.damage)
-                servant.domageServ(servantEnnemy.attack, servantEnnemy.damage)
-                servant.action = False
-        else:
-            raise GameException(servant.name + " : Je ne peux plus attaquer")
-        
+    def consumeMana(self, pMana):
+        self.mana -= pMana
+    
     def enterrerServiteurs(self):
         '''
         Supprime les serviteur Morts

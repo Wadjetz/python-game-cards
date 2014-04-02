@@ -7,7 +7,8 @@ from copy import copy
 import json
 import random
 
-from engine.Card import CardServant, CardSpell
+from engine.CardServant import CardServant
+from engine.CardSpell import CardSpell
 from engine.GameException import GameException
 
 
@@ -67,7 +68,7 @@ class Pioche(object):
         dumpServants = json.load(fileServants)
         for c in dumpServants:
             #ID, Type, name, description, dialog, cost, attack, damage, health, vulnerability
-            carte = CardServant(c["id"], c["type"], c["name"], c["description"], c["dialog"], c["cost"], c["attack"], c["damage"], c["health"])
+            carte = CardServant(c["id"], c["type"], c["name"], c["description"], c["dialog"], c["cost"], c["attack"], c["damage"], c["health"], c["effect"])
             self.totalCards[str(c["id"])] = carte
         fileServants.close()
         

@@ -8,7 +8,8 @@
 		"health":3,
 		"cost":2,
 		"attack":1,
-		"damage": "physical"
+		"damage": "physical",
+		"effect":"normal"
 	},
 	{
 		"id": 2000002,
@@ -19,7 +20,8 @@
 		"health":3,
 		"cost":2,
 		"attack":1,
-		"damage": "distance"
+		"damage": "distance",
+		"effect":"normal"
 	},
 	{
 		"id": 2000003,
@@ -30,7 +32,8 @@
 		"health":1,
 		"cost":1,
 		"attack":3,
-		"damage": "physical"
+		"damage": "physical",
+		"effect":"camouflage"
 	},
 	{
 		"id": 2000004,
@@ -41,7 +44,8 @@
 		"health":1,
 		"cost":1,
 		"attack":3,
-		"damage": "physical"
+		"damage": "physical",
+		"effect":"camouflage"
 	},
 	{
 		"id": 2000005,
@@ -52,7 +56,8 @@
 		"health":5,
 		"cost":3,
 		"attack":1,
-		"damage": "physical"
+		"damage": "physical",
+		"effect":"provocation"
 	},
 	{
 		"id": 2000006,
@@ -63,7 +68,8 @@
 		"health":6,
 		"cost":3,
 		"attack":1,
-		"damage": "physical"
+		"damage": "physical",
+		"effect":"provocation"
 	},
 	{
 		"id": 2000007,
@@ -74,7 +80,8 @@
 		"health":4,
 		"cost":3,
 		"attack":2,
-		"damage": "physical"
+		"damage": "physical",
+		"effect":"Proximity"
 	},
 	{
 		"id": 2000008,
@@ -85,7 +92,8 @@
 		"health":2,
 		"cost":3,
 		"attack":3,
-		"damage": "distance"
+		"damage": "distance",
+		"effect":"Proximity"
 	},
 	{
 		"id": 2000009,
@@ -96,7 +104,8 @@
 		"health":3,
 		"cost":3,
 		"attack":6,
-		"damage": "magic"
+		"damage": "magic",
+		"effect":"shield"
 	},
 	{
 		"id": 2000010,
@@ -107,6 +116,7 @@
 		"health":2,
 		"cost":3,
 		"attack":6,
-		"damage": "magic"
+		"damage": "magic",
+		"effect":"shield"
 	}
 ]
