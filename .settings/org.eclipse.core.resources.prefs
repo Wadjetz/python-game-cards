@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/save/db.txt=UTF-8
+encoding//src/network=UTF-8
+encoding//src/network/GameServer.py=UTF-8
+encoding//src/network/__init__.py=UTF-8
 encoding/<project>=UTF-8

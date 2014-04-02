@@ -1,0 +1,103 @@
+[
+	{
+		"id": 1000001,
+		"type": "Sort",
+		"name": "Boule de feu",
+		"description": "Attaque les serviteurs proches",
+		"dialog": "Oh Oh",
+		"cost":6,
+		"attack":6,
+		"damage": "magic",
+		"effect":"Proximity"
+	},{
+		"id": 1000002,
+		"type": "Sort",
+		"name": "Lance de glace",
+		"description": "Gelle l'ennemie pendant un tour",
+		"dialog": "Heu",
+		"cost":6,
+		"attack":6,
+		"damage": "magic",
+		"effect":"Frozen"
+	},{
+		"id": 1000003,
+		"type": "Sort",
+		"name": "Lance",
+		"description": "BdF",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":1,
+		"damage": "distance",
+		"effect":"frozen"
+	},{
+		"id": 1000004,
+		"type": "Sort",
+		"name": "Pique de glace",
+		"description": "BdF",
+		"dialog": "Brule",
+		"cost":2,
+		"attack":3,
+		"damage": "physical",
+		"effect":"stunned"
+	},{
+		"id": 1000005,
+		"type": "Sort",
+		"name": "Boule des arcanes",
+		"description": "BdF",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":6,
+		"damage": "magic",
+		"effect":""
+	},{
+		"id": 1000006,
+		"type": "Sort",
+		"name": "Eclaire",
+		"description": "BdF",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":6,
+		"damage": "magic",
+		"effect":"stunned"
+	},{
+		"id": 1000007,
+		"type": "Sort",
+		"name": "Malediction",
+		"description": "1 degats a chaque tour",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":1,
+		"damage": "physical",
+		"effect":"Affliction"
+	},{
+		"id": 1000008,
+		"type": "Sort",
+		"name": "Fleche Enflamer",
+		"description": "1 degats a chaque tour",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":1,
+		"damage": "distance",
+		"effect":"Affliction"
+	},{
+		"id": 1000009,
+		"type": "Sort",
+		"name": "Coup de poing",
+		"description": "1 degats a chaque tour",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":1,
+		"damage": "physical",
+		"effect":"Affliction"
+	},{
+		"id": 1000010,
+		"type": "Sort",
+		"name": "Coup de pied",
+		"description": "1 degats a chaque tour",
+		"dialog": "Brule",
+		"cost":1,
+		"attack":1,
+		"damage": "physical",
+		"effect":"Affliction"
+	}
+]
