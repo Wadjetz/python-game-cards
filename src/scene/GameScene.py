@@ -6,7 +6,7 @@ Menu principale du jeu
 @author: quenti77
 '''
 from image.Animation import Animation
-from image.Button import Button
+#from image.Button import Button
 from image.Sprite import Sprite
 
 try:
@@ -15,7 +15,7 @@ try:
 except:
     print("Import erronné")
 
-class TypePartieScene(Scene):
+class GameScene(Scene):
     '''
     Une scene pour le chargement des données
     '''
@@ -31,9 +31,6 @@ class TypePartieScene(Scene):
         l.clearAnimation()
         
         l.addAnimationByPath('bg', '../img/background.jpg')
-        l.addAnimationByPath('normal', '../img/normal.png', self.width / 2 - 140, 100)
-        l.addAnimationByPath('union', '../img/union.png', self.width / 2 - 140, 100)
-        l.addAnimationByPath('back', '../img/back.png', self.width / 2 - 140, 100)
         
         self.createButton(l)
         self.resizeWindow(l, self.width, self.height)
@@ -50,33 +47,10 @@ class TypePartieScene(Scene):
             l.addAnimation('title', animation)
     
     def createButton(self, l):
-        normal = l.getAnimation('normal')
-        if len(normal) > 0:
-            normal[0].newPos(self.width / 2 - 140, 100, 280, 50, 20)
-        
-        self.btnNormal = Button('normal', '../img/normal.png', '../img/normal_select.png', self.normalCallBack)
-        self.btnNormal.loadButton(self.width / 2 - 140, 100, 280, 50, self.width, self.height)
-        
-        union = l.getAnimation('union')
-        if len(union) > 0:
-            union[0].newPos(self.width / 2 - 140, 200, 280, 50, 20)
-        
-        self.btnUnion = Button('union', '../img/union.png', '../img/union_select.png', self.callbackButton)
-        self.btnUnion.loadButton(self.width / 2 - 140, 200, 280, 50, self.width, self.height)
-        
-        back = l.getAnimation('back')
-        if len(back) > 0:
-            back[0].newPos(self.width / 2 - 140, 300, 280, 50, 20)
-        
-        self.btnBack = Button('back', '../img/back.png', '../img/back_select.png', self.retourCallBack)
-        self.btnBack.loadButton(self.width / 2 - 140, 300, 280, 50, self.width, self.height)
+        pass
     
     def callbackButton(self, nom):
         print('Nom : ' + nom)
-    
-    def normalCallBack(self, nom):
-        from scene.GameScene import GameScene
-        self.ReturnScene = GameScene(self.loader)
     
     def retourCallBack(self, nom):
         from scene.MainScene import MainScene
@@ -88,9 +62,7 @@ class TypePartieScene(Scene):
         @param l: le gestionnaire d'image
         @return: Scene à renvoyer
         '''
-        self.btnNormal.update(e, l)
-        self.btnUnion.update(e, l)
-        self.btnBack.update(e, l)
+        
         
         if (e.quit):
             self.quitterCallBack('')
@@ -104,10 +76,6 @@ class TypePartieScene(Scene):
         backgrounds = l.getAnimation('bg')
         if len(backgrounds) > 0:
             backgrounds[0].newPos(0, 0, self.width, self.height, 0)
-        
-        self.btnNormal.resizeWindow(l, w, h)
-        self.btnUnion.resizeWindow(l, w, h)
-        self.btnBack.resizeWindow(l, w, h)
         
         animation = l.getAnimation('title')
         if len(animation) > 0:

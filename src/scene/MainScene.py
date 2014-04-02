@@ -53,28 +53,28 @@ class MainScene(Scene):
     def createButton(self, l):
         solo = l.getAnimation('solo')
         if len(solo) > 0:
-            solo[0].newPos(self.width / 2 - 140, 100, 280, 50, 60)
+            solo[0].newPos(self.width / 2 - 140, 100, 280, 50, 20)
         
         self.btnSolo = Button('solo', '../img/solo.png', '../img/solo_select.png', self.partieSolo)
         self.btnSolo.loadButton(self.width / 2 - 140, 100, 280, 50, self.width, self.height)
         
         multi = l.getAnimation('multi')
         if len(multi) > 0:
-            multi[0].newPos(self.width / 2 - 140, 200, 280, 50, 60)
+            multi[0].newPos(self.width / 2 - 140, 200, 280, 50, 20)
         
         self.btnMulti = Button('multi', '../img/multi.png', '../img/multi_select.png', self.callbackButton)
         self.btnMulti.loadButton(self.width / 2 - 140, 200, 280, 50, self.width, self.height)
         
         options = l.getAnimation('options')
         if len(options) > 0:
-            options[0].newPos(self.width / 2 - 140, 300, 280, 50, 60)
+            options[0].newPos(self.width / 2 - 140, 300, 280, 50, 20)
         
         self.btnOptions = Button('options', '../img/option.png', '../img/option_select.png', self.callbackButton)
         self.btnOptions.loadButton(self.width / 2 - 140, 300, 280, 50, self.width, self.height)
         
         quitter = l.getAnimation('quitter')
         if len(quitter) > 0:
-            quitter[0].newPos(self.width / 2 - 140, 400, 280, 50, 60)
+            quitter[0].newPos(self.width / 2 - 140, 400, 280, 50, 20)
         
         self.btnQuitter = Button('quitter', '../img/quitter.png', '../img/quitter_select.png', self.quitterCallBack)
         self.btnQuitter.loadButton(self.width / 2 - 140, 400, 280, 50, self.width, self.height)
@@ -101,7 +101,7 @@ class MainScene(Scene):
         self.btnQuitter.update(e, l)
         
         if (e.quit):
-            self.quitterCallBack()
+            self.quitterCallBack('')
         
         return self.ReturnScene
     
