@@ -5,11 +5,11 @@ Created on 11 mars 2014
 @author: egor
 '''
 
-from engine.Entity import Entity
+from engine.LivingEntity import LivingEntity
 from engine.GameException import GameException
 
 
-class Player(Entity):
+class Player(LivingEntity):
     '''
     Joueur Principale
     @param main: Les cartes utilisable par le joueur
@@ -21,7 +21,7 @@ class Player(Entity):
         @param name: Nom
         @param deck: Les carte utilisable par le joueur
         '''
-        Entity.__init__(self, ID, name, 30, 1)
+        LivingEntity.__init__(self, ID, "player", name, 1, "normal", "effect", "description", "dialog", 30)
         self.deck = deck
         self.mana = 1
         self.hand = {}
@@ -117,20 +117,27 @@ class Player(Entity):
         carte = self.getCarte(ID_card)
         
         if int(self.mana) >= int(carte.cost):
-            isHasP, servTarget = ennemy.isHasProvocation()
-            if isHasP == True:
-                print("Provocation " + self.name + " : attaque " + servTarget.name + " de " + str(carte.attack) + "dmg")
-                servTarget.domage(carte.attack, carte.damage)
-            else:
+            if carte.effect == "health":
                 if int(ID_target) > 0 and int(ID_target) < 3:
-                    print(self.name + " : attaque " + ennemy.name + " de " + str(carte.attack) + "dmg")
-                    ennemy.domage(carte.attack)
+                    carte.health(self)
+                elif int(ID_target) > 3000000:
+                    serv = self.getServiteur(ID_target)
+                    carte.health(serv)
+            else:
+                isHasP, servTarget = ennemy.isHasProvocation()
+                if isHasP == True:
+                    print("Provocation " + self.name + " : attaque " + servTarget.name + " de " + str(carte.attack) + "dmg")
+                    servTarget.domage(carte.attack, carte.damageType)
                 else:
-                    servant = ennemy.getServiteur(ID_target)
-                    print(self.name + " attaque " + servant.name + " de " + str(carte.attack) + "dmg")
-                    servant.domage(carte.attack, carte.damage)
-                self.mana = int(self.mana) - int(carte.cost)
-                self.deleteCarte(ID_card)
+                    if int(ID_target) > 0 and int(ID_target) < 3:
+                        print(self.name + " : attaque " + ennemy.name + " de " + str(carte.attack) + "dmg")
+                        ennemy.domage(carte.attack)
+                    else:
+                        servant = ennemy.getServiteur(ID_target)
+                        print(self.name + " attaque " + servant.name + " de " + str(carte.attack) + "dmg")
+                        servant.domage(carte.attack, carte.damageType)
+                    self.mana = int(self.mana) - int(carte.cost)
+                    self.deleteCarte(ID_card)
         else:
             raise GameException("J'ai pas assais de mana pour utiliser " + str(carte))
     
@@ -186,7 +193,7 @@ class Player(Entity):
         else:
             self.mana = tour
         
-        Entity.nextTour(self, tour)
+        LivingEntity.nextTour(self, tour)
         
         for key in self.fields:
             self.fields[key].nextTour(tour)

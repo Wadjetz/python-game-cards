@@ -67,8 +67,8 @@ class Pioche(object):
         fileServants = open("../res/cards/serviteurs.json", "r")
         dumpServants = json.load(fileServants)
         for c in dumpServants:
-            #ID, Type, name, description, dialog, cost, attack, damage, health, vulnerability
-            carte = CardServant(c["id"], c["type"], c["name"], c["description"], c["dialog"], c["cost"], c["attack"], c["damage"], c["health"], c["effect"])
+            #self, ID, Type, name, attack, damageType, effect, description, dialog, cost, health
+            carte = CardServant(c["id"], c["type"], c["name"], c["attack"], c["damageType"], c["effect"], c["description"], c["dialog"], c["cost"], c["health"])
             self.totalCards[str(c["id"])] = carte
         fileServants.close()
         
@@ -77,7 +77,7 @@ class Pioche(object):
         dumpSorts = json.load(fileSorts)
         for c in dumpSorts:
             #self, ID, Type, name, description, dialog, cost, attack, damage, effect
-            carte = CardSpell(c["id"], c["type"], c["name"], c["description"], c["dialog"], c["cost"], c["attack"], c["damage"], c["effect"])
+            carte = CardSpell(c["id"], c["type"], c["name"], c["attack"], c["damageType"], c["effect"], c["description"], c["dialog"], c["cost"])
             self.totalCards[str(c["id"])] = carte
         fileSorts.close()
     

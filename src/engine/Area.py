@@ -66,6 +66,14 @@ class Area(object):
         stop = False
 
         while stop == False:
+            
+            if self.player1.health <= 0:
+                print(self.player1.name + " a perdu et " + self.player2.name + " a GAGNER !!!!")
+                stop = True
+            if self.player2.health <= 0:
+                print(self.player2.name + " a perdu et " + self.player1.name + " a GAGNER !!!!")
+                stop = True 
+            
             self.playerTurn(self.player1, self.player2)
             self.playerTurn(self.player2, self.player1)
             
@@ -84,13 +92,7 @@ class Area(object):
                 self.player2.piocheCarte()
             except GameException as e:
                 print(self.player2.name + " " + str(e))
-                
-            if self.player1.health <= 0:
-                print(self.player1.name + " a perdu et " + self.player2.name + " a GAGNER !!!!")
-                stop = True
-            if self.player2.health <= 0:
-                print(self.player2.name + " a perdu et " + self.player1.name + " a GAGNER !!!!")
-                stop = True 
+            
     
     def playerTurn(self, player, ennemy):
         '''
@@ -104,35 +106,35 @@ class Area(object):
         while validator:
             print(self.toString())
             
-            ID = self.inputAction(player.name + " : entrer l'Id de la carte ou serviteur a utiliser (0 pour passer) ")
+            ID = self.inputAction("<" + player.name + "> Id carte ou serviteur [passer=0]")
             
             if int(ID) == 0:
                 #Passer le tour
                 validator = False
-            elif int(ID) > 0 and int(ID) < 3:
+            elif self.isPlayer(ID):
                 # Si le joueur a choisie lui meme
                 if int(player.mana) >= 2:
-                    ID_target = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
+                    ID_target = self.inputAction(player.name + " : entrer de la cible [passer=0]")
                     player.fight(ID_target, ennemy)
                     validator = self.verifActionJoueur(player)
                 else:
                     print(player.name + " : Je n'ai pas suffisamment de mana")
-            elif int(ID) > 1000000 and int(ID) < 2000000:
+            elif self.isSpell(ID):
                 # Si le joueur choisie un sort
                 try:
-                    ID_target = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
+                    ID_target = self.inputAction(player.name + " : entrer de la cible [passer=0]")
                     player.useCarteSpell(ID, ID_target, ennemy)
                     validator = self.verifActionJoueur(player)
                 except GameException as e:
                     print(e)
-            elif int(ID) > 2000000 and int(ID) < 3000000:
+            elif self.isCarteServant(ID):
                 # Si le joueur a choisie d'invoquer un serviteur
                 try:
                     player.invoke(ID)
                     validator = self.verifActionJoueur(player)
                 except GameException as e:
                     print(e)
-            elif int(ID) > 3000000:
+            elif self.isServant(ID):
                 try:
                     ID_target = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
                     servant = player.getServiteur(ID)
@@ -163,3 +165,40 @@ class Area(object):
                 flag = True
         
         return flag
+    
+    def isPlayer(self, ID):
+        '''
+        Verifie si l'id correspond un un joueur
+        @param ID: Id du joueur
+        '''
+        if int(ID) > 0 and int(ID) < 3:
+            return True
+        else:
+            return False
+        
+    def isSpell(self, ID):
+        '''
+        Verifie si l'id correspond a une carte sort
+        '''
+        if int(ID) > 1000000 and int(ID) < 2000000:
+            return True
+        else:
+            return False
+        
+    def isCarteServant(self, ID):
+        '''
+        Verifie si l'id correspond a une carte qui invoque un serviteur
+        '''
+        if int(ID) > 2000000 and int(ID) < 3000000:
+            return True
+        else:
+            return False
+    
+    def isServant(self, ID):
+        '''
+        Verifie si l'id correspond a un serviteur
+        '''
+        if int(ID) > 3000000:
+            return True
+        else:
+            return False

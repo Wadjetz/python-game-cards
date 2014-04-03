@@ -1,37 +1,33 @@
 '''
-Created on 2 avr. 2014
+Created on 3 avr. 2014
 
 @author: egor
 '''
 
-
 class Entity(object):
     '''
-    Entite vivant dans le jeu
+    Entité basique du jeux
     '''
-    def __init__(self, ID, name, health, attack):
+
+
+    def __init__(self, ID, Type, name, attack, damageType, effect, description, dialog):
         '''
         Constructor
         @param ID: id unique de la carte
+        @param Type: Type de la carte
         @param name: Nom
-        @param health: Les points de vie
         @param attack: Degats
+        @param damageType: type de degats
+        @param effect: Effet speciale de l'entité
+        @param description: Description
+        @param dialog: dialog de la carte
         '''
         self.ID = int(ID)
+        self.Type = Type
         self.name = name
-        self.health = int(health)
         self.attack = int(attack)
-        self.action = False
+        self.damageType = damageType
+        self.effect = effect
+        self.description = description
+        self.dialog = dialog
         
-    def domage(self, domage):
-        '''
-        Enleve de la vie a l'entite
-        '''
-        self.health -= int(domage)
-        
-    def nextTour(self, tour):
-        '''
-        Tour suivant
-        '''
-        self.action = True
-    
