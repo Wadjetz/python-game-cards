@@ -31,6 +31,17 @@ class Player(Entity):
             i
             self.piocheCarte()
     
+    def isHasProvocation(self):
+        '''
+        Verifie si un serviteur possede la provocation
+        @return: pair(Boolean, Serviteur or None)
+        '''
+        for key in self.fields:
+            servant = self.fields[key]
+            if servant.effect == "provocation":
+                return (True, servant)
+        return (False, None)
+    
     def invoke(self, ID):
         '''
         Invoque un serviteur
@@ -102,17 +113,24 @@ class Player(Entity):
         @param ID_target: Id de la cible (joueur ou serviteur)
         @param ennemy: Joueur ennemie
         '''
+        
         carte = self.getCarte(ID_card)
+        
         if int(self.mana) >= int(carte.cost):
-            if int(ID_target) > 0 and int(ID_target) < 3:
-                print(self.name + " : attaque " + ennemy.name + " de " + str(carte.attack) + "dmg")
-                ennemy.domage(carte.attack)
+            isHasP, servTarget = ennemy.isHasProvocation()
+            if isHasP == True:
+                print("Provocation " + self.name + " : attaque " + servTarget.name + " de " + str(carte.attack) + "dmg")
+                servTarget.domage(carte.attack, carte.damage)
             else:
-                servant = ennemy.getServiteur(ID_target)
-                print(self.name + " attaque " + servant.name + " de " + str(carte.attack) + "dmg")
-                servant.domage(carte.attack, carte.damage)
-            self.mana = int(self.mana) - int(carte.cost)
-            self.deleteCarte(ID_card)
+                if int(ID_target) > 0 and int(ID_target) < 3:
+                    print(self.name + " : attaque " + ennemy.name + " de " + str(carte.attack) + "dmg")
+                    ennemy.domage(carte.attack)
+                else:
+                    servant = ennemy.getServiteur(ID_target)
+                    print(self.name + " attaque " + servant.name + " de " + str(carte.attack) + "dmg")
+                    servant.domage(carte.attack, carte.damage)
+                self.mana = int(self.mana) - int(carte.cost)
+                self.deleteCarte(ID_card)
         else:
             raise GameException("J'ai pas assais de mana pour utiliser " + str(carte))
     
@@ -122,15 +140,20 @@ class Player(Entity):
         '''
         if self.action == True:
             if int(self.mana) >= 2:
-                if int(ID_target) > 0 and int(ID_target) < 3:
-                    print(str(self.name) + " attaque " + str(ennemy.name) + " de " + str(self.attack) + "dmg")
-                    ennemy.domage(self.attack)
-                if (int(ID_target) > 3000000):
-                    servant = ennemy.getServiteur(ID_target)
-                    servant.domage(int(self.attack) + 1)
-                    print(self.name + " attaque " + servant.name + " de " + str(self.attack + 1) + "dmg")
-                self.action = False
-                self.consumeMana(2)
+                isHasP, servTarget = ennemy.isHasProvocation()
+                if isHasP == True:
+                    print("Provocation " + self.name + " : attaque " + servTarget.name + " de " + str(self.attack) + "dmg")
+                    servTarget.domage(self.attack, "")
+                else:
+                    if int(ID_target) > 0 and int(ID_target) < 3:
+                        print(str(self.name) + " attaque " + str(ennemy.name) + " de " + str(self.attack) + "dmg")
+                        ennemy.domage(self.attack)
+                    if (int(ID_target) > 3000000):
+                        servant = ennemy.getServiteur(ID_target)
+                        servant.domage(int(self.attack) + 1)
+                        print(self.name + " attaque " + servant.name + " de " + str(self.attack + 1) + "dmg")
+                    self.action = False
+                    self.consumeMana(2)
             else:
                 raise GameException(self.name + " : Je n'ai pas suffisamment de mana")
         else:

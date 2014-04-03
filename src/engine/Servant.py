@@ -50,12 +50,6 @@ class Servant(Entity):
                 self.action = False
         else:
             raise GameException(self.name + " : Je ne peux plus attaquer")
-     
-    def provocation(self, ID_target, ennemy):
-        '''
-        
-        '''
-        print("self.effect")
         
     def domage(self, domage, typeDomage):
         '''
