@@ -33,7 +33,7 @@ class Card():
         
     def toString(self):
         txt = "ID:" + str(self.ID) + "-" + str(self.name)
-        txt += ":[cost=" + str(self.cost) + " mana , degats=" + str(self.attack) + ", damage=" + str(self.damage)
+        txt += ":[" + str(self.cost) + "pm, " + str(self.attack) + "dmg, " + str(self.damage)
         #txt += ", Type=" + str(self.Type) + ", description=" + str(self.description) + ", dialog=" + str(self.dialog) + "]"
         return txt
     

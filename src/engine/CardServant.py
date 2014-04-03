@@ -28,8 +28,8 @@ class CardServant(Card):
         return Servant(int(self.ID)+1000000+random.randrange(100000), self.Type, self.name, self.description, self.dialog, self.attack, self.damage, self.health, self.effect)
     
     def toString(self):
-        txt = "ID:" + str(self.ID) + "-" + str(self.name)
-        txt += ":[cost=" + str(self.cost) + " mana , degats=" + str(self.attack) + ", damage=" + str(self.damage) + ", health=" + str(self.health) + ", effect=" + str(self.effect) + "]"
+        txt = "ID:" + str(self.ID) + "-" + str(self.name) + "\t"
+        txt += ":[" + str(self.cost) + "pM, " + str(self.attack) + "dmg, " + str(self.damage) + ", " + str(self.health) + "pV, " + str(self.effect) + "]"
         #txt += ", Type=" + str(self.Type) + ", description=" + str(self.description) + ", dialog=" + str(self.dialog) + "]"
         return txt
     

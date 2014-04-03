@@ -24,9 +24,8 @@ class CardSpell(Card):
         print()
         
     def toString(self):
-        txt = "ID:" + str(self.ID) + "-" + str(self.name)
-        txt += ":[cost=" + str(self.cost) + " mana , degats=" + str(self.attack) + ", damage=" + str(self.damage) + ", effect=" + str(self.effect) + "]"
-        #txt += ", Type=" + str(self.Type) + ", description=" + str(self.description) + ", dialog=" + str(self.dialog) + "]"
+        txt = "ID:" + str(self.ID) + "-" + str(self.name) + "\t"
+        txt += ":[" + str(self.cost) + "pM, " + str(self.attack) + "dmg, " + str(self.damage) + ", " + str(self.effect) + "]"
         return txt
     
     def __str__(self):

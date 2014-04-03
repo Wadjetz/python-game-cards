@@ -83,7 +83,7 @@ class Player(Entity):
         Affiche les informations joueur
         '''
         txt = "ID:" + str(self.ID) + "-" + str(self.name)
-        txt += ":[mana=" + str(self.mana) + ", vie=" + str(self.health) + ", action=" + str(self.action) + "] "
+        txt += ":[" + str(self.mana) + "pm, " + str(self.health) + "pv, a=" + str(self.action) + "] "
         txt += "Hand = {\n"
         for key in self.hand:
             carte = self.hand[key]
@@ -150,10 +150,10 @@ class Player(Entity):
                         ennemy.domage(self.attack)
                     if (int(ID_target) > 3000000):
                         servant = ennemy.getServiteur(ID_target)
-                        servant.domage(int(self.attack) + 1)
+                        servant.domage((int(self.attack) + 1), "")
                         print(self.name + " attaque " + servant.name + " de " + str(self.attack + 1) + "dmg")
-                    self.action = False
-                    self.consumeMana(2)
+                self.action = False
+                self.consumeMana(2)
             else:
                 raise GameException(self.name + " : Je n'ai pas suffisamment de mana")
         else:

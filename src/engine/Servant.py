@@ -27,6 +27,10 @@ class Servant(Entity):
         self.dialog = dialog
         self.damage = damage
         self.effect = effect
+        if self.effect == "camouflage":
+            self.camouflage = True
+        else:
+            self.camouflage = False
     
     def fight(self, ID_target, ennemy):
         '''
@@ -35,19 +39,23 @@ class Servant(Entity):
         #if self.effect == "provocation":
             #self.provocation(ID_target, ennemy)
         if self.action == True:
-            if int(ID_target) > 3000000:
-                #la cible est un serviteur
-                servantEnnemy = ennemy.getServiteur(ID_target)
-                print(self.name + " attaque " + servantEnnemy.name + " de " + str(self.attack) + "dmg et " + servantEnnemy.name + " replique de " + str(servantEnnemy.attack))
-                
-                servantEnnemy.domage(self.attack, self.damage)
-                self.domage(servantEnnemy.attack, servantEnnemy.damage)
-                self.action = False
+            isHasP, servTarget = ennemy.isHasProvocation()
+            if isHasP == True:
+                print("Provocation " + self.name + " : attaque " + servTarget.name + " de " + str(self.attack) + "dmg")
+                servTarget.domage(self.attack, self.damage)
             else:
-                #la cible est un joueur
-                print(self.name + " attaque " + ennemy.name + " de " + str(self.attack) + "dmg")
-                ennemy.domage(self.attack)
-                self.action = False
+                if int(ID_target) > 3000000:
+                    #la cible est un serviteur
+                    servantEnnemy = ennemy.getServiteur(ID_target)
+                    self.camouflage = False
+                    servantEnnemy.domage(self.attack, self.damage)
+                    self.domage(servantEnnemy.attack, servantEnnemy.damage)
+                else:
+                    #la cible est un joueur
+                    print(self.name + " attaque " + ennemy.name + " de " + str(self.attack) + "dmg")
+                    ennemy.domage(self.attack)
+            self.action = False
+            self.camouflage = False
         else:
             raise GameException(self.name + " : Je ne peux plus attaquer")
         
@@ -55,22 +63,25 @@ class Servant(Entity):
         '''
         Gestion des type de degats
         '''
-        if self.damage == "magic" and typeDomage == "distance":
-            print("CRITIQUE " + str(int(domage) * 2))
-            self.health -= int(domage) * 2
-        elif self.damage == "distance" and typeDomage == "physical":
-            print("CRITIQUE " + str(int(domage) * 2))
-            self.health -= int(domage) * 2
-        elif self.damage == "physical" and typeDomage == "magic":
-            print("CRITIQUE " + str(int(domage) * 2))
-            self.health -= int(domage) * 2
+        if self.camouflage == False:
+            if self.damage == "magic" and typeDomage == "distance":
+                print("CRITIQUE " + str(int(domage) * 2))
+                self.health -= int(domage) * 2
+            elif self.damage == "distance" and typeDomage == "physical":
+                print("CRITIQUE " + str(int(domage) * 2))
+                self.health -= int(domage) * 2
+            elif self.damage == "physical" and typeDomage == "magic":
+                print("CRITIQUE " + str(int(domage) * 2))
+                self.health -= int(domage) * 2
+            else:
+                print(self.name + " ce prend " + str(self.attack) + "dmg et replique de " + str(self.attack))
+                self.health -= int(domage)
         else:
-            self.health -= int(domage)
+            raise GameException(self.name + " est Comouflé il ne peut pas etre attaquer <ID=" + str(self.ID) + ">")
     
     def toString(self):
-        txt = "ID:" + str(self.ID) + "-" + str(self.name)
-        txt += ":[health=" + str(self.health) + " pv, degats=" + str(self.attack) + ", action=" + str(self.action) + ", damage=" + str(self.damage)
-        #txt += ", Type=" + str(self.Type) + ", description=" + str(self.description) + ", dialog=" + str(self.dialog) + ", vulnerability=" + str(self.vulnerability) + "]"
+        txt = "ID:" + str(self.ID) + "-" + str(self.name)  + "\t"
+        txt += ":[" + str(self.health) + "pv, " + str(self.attack) + "dmg, a=" + str(self.action) + ", " + str(self.damage) + ", " + self.effect + "]"
         return txt
     
     def __str__(self):
