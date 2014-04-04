@@ -74,8 +74,8 @@ class Area(object):
                 print(self.player2.name + " a perdu et " + self.player1.name + " a GAGNER !!!!")
                 stop = True 
             
-            self.playerTurn(self.player1, self.player2)
-            self.playerTurn(self.player2, self.player1)
+            self.playerTurn_v2(self.player1, self.player2)
+            self.playerTurn_v2(self.player2, self.player1)
             
             self.tour = self.tour + 1
             
@@ -92,14 +92,46 @@ class Area(object):
                 self.player2.piocheCarte()
             except GameException as e:
                 print(self.player2.name + " " + str(e))
-            
     
+    def playerTurn_v2(self, player, ennemy):
+        '''
+        Les interaction du joueur pendant le tour
+        @param player: Joueur
+        @param ennemy: Joueur adverse
+        '''
+        validator = True
+        while validator:
+            print(self)
+            try:
+                ID_attack = self.inputAction("<" + player.name + "> Id carte ou serviteur [passer=0]")
+                
+                if int(ID_attack) == 0:
+                    # Si le joueur souhaite passer son tour
+                    print(player.name + " passe son tour")
+                    validator = False
+                elif int(ID_attack) < 0:
+                    print("Saisie incorrecte")
+                else:
+                    if self.isCarteServant(ID_attack):
+                        # Si c'est une carte d'invocation des serviteur
+                        player.invoke(ID_attack)
+                        validator = self.verifActionJoueur(player)
+                    else:
+                        #Si ce n'est pas une carte sort
+                        ID_target = self.inputAction(player.name + " : entrer de la cible [annuler=0]")
+                        if int(ID_target) == 0:
+                            pass
+                        else:
+                            player.war(ID_attack, ID_target, ennemy)
+                            validator = self.verifActionJoueur(player)
+            except GameException as e:
+                print(e)
+        
     def playerTurn(self, player, ennemy):
         '''
         Action du joueur
         @param player: Joueur
-        @param playerTarget: Joueur adverse
-        @param playerServiteurparam: Les serviteurs du joueur
+        @param ennemy: Joueur adverse
         '''
         validator = True
         

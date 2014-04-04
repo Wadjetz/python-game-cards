@@ -153,7 +153,7 @@ class Player(LivingEntity):
                     servTarget.domage(self.attack, "")
                 else:
                     if int(ID_target) > 0 and int(ID_target) < 3:
-                        print(str(self.name) + " attaque " + str(ennemy.name) + " de " + str(self.attack) + "dmg")
+                        print(str(self.name) + " inflige " + str(self.attack) + " dmg a" + str(ennemy.name))
                         ennemy.domage(self.attack)
                     if (int(ID_target) > 3000000):
                         servant = ennemy.getServiteur(ID_target)
@@ -165,6 +165,22 @@ class Player(LivingEntity):
                 raise GameException(self.name + " : Je n'ai pas suffisamment de mana")
         else:
             raise GameException(self.name + " : Je ne peux plus attaquer")
+    
+    def war(self, ID_attack, ID_target, ennemy):
+        '''
+        '''
+        print("This is a WAR")
+        if self.isPlayer(ID_attack):
+            #le joueur attaque
+            self.fight(ID_target, ennemy)
+        if self.isSpell(ID_attack):
+            #le joueur utilise une carte
+            self.useCarteSpell(ID_attack, ID_target, ennemy)
+        if self.isServant(ID_attack):
+            #le joueur fait attaquer un serviteur
+            servant = self.getServiteur(ID_attack)
+            servant.fight(ID_target, ennemy)
+            
     
     def consumeMana(self, pMana):
         self.mana -= pMana
@@ -200,4 +216,41 @@ class Player(LivingEntity):
         
         if self.health <= 0:
             print(self.name + "Est mort " + self.toString())
+            
+    def isPlayer(self, ID):
+        '''
+        Verifie si l'id correspond un un joueur
+        @param ID: Id du joueur
+        '''
+        if int(ID) > 0 and int(ID) < 3:
+            return True
+        else:
+            return False
+        
+    def isSpell(self, ID):
+        '''
+        Verifie si l'id correspond a une carte sort
+        '''
+        if int(ID) > 1000000 and int(ID) < 2000000:
+            return True
+        else:
+            return False
+        
+    def isCarteServant(self, ID):
+        '''
+        Verifie si l'id correspond a une carte qui invoque un serviteur
+        '''
+        if int(ID) > 2000000 and int(ID) < 3000000:
+            return True
+        else:
+            return False
+    
+    def isServant(self, ID):
+        '''
+        Verifie si l'id correspond a un serviteur
+        '''
+        if int(ID) > 3000000:
+            return True
+        else:
+            return False
     
