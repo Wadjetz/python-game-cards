@@ -28,15 +28,6 @@ class Area(object):
         
         self.player1 = Player(1, namePlayer1, deckPlayer1)
         self.player2 = Player(2, namePlayer2, deckPlayer2)
-        
-    def toString(self):
-        txt = "\n\n@@@@@@@@@@@@@@@ --------------- TOUR " + str(self.tour) + " --------------- @@@@@@@@@@@@@@@\n"
-        txt += "ID=" + str(self.player1)
-        txt += "ID=" + str(self.player2)
-        return txt + "\n"
-    
-    def __str__(self):
-        return self.toString()
     
     def inputAction(self, message):
         '''
@@ -159,7 +150,7 @@ class Area(object):
                     validator = self.verifActionJoueur(player)
                 except GameException as e:
                     print(e)
-            elif self.isCarteServant(ID):
+            elif player.isCarteServant(ID):
                 # Si le joueur a choisie d'invoquer un serviteur
                 try:
                     player.invoke(ID)
@@ -198,39 +189,12 @@ class Area(object):
         
         return flag
     
-    def isPlayer(self, ID):
-        '''
-        Verifie si l'id correspond un un joueur
-        @param ID: Id du joueur
-        '''
-        if int(ID) > 0 and int(ID) < 3:
-            return True
-        else:
-            return False
-        
-    def isSpell(self, ID):
-        '''
-        Verifie si l'id correspond a une carte sort
-        '''
-        if int(ID) > 1000000 and int(ID) < 2000000:
-            return True
-        else:
-            return False
-        
-    def isCarteServant(self, ID):
-        '''
-        Verifie si l'id correspond a une carte qui invoque un serviteur
-        '''
-        if int(ID) > 2000000 and int(ID) < 3000000:
-            return True
-        else:
-            return False
+    def toString(self):
+        txt = "\n\n@@@@@@@@@@@@@@@ --------------- TOUR " + str(self.tour) + " --------------- @@@@@@@@@@@@@@@\n"
+        txt += "ID=" + str(self.player1)
+        txt += "ID=" + str(self.player2)
+        return txt + "\n"
     
-    def isServant(self, ID):
-        '''
-        Verifie si l'id correspond a un serviteur
-        '''
-        if int(ID) > 3000000:
-            return True
-        else:
-            return False
+    def __str__(self):
+        return self.toString()
+    
