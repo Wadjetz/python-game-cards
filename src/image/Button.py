@@ -1,6 +1,6 @@
 '''
 Package pour la gestion des composants
-Menu principale du jeu
+Représentation d'un bouton à l'écran
 
 @version: 0.1
 @author: quenti77
@@ -27,6 +27,11 @@ class Button(object):
         return (e.posX >= x and e.posX <= (x + w) and e.posY >= y and e.posY <= (y + h))
     
     def update(self, e, l):
+        '''
+        @param e: le gestionnaire d'événement
+        @param l: le gestionnaire d'image
+        '''
+        
         if self.animationOFF:
             if self.mouseCheck(e, (self.info[4] / 2 - self.info[2] / 2), self.info[1], self.info[2], self.info[3]):
                 if e.button[1] == True:

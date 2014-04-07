@@ -20,7 +20,7 @@ class Loader(object):
         self.anim = []
         self.titles = []
     
-    def addAnimationByPath(self, name, path, x = 0, y = 0):
+    def addAnimationByPath(self, name, path, x = 0, y = 0, level = 0):
         '''
         @param name:Le nom de l'animation
         @param path: chemin du sprite
@@ -28,15 +28,15 @@ class Loader(object):
         ts = Sprite(path)
         ts.setPosition(x, y)
         ta = Animation(ts)
-        self.addAnimation(name, ta)
+        self.addAnimation(name, ta, level)
     
-    def addAnimation(self, name, animation = None):
+    def addAnimation(self, name, animation = None, level = 0):
         '''
         @param name:Le nom de l'animation
         @param animation: l'animation elle-meme 
         '''
         if animation is not None:
-            tempAnim = { 'name': name, 'value': animation}
+            tempAnim = { 'name': name, 'value': animation, 'level': level}
             self.anim.append(tempAnim)
             
     def addFont(self, name, title, size):
