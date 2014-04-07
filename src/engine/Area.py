@@ -46,7 +46,7 @@ class Area(object):
         '''
         ID = -1
         try:
-            ID = input(message + "[int]#")
+            ID = input(message + "[int]# ")
             ID = int(ID)
         except EOFError:
             print("Saisie incorrecte EOFError=")
