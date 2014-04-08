@@ -81,7 +81,11 @@ class Servant(LivingEntity):
     
     def toString(self):
         txt = str(self.ID) + " : " + str(self.name)  + "\t"
-        txt += ":[" + str(self.health) + "pv, " + str(self.attack) + "dmg, a=" + str(self.action) + ", " + str(self.damageType) + ", " + self.effect + "]"
+        txt += ":[" + str(self.health) + "pv, " + str(self.attack) + "dmg, a=" + str(self.action) + ", " + str(self.damageType) + ", "
+        if self.effect == "camouflage":
+            txt += self.effect + "=" + str(self.camouflage) + "]"
+        else:
+            txt += self.effect + "]"
         return txt
     
     def __str__(self):

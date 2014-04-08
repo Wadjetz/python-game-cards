@@ -34,13 +34,17 @@ class Player(LivingEntity):
     def isHasProvocation(self):
         '''
         Verifie si un serviteur possede la provocation
-        @return: pair(Boolean, Serviteur or None)
+        @return: pair(Boolean, [Serviteur]) True si le joueur possede un serviteur avec provocation
+                 Et le tableaux des serviteur qui le possede
         '''
+        servProvoc = []
+        flag = False
         for key in self.fields:
             servant = self.fields[key]
             if servant.effect == "provocation":
-                return (True, servant)
-        return (False, None)
+                servProvoc.append(servant)
+                flag = True
+        return (flag, servProvoc)
     
     def invoke(self, ID):
         '''
@@ -77,24 +81,6 @@ class Player(LivingEntity):
     def deleteCarte(self, ID):
         if str(ID) in self.hand:
             del self.hand[str(ID)]
-    
-    def toString(self):
-        '''
-        Affiche les informations joueur
-        '''
-        txt = "ID:" + str(self.ID) + "-" + str(self.name)
-        txt += ":[" + str(self.mana) + "pm, " + str(self.health) + "pv, a=" + str(self.action) + "] "
-        txt += "Hand = {\n"
-        for key in self.hand:
-            carte = self.hand[key]
-            txt += "\t" + str(carte) + "\n"
-        txt += "\t" + self.name + " Fields :\n"
-        for key in self.fields:
-            txt += "\t" + str(self.fields[key]) + "\n"
-        return txt + "}\n"
-    
-    def __str__(self):
-        return self.toString()
     
     def getServiteur(self, ID_serv):
         '''
@@ -149,8 +135,13 @@ class Player(LivingEntity):
             if int(self.mana) >= 2:
                 isHasP, servTarget = ennemy.isHasProvocation()
                 if isHasP == True:
-                    print("Provocation " + self.name + " : attaque " + servTarget.name + " de " + str(self.attack) + "dmg")
-                    servTarget.domage(self.attack, "")
+                    for serv in servTarget:
+                        if serv.ID == ID_target:
+                            #si la cible de l'attaque possede la provocation
+                            print("Provocation : " + self.name + " : attaque " + serv.name + " de " + str(self.attack) + "dmg")
+                            serv.domage(self.attack, "normal")
+                        else:
+                            print(serv)
                 else:
                     if int(ID_target) > 0 and int(ID_target) < 3:
                         print(str(self.name) + " inflige " + str(self.attack) + " dmg a" + str(ennemy.name))
@@ -166,16 +157,22 @@ class Player(LivingEntity):
         else:
             raise GameException(self.name + " : Je ne peux plus attaquer")
     
+    def fight_v2(self):
+        '''
+        '''
+    
     def war(self, ID_attack, ID_target, ennemy):
         '''
         '''
-        print("This is a WAR")
+        print("THIS IS A SPARTA")
         if self.isPlayer(ID_attack):
             #le joueur attaque
             self.fight(ID_target, ennemy)
+            
         if self.isSpell(ID_attack):
             #le joueur utilise une carte
             self.useCarteSpell(ID_attack, ID_target, ennemy)
+            
         if self.isServant(ID_attack):
             #le joueur fait attaquer un serviteur
             servant = self.getServiteur(ID_attack)
@@ -254,3 +251,20 @@ class Player(LivingEntity):
         else:
             return False
     
+    def toString(self):
+        '''
+        Affiche les informations joueur
+        '''
+        txt = "ID:" + str(self.ID) + "-" + str(self.name)
+        txt += ":[" + str(self.mana) + "pm, " + str(self.health) + "pv, a=" + str(self.action) + "] "
+        txt += "Hand = {\n"
+        for key in self.hand:
+            carte = self.hand[key]
+            txt += "\t" + str(carte) + "\n"
+        txt += "\t" + self.name + " Fields :\n"
+        for key in self.fields:
+            txt += "\t" + str(self.fields[key]) + "\n"
+        return txt + "}\n"
+    
+    def __str__(self):
+        return self.toString()

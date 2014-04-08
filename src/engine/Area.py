@@ -103,7 +103,7 @@ class Area(object):
                 elif int(ID_attack) < 0:
                     print("Saisie incorrecte")
                 else:
-                    if self.isCarteServant(ID_attack):
+                    if player.isCarteServant(ID_attack):
                         # Si c'est une carte d'invocation des serviteur
                         player.invoke(ID_attack)
                         validator = self.verifActionJoueur(player)
