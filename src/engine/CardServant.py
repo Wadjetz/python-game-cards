@@ -14,23 +14,23 @@ class CardServant(Card):
     CardServiteur
     '''
 
-
-    def __init__(self, ID, Type, name, description, dialog, cost, attack, damage, health, effect):
+    def __init__(self, ID, Type, name, attack, damageType, effect, description, dialog, cost, health):
         '''
         Constructor
+        @param health: Les points de vie
         '''
-        Card.__init__(self, ID, Type, name, description, dialog, cost, attack, damage, effect)
+        Card.__init__(self, ID, Type, name, attack, damageType, effect, description, dialog, cost)
         self.health = health
     
     
     def invokeServant(self):
-        #ID, Type, name, description, dialog, attack, damage, health, vulnerability
-        return Servant(int(self.ID)+1000000+random.randrange(100000), self.Type, self.name, self.description, self.dialog, self.attack, self.damage, self.health, self.effect)
+        #Iself, ID, Type, name, attack, damageType, effect, description, dialog, health
+        ID = int(self.ID)+1000000+random.randrange(100000)
+        return Servant(ID, self.Type, self.name, self.attack, self.damageType, self.effect, self.description, self.dialog, self.health)
     
     def toString(self):
-        txt = "ID:" + str(self.ID) + "-" + str(self.name)
-        txt += ":[cost=" + str(self.cost) + " mana , degats=" + str(self.attack) + ", damage=" + str(self.damage) + ", health=" + str(self.health) + ", effect=" + str(self.effect) + "]"
-        #txt += ", Type=" + str(self.Type) + ", description=" + str(self.description) + ", dialog=" + str(self.dialog) + "]"
+        txt = str(self.ID) + " : " + str(self.name) + "\t"
+        txt += ":[" + str(self.cost) + "pM, " + str(self.attack) + "dmg, " + str(self.damageType) + ", " + str(self.health) + "pV, " + str(self.effect) + "]"
         return txt
     
     def __str__(self):

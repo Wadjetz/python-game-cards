@@ -11,22 +11,23 @@ class CardSpell(Card):
     Carte Sort
     '''
 
-    def __init__(self, ID, Type, name, description, dialog, cost, attack, damage, effect):
+    def __init__(self, ID, Type, name, attack, damageType, effect, description, dialog, cost):
         '''
         Constructor
         '''
-        Card.__init__(self, ID, Type, name, description, dialog, cost, attack, damage, effect)
+        Card.__init__(self, ID, Type, name, attack, damageType, effect, description, dialog, cost)
         
-    def fight(self):
+    def health(self, target):
         '''
         La CarteSpell inflige des degats
         '''
-        print()
+        if self.effect == "health":
+            target.health += self.attack
+            
         
     def toString(self):
-        txt = "ID:" + str(self.ID) + "-" + str(self.name)
-        txt += ":[cost=" + str(self.cost) + " mana , degats=" + str(self.attack) + ", damage=" + str(self.damage) + ", effect=" + str(self.effect) + "]"
-        #txt += ", Type=" + str(self.Type) + ", description=" + str(self.description) + ", dialog=" + str(self.dialog) + "]"
+        txt = str(self.ID) + " : " + str(self.name) + "\t"
+        txt += ":[" + str(self.cost) + "pM, " + str(self.attack) + "dmg, " + str(self.damageType) + ", " + str(self.effect) + "]"
         return txt
     
     def __str__(self):
