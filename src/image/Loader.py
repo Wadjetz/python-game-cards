@@ -19,6 +19,7 @@ class Loader(object):
     def __init__(self):
         self.anim = []
         self.titles = []
+        self.levelMax = 0
     
     def addAnimationByPath(self, name, path, x = 0, y = 0, level = 0):
         '''
@@ -35,6 +36,9 @@ class Loader(object):
         @param name:Le nom de l'animation
         @param animation: l'animation elle-meme 
         '''
+        if self.levelMax < level:
+            self.levelMax = level
+        
         if animation is not None:
             tempAnim = { 'name': name, 'value': animation, 'level': level}
             self.anim.append(tempAnim)
@@ -53,9 +57,13 @@ class Loader(object):
         '''
         @param name: Le nom de l'animation à retirer
         '''
+        self.levelMax = 0
         for item in self.anim:
             if (item['name'] == name):
                 self.anim.remove(item)
+            else:
+                if item['level'] > self.levelMax:
+                    self.levelMax = item['level']
     
     def removeFont(self, name):
         '''
@@ -70,6 +78,7 @@ class Loader(object):
         Efface toute les animations du tableau
         '''
         self.anim.clear()
+        self.levelMax = 0
         
     def clearFont(self):
         '''
@@ -105,6 +114,8 @@ class Loader(object):
         '''
         Update all
         '''
-        for animation in self.anim:
-            animation['value'].update(screen)
+        for i in range(0, self.levelMax + 1):
+            for animation in self.anim:
+                if animation['level'] == i:
+                    animation['value'].update(screen)
     

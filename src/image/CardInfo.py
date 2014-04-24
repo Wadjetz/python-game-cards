@@ -6,34 +6,39 @@ Représentation d'un bouton à l'écran
 @author: quenti77
 '''
 
+try:
+    import pygame
+except:
+    print("Import erronné")
+
 class CardInfo(object):
     '''
     Une carte du jeu sur une scene
     '''
     
-    def __init__(self, l, carte):
+    def __init__(self, l, carte, level):
         '''
         Constructeur d'une carte affichable
         @param l: Le loader de ressource
         '''
+        self.swidth = pygame.display.get_surface().get_width()
+        self.sheight = pygame.display.get_surface().get_height()
         self.carte = carte
         self.name = str(self.carte.ID) + "-" + self.carte.name
         self.loader = l
         self.type = "spell"
         self.visible = True
+        self.showInfo = True
         self.select = False
         self.asyncSelect = False
         self.changeVisibility = False
         self.posX = 50
         self.posY = 50
-        self.width = 50
-        self.height = 70
+        self.width = 75
+        self.height = 105
         self.tick = 0
         
-        self.loader.addAnimation(self.name, None)
-        
-        #TODO: Ajouter les textes
-        
+        self.loader.addAnimation(self.name, None, level)
         self.updateModif(True)
     
     def setPosition(self, x, y, t = 0):
@@ -118,6 +123,24 @@ class CardInfo(object):
         if len(anim) > 0:
             anim[0].newPos(self.posX - addingSize, self.posY - addingSize, self.width + (addingSize * 2), self.height + (addingSize * 2), addingTime)
     
+    def showInfoCard(self):
+        if not self.showInfo:
+            self.showInfo = True
+            print("On montre la carte")
+            
+            card = self.loader.getAnimation('showCard')
+            if len(card) > 0:
+                card[0].newPos(self.swidth / 2 - 100, self.sheight / 2 - 140, 200, 280, 8)
+    
+    def hideInfoCard(self):
+        if self.showInfo:
+            self.showInfo = False
+            print("On cache la carte")
+            
+            card = self.loader.getAnimation('showCard')
+            if len(card) > 0:
+                card[0].newPos(self.swidth / 2, self.sheight / 2, 0, 0, 8)
+
     def mouseCheck(self, e, x, y, w, h):
         return (e.posX >= x and e.posX <= (x + w) and e.posY >= y and e.posY <= (y + h))
     
@@ -125,10 +148,16 @@ class CardInfo(object):
         '''
         On regarde les événements sur la carte
         '''
-        
-        if self.mouseCheck(e, self.posX, self.posY, self.width, self.height):
+        if not (e == None) and self.mouseCheck(e, self.posX, self.posY, self.width, self.height):
+            if self.visible == True:
+                self.showInfoCard()
+            
             if e.button[1]:
                 e.button[1] = False
                 self.setSelect()
-        
+        else:
+            self.hideInfoCard()
     
+    def updateResize(self, w, h):
+        self.swidth = w
+        self.sheight = h

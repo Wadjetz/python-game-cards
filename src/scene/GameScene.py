@@ -43,8 +43,15 @@ class GameScene(Scene):
         
         l.clearAnimation()
         l.addAnimationByPath('bg', '../img/background.jpg')
+        l.addAnimationByPath('showCard', '../img/card/spellCard.jpg', self.width / 2 - 75, self.height / 2 - 105)
         
-        self.cardTest = CardInfo(l, self.player1.deck.getCarte())
+        self.cardPlayer = []
+        for i in range(1, 4):
+            self.cardPlayer.append(CardInfo(l, self.player1.deck.getCarte()))
+        
+        self.cardEnemy = []
+        for i in range(1, 4):
+            self.cardEnemy.append(CardInfo(l, self.player2.deck.getCarte()))
         
         self.resizeWindow(l, self.width, self.height)
         self.ReturnScene = self
@@ -58,6 +65,7 @@ class GameScene(Scene):
             sprite = Sprite(texts[0].render(message, 1, (255, 255, 0)))
             animation = Animation(sprite)
             animation.newPos((self.width / 2 - sprite.w / 2), (self.height / 2 - sprite.h / 2), sprite.w, sprite.h, 0)
+            animation.newPos((self.width / 2), (self.height / 2), 0, 0, 100)
                 
             l.removeAnimation('info')
             l.addAnimation('info', animation)
@@ -68,6 +76,23 @@ class GameScene(Scene):
     def retourCallBack(self, nom):
         from scene.MainScene import MainScene
         self.ReturnScene = MainScene(self.loader)
+    
+    def updateMain(self, e, l):
+        x = 10
+        y = 10
+        for cardUpdateEnemy in self.cardEnemy:
+            cardUpdateEnemy.update(e, l)
+            cardUpdateEnemy.updateResize(self.width, self.height)
+            cardUpdateEnemy.setPosition(x, y, 0)
+            x += cardUpdateEnemy.width + (20 / len(self.cardEnemy))
+        
+        x = self.width - 85
+        y = self.height - 115
+        for cardUpdatePlayer in self.cardPlayer:
+            cardUpdatePlayer.update(e, l)
+            cardUpdatePlayer.updateResize(self.width, self.height)
+            cardUpdatePlayer.setPosition(x, y, 0)
+            x -= cardUpdatePlayer.width + (20 / len(self.cardPlayer))
     
     def update(self, e, l):
         '''
@@ -80,15 +105,19 @@ class GameScene(Scene):
             #Get name and random begin
             print("Choix du nom ...")
             print("Choix du joueur commençant ...")
-            print("Joueur 1 à vous !")
-            self.changeText(l, "Joueur 1 à vous !")
             self.action = 1
+            self.changeText(l, "" + self.player1.name + " à vous !")
         elif self.action == 1:
             # Joueur 1 sur joueur 2
-            pass
+            if e.keyboard[pygame.K_i]:
+                e.keyboard[pygame.K_i] = False
+                self.cardPlayer.append(CardInfo(l, self.player1.deck.getCarte()))
+            if self.action == 2:
+                self.changeText(l, "" + self.player2.name + " à vous !")
         elif self.action == 2:
             # Joueur 2 sur joueur 1
-            pass
+            if self.action == 3:
+                self.changeText(l, "Tour suivant !")
         elif self.action == 3:
             # reset
             pass
@@ -98,14 +127,11 @@ class GameScene(Scene):
         elif self.action == 5:
             self.retourCallBack('')
             
-        if e.keyboard[pygame.K_F1]:
-            e.keyboard[pygame.K_F1] = False
-            self.cardTest.setVisible(not self.cardTest.visible)
-            
-        self.cardTest.update(e, l)
+        self.updateMain(e, l)
             
         if (e.quit):
-            self.quitterCallBack('')
+            e.quit = False
+            self.retourCallBack('')
         
         return self.ReturnScene
     
@@ -120,3 +146,5 @@ class GameScene(Scene):
         animation = l.getAnimation('title')
         if len(animation) > 0:
             animation[0].newPos((self.width / 2 - animation[0].sprite.w / 2), 30, animation[0].sprite.w, animation[0].sprite.h, 0)
+        
+        self.updateMain(None, l)

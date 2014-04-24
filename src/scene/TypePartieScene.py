@@ -30,10 +30,10 @@ class TypePartieScene(Scene):
         
         l.clearAnimation()
         
-        l.addAnimationByPath('bg', '../img/background.jpg')
-        l.addAnimationByPath('normal', '../img/normal.png', self.width / 2 - 140, 100)
-        l.addAnimationByPath('union', '../img/union.png', self.width / 2 - 140, 100)
-        l.addAnimationByPath('back', '../img/back.png', self.width / 2 - 140, 100)
+        l.addAnimationByPath('bg', '../img/background.jpg', level=0)
+        l.addAnimationByPath('normal', '../img/normal.png', self.width / 2 - 140, 100, level=1)
+        l.addAnimationByPath('union', '../img/union.png', self.width / 2 - 140, 100, level=1)
+        l.addAnimationByPath('back', '../img/back.png', self.width / 2 - 140, 100, level=1)
         
         self.createButton(l)
         self.resizeWindow(l, self.width, self.height)

@@ -30,11 +30,11 @@ class MainScene(Scene):
         
         l.clearAnimation()
         
-        l.addAnimationByPath('bg', '../img/background.jpg')
-        l.addAnimationByPath('solo', '../img/solo.png', self.width / 2 - 140, 100)
-        l.addAnimationByPath('multi', '../img/multi.png', self.width / 2 - 140, 100)
-        l.addAnimationByPath('options', '../img/option.png', self.width / 2 - 140, 100)
-        l.addAnimationByPath('quitter', '../img/quitter.png', self.width / 2 - 140, 100)
+        l.addAnimationByPath('bg', '../img/background.jpg', level=0)
+        l.addAnimationByPath('solo', '../img/solo.png', self.width / 2 - 140, 100, level=1)
+        l.addAnimationByPath('multi', '../img/multi.png', self.width / 2 - 140, 100, level=1)
+        l.addAnimationByPath('options', '../img/option.png', self.width / 2 - 140, 100, level=1)
+        l.addAnimationByPath('quitter', '../img/quitter.png', self.width / 2 - 140, 100, level=1)
         
         self.createButton(l)
         self.resizeWindow(l, self.width, self.height)

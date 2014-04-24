@@ -36,7 +36,7 @@ class Game(object):
         self.fullSize[0] = self.modes[0][0]
         self.fullSize[1] = self.modes[0][1]
         
-        self.loader.addFont("mainTitle", "../img/LSANS.ttf", 30)
+        self.loader.addFont("mainTitle", "../img/LSANS.ttf", 48)
         self.loader.addFont("text", "../img/LSANS.ttf", 15)
     
     def play(self):
