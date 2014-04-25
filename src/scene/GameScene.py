@@ -42,6 +42,8 @@ class GameScene(Scene):
         self.player1 = Player(1, "Egor", deckPlayer1)
         self.player2 = Player(2, "Quentin", deckPlayer2)
         
+        self.tour = 1
+        
         self.lastAnimCard = None
         
         l.clearAnimation()
@@ -116,6 +118,43 @@ class GameScene(Scene):
         anim.newPos((self.width / 2), (self.height / 2), 0, 0, 50, None)
         self.actionCallBack = False
     
+    def statusText(self, l):
+        texts = l.getFont('mainTitle')
+        
+        # PLayer 1 ( Down )
+        if len(texts) > 0:
+            sprite = Sprite(texts[0].render("VIE: " + str(self.player1.health) +  "/30", 1, (255, 255, 0)))
+            spriteBis = Sprite(texts[0].render("MANA: " + str(self.player1.mana) +  "/10", 1, (255, 255, 0)))
+            
+            animation = Animation(sprite)
+            animationBis = Animation(spriteBis)
+            
+            animation.newPos(self.width - 10, (self.height / 2 - sprite.h / 2) - 10 - (sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
+            animationBis.newPos(self.width - 10, (self.height / 2 - sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
+            
+            l.removeAnimation('infoVieP1')
+            l.addAnimation('infoVieP1', animation, level=5)
+            
+            l.removeAnimation('infoManaP1')
+            l.addAnimation('infoManaP1', animationBis, level=5)
+        
+        # PLayer 1 ( UP )
+        if len(texts) > 0:
+            sprite = Sprite(texts[0].render("VIE: " + str(self.player2.health) +  "/30", 1, (255, 255, 0)))
+            spriteBis = Sprite(texts[0].render("MANA: " + str(self.player2.mana) +  "/10", 1, (255, 255, 0)))
+            
+            animation = Animation(sprite)
+            animationBis = Animation(spriteBis)
+            
+            animation.newPos(10, (self.height / 2 - sprite.h / 2) - 10 - (sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
+            animationBis.newPos(10, (self.height / 2 - sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
+            
+            l.removeAnimation('infoVieP2')
+            l.addAnimation('infoVieP2', animation, level=5)
+            
+            l.removeAnimation('infoManaP2')
+            l.addAnimation('infoManaP2', animationBis, level=5)
+    
     def changeText(self, l, message):
         texts = l.getFont('mainTitle')
             
@@ -139,6 +178,9 @@ class GameScene(Scene):
         x = 10
         y = 10
         for cardUpdateEnemy in self.cardEnemy:
+            if self.action == 10:
+                pass
+            
             if self.lastAnimCard != cardUpdateEnemy:
                 cardUpdateEnemy.update(e, l)
                 cardUpdateEnemy.updateResize(self.width, self.height)
@@ -153,6 +195,8 @@ class GameScene(Scene):
                 cardUpdatePlayer.updateResize(self.width, self.height)
                 cardUpdatePlayer.setPosition(x, y, 0)
                 x -= cardUpdatePlayer.width + 5
+        
+        self.statusText(l)
     
     def update(self, e, l):
         '''
@@ -168,6 +212,7 @@ class GameScene(Scene):
             self.actionCallBack = True
             self.action = 1
         elif self.action == 1:
+            
             if self.actionCallBack == False:
                 self.animDeckPlayer()
                 self.action = 2
@@ -198,10 +243,15 @@ class GameScene(Scene):
                 e.keyboard[pygame.K_v] = False
                 self.changeText(l, "" + self.player1.name + " à vous !")
                 self.actionCallBack = True
-                self.action = 1
+                self.action = 30
         elif self.action == 30:
             # reset
-            pass
+            self.player1.nextTour(self.tour)
+            self.player2.nextTour(self.tour)
+            
+            self.changeText(l, "" + self.player1.name + " à vous !")
+            self.actionCallBack = True
+            self.action = 1
         elif self.action == 40:
             # Fin de partie
             pass
