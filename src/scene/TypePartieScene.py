@@ -50,6 +50,9 @@ class TypePartieScene(Scene):
             l.addAnimation('title', animation)
     
     def createButton(self, l):
+        '''
+        @param l: le chargeur d'image
+        '''
         normal = l.getAnimation('normal')
         if len(normal) > 0:
             normal[0].newPos(self.width / 2 - 140, 100, 280, 50, 20)
@@ -98,6 +101,12 @@ class TypePartieScene(Scene):
         return self.ReturnScene
     
     def resizeWindow(self, l, w, h):
+        '''
+        Au redimensionnement de la fenêtre
+        @param l: le chargeur de ressources
+        @param w: la nouvelle largeur
+        @param h: la nouvelle hauteur
+        '''
         self.width = w
         self.height = h
         
