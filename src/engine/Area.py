@@ -84,6 +84,48 @@ class Area(object):
             except GameException as e:
                 print(self.player2.name + " " + str(e))
     
+    def gameLoopNetworkHost(self, host, conn):
+        '''
+        Boucle du jeux en réseau pour l'host
+        '''
+        
+        stop = False
+
+        while stop == False:
+            
+            if self.player1.health <= 0:
+                print(self.player1.name + " a perdu et " + self.player2.name + " a GAGNER !!!!")
+                stop = True
+            if self.player2.health <= 0:
+                print(self.player2.name + " a perdu et " + self.player1.name + " a GAGNER !!!!")
+                stop = True 
+            
+            self.playerTurn_v2(self.player1, self.player2)
+            self = host.run(self, conn)
+            
+            
+            self.tour = self.tour + 1
+            
+            self.player1.nextTour(self.tour)
+            self.player2.nextTour(self.tour)
+            
+            print("Tous le monde Pioche une carte")
+            
+            try:
+                self.player1.piocheCarte()
+            except GameException as e:
+                print(self.player1.name + " " + str(e))
+            try:
+                self.player2.piocheCarte()
+            except GameException as e:
+                print(self.player2.name + " " + str(e))
+        host.close(conn)
+    
+    def gameLoopNetworkClient(self):
+        self.playerTurn_v2(self.player2, self.player1)
+        return self
+    
+    
     def playerTurn_v2(self, player, ennemy):
         '''
         Les interaction du joueur pendant le tour
@@ -209,3 +251,6 @@ class Area(object):
     
     def getPlayer2(self):
         return self.player2
+    
+    def getTour(self):
+        return self.tour

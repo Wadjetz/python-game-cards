@@ -5,10 +5,13 @@ Created on 1 avr. 2014
 @author: egor
 '''
 import socket
+import pickle
+import select
 from engine import Player
 from engine import Deck
 from engine.Deck import Pioche
 from engine import Area
+import asyncore
 class GameServer():
     '''
     classdocs
@@ -19,27 +22,41 @@ class GameServer():
         '''
         Constructor
         '''
-        
-        deck = Area("Damien", "Thib")
+   
         serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
         serverSocket.bind((HOST, PORT))
-        serverSocket.listen(5)
-        hostaddr, port = serverSocket.getsockname()
-        print("Server Run " + str(hostaddr) + " " + str(port))
-        conn, addr = serverSocket.accept()
-        print('Connected by', addr)
-        conn.sendall(deck)
-        while True:
-            data = conn.recv(1024)
-            if not data: break
-            conn.sendall(data)
-        conn.close()
+        serverSocket.listen(10)
+        
+        conn = serverSocket.accept()
+        print(conn)
+        game = Area('Damien', 'thib')
+        game.gameLoopNetworkHost(self, conn)
     
-    def run(self):
+    def run(self, game, conn):
         '''
+        Permet d'envoyer au client les informations sur l'état de la game
+        '''
+        data = pickle.dumps(game)
+        print(conn)
+        conn.send(data)
+        return self.receive(conn)
+
         
+    def receive(self, conn):
         '''
-        
-    def close(self):
+        Recoit les informations envoyé par le client
         '''
+        data = bytes()
+        while 1:
+            paquet = conn.recv(1024)
+            if not paquet: break
+            data += paquet
+        game = pickle.loads(data)
+        return game
+    
+    def close(self, conn):
         '''
+        Ferme le serveur
+        '''
+        conn.close()
