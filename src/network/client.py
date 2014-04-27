@@ -5,5 +5,5 @@ Created on 23 avr. 2014
 '''
 
 if __name__ == '__main__':
-    from GameClient import GameClient
-    GameClient("localhost", 9999)
+    from network.GameClient import GameClient
+    GameClient("localhost", 9998)

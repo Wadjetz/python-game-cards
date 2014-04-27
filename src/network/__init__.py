@@ -8,6 +8,6 @@ from engine.Area import Area
 
 def main():
     
-    GameServer('localhost', 9999)
+    GameServer('localhost', 9998)
 
 if __name__ == '__main__':main()
