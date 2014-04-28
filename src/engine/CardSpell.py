@@ -23,7 +23,7 @@ class CardSpell(Card):
         '''
         if self.effect == "health":
             target.health += self.attack
-            print(self.name + "Soigne " + target.name + " de " + self.attack)
+            print(self.name + " Soigne " + target.name + " de " + str(self.attack) )
             
         
     def toString(self):

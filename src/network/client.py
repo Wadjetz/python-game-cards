@@ -8,5 +8,5 @@ from network.GameClient import GameClient
 
 if __name__ == '__main__':
     #from GameClient import GameClient
-    GameClient("localhost", 9999)
+    GameClient("localhost", 9998)
 

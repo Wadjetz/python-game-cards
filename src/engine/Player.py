@@ -109,6 +109,7 @@ class Player(LivingEntity):
                 elif int(ID_target) > 3000000:
                     serv = self.getServiteur(ID_target)
                     carte.health(serv)
+                self.consumeMana(carte.cost)
                 self.deleteCarte(ID_card);
     
             else:
@@ -124,8 +125,8 @@ class Player(LivingEntity):
                         servant = ennemy.getServiteur(ID_target)
                         print(self.name + " attaque " + servant.name + " de " + str(carte.attack) + "dmg")
                         servant.domage(carte.attack, carte.damageType)
-                    self.mana = int(self.mana) - int(carte.cost)
-                    self.deleteCarte(ID_card)
+                self.mana = int(self.mana) - int(carte.cost)
+                self.deleteCarte(ID_card)
         else:
             raise GameException("J'ai pas assais de mana pour utiliser " + str(carte))
     

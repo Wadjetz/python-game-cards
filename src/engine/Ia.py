@@ -141,11 +141,11 @@ class Area(object):
                         # Si c'est une carte d'invocation des serviteur
                         player.invoke(ID_attack)
                         validator = self.verifActionJoueur(player)
-                    else:
-                        #Si ce n'est pas une carte sort
-                        ID_target = random.randint(1,len(self.enemy.fields))
-                        player.war(ID_attack, ID_target, ennemy)
-                        validator = self.verifActionJoueur(player)
+                else:
+                    #Si ce n'est pas une carte sort
+                    ID_target = random.randint(1,len(self.enemy.fields))
+                    player.war(ID_attack, ID_target, ennemy)
+                    validator = self.verifActionJoueur(player)
             except GameException as e:
                 print(e)
         

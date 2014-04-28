@@ -12,13 +12,12 @@ class GameServer():
     classdocs
     '''
 
-
     def __init__(self, HOST, PORT):
         '''
         Constructor
         '''   
         serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+        print("Serveur run " + str(HOST) + ":" + str(PORT))
         serverSocket.bind((HOST, PORT))
         serverSocket.listen(5)
         
