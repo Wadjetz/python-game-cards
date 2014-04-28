@@ -5,36 +5,51 @@ Created on 1 avr. 2014
 @author: egor
 '''
 import socket
-
-
+import pickle
+from engine import Area
 class GameServer():
     '''
     classdocs
     '''
 
-
     def __init__(self, HOST, PORT):
         '''
         Constructor
-        '''
+        '''   
         serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print("Serveur run " + str(HOST) + ":" + str(PORT))
         serverSocket.bind((HOST, PORT))
         serverSocket.listen(5)
-        hostaddr, port = serverSocket.getsockname()
-        print("Server Run " + str(hostaddr) + " " + str(port))
-        conn, addr = serverSocket.accept()
-        print('Connected by', addr)
-        while True:
-            data = conn.recv(1024)
-            if not data: break
-            conn.sendall(data)
-        conn.close()
+        
+        conn = serverSocket.accept()
+        game = Area('Damien', 'thib')
+        game.gameLoopNetworkHost(self, conn)
     
-    def run(self):
+    def run(self, game, conn):
         '''
+        Permet d'envoyer au client les informations sur l'état de la game
+        '''
+        data = pickle.dumps(game)
+        conn[0].sendall(data)
+        conn[0].sendall(b"fin")
+        return self.receive(conn)
+
         
+    def receive(self, conn):
         '''
-        
-    def close(self):
+        Recoit les informations envoyé par le client
+        '''   
+        data = bytes()
+        while 1:
+            paquet = conn[0].recv(8162)
+            if paquet == b"fin": 
+                break
+            data += paquet
+        game = pickle.loads(data)
+        return game
+
+    def close(self, conn):
         '''
+        Ferme le serveur
         '''
+        conn[0].close()

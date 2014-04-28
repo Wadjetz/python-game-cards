@@ -1,12 +1,11 @@
 # -*- coding : utf-8 -*-
 '''
-Created on 11 mars 2014
-
-@author: egor
+Thibault Dassonvillé
 '''
 from engine.Deck import Pioche, Deck
 from engine.GameException import GameException
 from engine.Player import Player
+import random
 
 
 class Area(object):
@@ -66,8 +65,8 @@ class Area(object):
                 stop = True 
             
             self.playerTurn_v2(self.player1, self.player2)
-            #self.playerTurn_v2(self.player2, self.player1)
-            self.playerTurnIA(self.player2, self.player1)
+            self.playerTurn_v2(self.player2, self.player1)
+            
             self.tour = self.tour + 1
             
             self.player1.nextTour(self.tour)
@@ -134,97 +133,22 @@ class Area(object):
         '''
         validator = True
         while validator:
-            
             print(self)
             try:
-                ID_attack = self.inputAction("<" + player.name + "> Id carte ou serviteur [passer=0]")
+                ID_attack = random.randint(1,len(self.player.hand))
                 
-                if int(ID_attack) == 0:
-                    # Si le joueur souhaite passer son tour
-                    print(player.name + " passe son tour")
-                    validator = False
-                elif int(ID_attack) < 0:
-                    print("Saisie incorrecte")
-                else:
-                    if player.isCarteServant(ID_attack):
+                if player.isCarteServant(ID_attack):
                         # Si c'est une carte d'invocation des serviteur
                         player.invoke(ID_attack)
                         validator = self.verifActionJoueur(player)
-                    else:
-                        #Si ce n'est pas une carte sort
-                        ID_target = self.inputAction(player.name + " : entrer de la cible [annuler=0]")
-                        if int(ID_target) == 0:
-                            pass
-                        else:
-                            player.war(ID_attack, ID_target, ennemy)
-                            validator = self.verifActionJoueur(player)
-                self.player1.enterrerServiteurs()
-                self.player2.enterrerServiteurs()
+                else:
+                    #Si ce n'est pas une carte sort
+                    ID_target = random.randint(1,len(self.enemy.fields))
+                    player.war(ID_attack, ID_target, ennemy)
+                    validator = self.verifActionJoueur(player)
             except GameException as e:
                 print(e)
-    
-    def playerTurnIA(self, player, ennemy):
-        '''
-        Action du joueur
-        @param player: Joueur
-        @param ennemy: Joueur adverse
-        '''
-        validator = True
         
-        while validator:
-
-            #print(self.toString())
-            
-            
-            
-            
-            
-            '''
-            
-            ID = self.inputAction("<" + player.name + "> Id carte ou serviteur [passer=0]")
-            
-            if int(ID) == 0:
-                #Passer le tour
-                validator = False
-            elif self.isPlayer(ID):
-                # Si le joueur a choisie lui meme
-                if int(player.mana) >= 2:
-                    ID_target = self.inputAction(player.name + " : entrer de la cible [passer=0]")
-                    player.fight(ID_target, ennemy)
-                    validator = self.verifActionJoueur(player)
-                else:
-                    print(player.name + " : Je n'ai pas suffisamment de mana")
-            elif self.isSpell(ID):
-                # Si le joueur choisie un sort
-                try:
-                    ID_target = self.inputAction(player.name + " : entrer de la cible [passer=0]")
-                    player.useCarteSpell(ID, ID_target, ennemy)
-                    validator = self.verifActionJoueur(player)
-                except GameException as e:
-                    print(e)
-            elif player.isCarteServant(ID):
-                # Si le joueur a choisie d'invoquer un serviteur
-                try:
-                    player.invoke(ID)
-                    validator = self.verifActionJoueur(player)
-                except GameException as e:
-                    print(e)
-            elif self.isServant(ID):
-                try:
-                    ID_target = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
-                    servant = player.getServiteur(ID)
-                    servant.fight(ID_target, ennemy)
-                    validator = self.verifActionJoueur(player)
-                except GameException as e:
-                    print(e)
-            else:
-                print("Saisie incorrecte ()")
-                
-            
-            self.player1.enterrerServiteurs()
-            self.player2.enterrerServiteurs()
-        '''
-    
     def playerTurn(self, player, ennemy):
         '''
         Action du joueur
@@ -234,18 +158,14 @@ class Area(object):
         validator = True
         
         while validator:
-
             print(self.toString())
             
-            ID = self.inputAction("<" + player.name + "> Id carte ou serviteur [passer=0]")
+            ID = random.randint(1,len(self.player.hand))
             
-            if int(ID) == 0:
-                #Passer le tour
-                validator = False
             elif self.isPlayer(ID):
                 # Si le joueur a choisie lui meme
                 if int(player.mana) >= 2:
-                    ID_target = self.inputAction(player.name + " : entrer de la cible [passer=0]")
+                    ID_target = random.randint(1,len(self.enemy.fields))
                     player.fight(ID_target, ennemy)
                     validator = self.verifActionJoueur(player)
                 else:
@@ -253,7 +173,7 @@ class Area(object):
             elif self.isSpell(ID):
                 # Si le joueur choisie un sort
                 try:
-                    ID_target = self.inputAction(player.name + " : entrer de la cible [passer=0]")
+                    ID_target = random.randint(1,len(self.enemy.fields))
                     player.useCarteSpell(ID, ID_target, ennemy)
                     validator = self.verifActionJoueur(player)
                 except GameException as e:
@@ -267,7 +187,7 @@ class Area(object):
                     print(e)
             elif self.isServant(ID):
                 try:
-                    ID_target = self.inputAction(player.name + " : entrer de la cible (0 pour passer) ")
+                    ID_target = random.randint(1,len(self.enemy.fields))
                     servant = player.getServiteur(ID)
                     servant.fight(ID_target, ennemy)
                     validator = self.verifActionJoueur(player)

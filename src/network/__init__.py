@@ -3,11 +3,11 @@
 Gestion du reseau
 '''
 from network.GameServer import GameServer
+from engine.Area import Area
 
 
 def main():
-    gameServer = GameServer("localhost", 9999)
-    gameServer.run()
     
+    GameServer('localhost', 9998)
 
 if __name__ == '__main__':main()

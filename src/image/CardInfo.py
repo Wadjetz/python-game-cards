@@ -6,46 +6,57 @@ Représentation d'un bouton à l'écran
 @author: quenti77
 '''
 
+
+try:
+    import pygame
+    from random import randint
+except:
+    print("Import erronné")
+
 class CardInfo(object):
     '''
     Une carte du jeu sur une scene
     '''
     
-    def __init__(self, l, carte):
+    def __init__(self, l, carte, level):
         '''
         Constructeur d'une carte affichable
         @param l: Le loader de ressource
         '''
+        self.swidth = pygame.display.get_surface().get_width()
+        self.sheight = pygame.display.get_surface().get_height()
         self.carte = carte
-        self.name = str(self.carte.ID) + "-" + self.carte.name
+        self.name = str(self.carte.ID) + "-" + self.carte.name + "-" + str(randint(1, 1000000))
         self.loader = l
         self.type = "spell"
         self.visible = True
+        self.showInfo = True
         self.select = False
         self.asyncSelect = False
         self.changeVisibility = False
         self.posX = 50
         self.posY = 50
-        self.width = 50
-        self.height = 70
+        self.width = 75
+        self.height = 105
         self.tick = 0
+        self.func = None
+        self.level = level
         
-        self.loader.addAnimation(self.name, None)
-        
-        #TODO: Ajouter les textes
-        
+        self.loader.addAnimation(self.name, None, level)
         self.updateModif(True)
     
-    def setPosition(self, x, y, t = 0):
+    def setPosition(self, x, y, t = 0, func = None):
         '''
         Modifie la position de la carte
         @param x: position x
         @param y: position y
         @param t: le nombre de tick vers la nouvelle position (animation)
+        @param func: Fonction de callback
         '''
         self.posX = x
         self.posY = y
         self.tick = t
+        self.func = func
         self.updateModif()
     
     def setSize(self, w, h):
@@ -54,6 +65,18 @@ class CardInfo(object):
         '''
         self.width = w
         self.height = h
+        self.updateModif()
+    
+    def setResize(self, x, y, w, h, t = 0, func = None):
+        '''
+        Rassemble le setSize et le setPosition
+        '''
+        self.posX = x
+        self.posY = y
+        self.width = w
+        self.height = h
+        self.tick = t
+        self.func = func
         self.updateModif()
     
     def setType(self, typeCard):
@@ -99,11 +122,13 @@ class CardInfo(object):
             self.changeVisibility = False
             if self.visible == True:
                 imageSelect = '../img/card/spellCard.jpg'
+                # Show text on the card
+                
             else:
                 imageSelect = '../img/card/backSpellCard.jpg'
             
             self.loader.removeAnimation(self.name)
-            self.loader.addAnimationByPath(self.name, imageSelect, 1)
+            self.loader.addAnimationByPath(self.name, imageSelect, level=1)
             
         if self.select != self.asyncSelect:
             self.asyncSelect = self.select
@@ -116,8 +141,26 @@ class CardInfo(object):
         
         anim = self.loader.getAnimation(self.name)
         if len(anim) > 0:
-            anim[0].newPos(self.posX - addingSize, self.posY - addingSize, self.width + (addingSize * 2), self.height + (addingSize * 2), addingTime)
+            anim[0].newPos(self.posX - addingSize, self.posY - addingSize, self.width + (addingSize * 2), self.height + (addingSize * 2), addingTime, self.func)
     
+    def showInfoCard(self):
+        if not self.showInfo:
+            self.showInfo = True
+            print("On montre la carte (ID:" + str(self.name) + ")")
+            
+            card = self.loader.getAnimation('showCard')
+            if len(card) > 0:
+                card[0].newPos(self.swidth / 2 - 100, self.sheight / 2 - 140, 200, 280, 8)
+    
+    def hideInfoCard(self):
+        if self.showInfo:
+            self.showInfo = False
+            print("On cache la carte (ID:" + str(self.name) + ")")
+            
+            card = self.loader.getAnimation('showCard')
+            if len(card) > 0:
+                card[0].newPos(self.swidth / 2, self.sheight / 2, 0, 0, 8)
+
     def mouseCheck(self, e, x, y, w, h):
         return (e.posX >= x and e.posX <= (x + w) and e.posY >= y and e.posY <= (y + h))
     
@@ -125,10 +168,16 @@ class CardInfo(object):
         '''
         On regarde les événements sur la carte
         '''
-        
-        if self.mouseCheck(e, self.posX, self.posY, self.width, self.height):
+        if not (e == None) and self.mouseCheck(e, self.posX, self.posY, self.width, self.height):
+            if self.visible == True:
+                self.showInfoCard()
+            
             if e.button[1]:
                 e.button[1] = False
                 self.setSelect()
-        
+        else:
+            self.hideInfoCard()
     
+    def updateResize(self, w, h):
+        self.swidth = w
+        self.sheight = h

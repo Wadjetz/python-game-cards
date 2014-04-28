@@ -8,7 +8,7 @@
 		"health":3,
 		"cost":2,
 		"attack":1,
-		"damage": "physical",
+		"damageType": "physical",
 		"effect":"normal"
 	},
 	{
@@ -20,7 +20,7 @@
 		"health":3,
 		"cost":2,
 		"attack":1,
-		"damage": "distance",
+		"damageType": "distance",
 		"effect":"normal"
 	},
 	{
@@ -32,7 +32,7 @@
 		"health":1,
 		"cost":1,
 		"attack":3,
-		"damage": "physical",
+		"damageType": "physical",
 		"effect":"camouflage"
 	},
 	{
@@ -44,7 +44,7 @@
 		"health":1,
 		"cost":1,
 		"attack":3,
-		"damage": "physical",
+		"damageType": "physical",
 		"effect":"camouflage"
 	},
 	{
@@ -56,7 +56,7 @@
 		"health":5,
 		"cost":3,
 		"attack":1,
-		"damage": "physical",
+		"damageType": "physical",
 		"effect":"provocation"
 	},
 	{
@@ -68,55 +68,67 @@
 		"health":6,
 		"cost":3,
 		"attack":1,
-		"damage": "physical",
+		"damageType": "physical",
 		"effect":"provocation"
 	},
 	{
 		"id": 2000007,
-		"type": "Serv",
+		"type": "serv",
 		"name": "Lancier",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
 		"health":4,
 		"cost":3,
 		"attack":2,
-		"damage": "physical",
-		"effect":"Proximity"
+		"damageType": "physical",
+		"effect":"camouflage"
 	},
 	{
 		"id": 2000008,
-		"type": "Serv",
+		"type": "serv",
 		"name": "Arbaletrier",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
 		"health":2,
 		"cost":3,
 		"attack":3,
-		"damage": "distance",
-		"effect":"Proximity"
+		"damageType": "distance",
+		"effect":"camouflage"
 	},
 	{
 		"id": 2000009,
-		"type": "Serv",
+		"type": "serv",
 		"name": "Sorcier",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
 		"health":3,
 		"cost":3,
 		"attack":6,
-		"damage": "magic",
+		"damageType": "magic",
 		"effect":"shield"
 	},
 	{
 		"id": 2000010,
-		"type": "Serv",
+		"type": "serv",
 		"name": "Magicien",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
 		"health":2,
 		"cost":3,
 		"attack":6,
-		"damage": "magic",
+		"damageType": "magic",
 		"effect":"shield"
+	},
+	{
+		"id": 2000011,
+		"type": "serv",
+		"name": "Garde",
+		"description": "chair a canon",
+		"dialog": "Je vais vous tuer lentement",
+		"health":5,
+		"cost":1,
+		"attack":1,
+		"damageType": "physical",
+		"effect":"provocation"
 	}
 ]

@@ -23,7 +23,7 @@ class Game(object):
         '''
         self.event = Event()
         self.loader = Loader()
-        self.mainWindow = pygame.display.set_mode((1152, 768), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
+        self.mainWindow = pygame.display.set_mode((1024, 600), pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.RESIZABLE)
         self.mainScene = LoadScene(self.loader)
         self.fullscreen = False
         self.lastSize = [1152, 768]
@@ -36,7 +36,7 @@ class Game(object):
         self.fullSize[0] = self.modes[0][0]
         self.fullSize[1] = self.modes[0][1]
         
-        self.loader.addFont("mainTitle", "../img/LSANS.ttf", 30)
+        self.loader.addFont("mainTitle", "../img/LSANS.ttf", 48)
         self.loader.addFont("text", "../img/LSANS.ttf", 15)
     
     def play(self):

@@ -19,8 +19,10 @@ class Animation(object):
         self.index = 1
         self.pos = [sp.x, sp.y, sp.w, sp.h]
         self.end = [sp.x, sp.y, sp.w, sp.h, 0]
+        self.func = None
+        self.callFunc = True
     
-    def newPos(self, x, y, w, h, t):
+    def newPos(self, x, y, w, h, t, f = None):
         '''
         @param x: nouvelle position X
         @param y: nouvelle position Y
@@ -29,6 +31,10 @@ class Animation(object):
         @param t: nombre de ticks
         Définit les nouvelles valeurs
         '''
+        if not (f == None):
+            self.func = f
+            self.callFunc = False
+        
         self.end[0] = x
         self.end[1] = y
         self.end[2] = w
@@ -43,7 +49,7 @@ class Animation(object):
     def setIndex(self, index):
         self.index = index
     
-    def addPos(self, x, y, w, h, t):
+    def addPos(self, x, y, w, h, t, f = None):
         '''
         @param x: nouvelle position X
         @param y: nouvelle position Y
@@ -53,6 +59,10 @@ class Animation(object):
         @param t: nombre de ticks
         Ajoute les nouvelles valeurs
         '''
+        
+        if not (f == None):
+            self.func = f 
+            self.callFunc = False
         
         self.end[0] += x
         self.end[1] += y
@@ -92,6 +102,9 @@ class Animation(object):
                 self.pos[i] += self.calcul(self.pos[i], self.end[i], self.end[4])
             
             self.end[4] -= 1
+        elif self.callFunc == False:
+            self.callFunc = True
+            self.func(self)
         
         self.sprite.setPosition(self.pos[0], self.pos[1])
         self.sprite.setSize(self.pos[2], self.pos[3])

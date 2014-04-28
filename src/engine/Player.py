@@ -5,11 +5,11 @@ Created on 11 mars 2014
 @author: egor
 '''
 
-from engine.Entity import Entity
+from engine.LivingEntity import LivingEntity
 from engine.GameException import GameException
 
 
-class Player(Entity):
+class Player(LivingEntity):
     '''
     Joueur Principale
     @param main: Les cartes utilisable par le joueur
@@ -21,7 +21,7 @@ class Player(Entity):
         @param name: Nom
         @param deck: Les carte utilisable par le joueur
         '''
-        Entity.__init__(self, ID, name, 30, 1)
+        LivingEntity.__init__(self, ID, "player", name, 1, "normal", "effect", "description", "dialog", 30)
         self.deck = deck
         self.mana = 1
         self.hand = {}
@@ -34,13 +34,17 @@ class Player(Entity):
     def isHasProvocation(self):
         '''
         Verifie si un serviteur possede la provocation
-        @return: pair(Boolean, Serviteur or None)
+        @return: pair(Boolean, [Serviteur]) True si le joueur possede un serviteur avec provocation
+                 Et le tableaux des serviteur qui le possede
         '''
+        servProvoc = []
+        flag = False
         for key in self.fields:
             servant = self.fields[key]
             if servant.effect == "provocation":
-                return (True, servant)
-        return (False, None)
+                servProvoc = servant
+                flag = True
+        return (flag, servProvoc)
     
     def invoke(self, ID):
         '''
@@ -78,24 +82,6 @@ class Player(Entity):
         if str(ID) in self.hand:
             del self.hand[str(ID)]
     
-    def toString(self):
-        '''
-        Affiche les informations joueur
-        '''
-        txt = "ID:" + str(self.ID) + "-" + str(self.name)
-        txt += ":[mana=" + str(self.mana) + ", vie=" + str(self.health) + ", action=" + str(self.action) + "] "
-        txt += "Hand = {\n"
-        for key in self.hand:
-            carte = self.hand[key]
-            txt += "\t" + str(carte) + "\n"
-        txt += "\t" + self.name + " Fields :\n"
-        for key in self.fields:
-            txt += "\t" + str(self.fields[key]) + "\n"
-        return txt + "}\n"
-    
-    def __str__(self):
-        return self.toString()
-    
     def getServiteur(self, ID_serv):
         '''
         Recupere un serviteur dans le hand
@@ -117,18 +103,28 @@ class Player(Entity):
         carte = self.getCarte(ID_card)
         
         if int(self.mana) >= int(carte.cost):
-            isHasP, servTarget = ennemy.isHasProvocation()
-            if isHasP == True:
-                print("Provocation " + self.name + " : attaque " + servTarget.name + " de " + str(carte.attack) + "dmg")
-                servTarget.domage(carte.attack, carte.damage)
-            else:
+            if carte.effect == "health":
                 if int(ID_target) > 0 and int(ID_target) < 3:
-                    print(self.name + " : attaque " + ennemy.name + " de " + str(carte.attack) + "dmg")
-                    ennemy.domage(carte.attack)
+                    carte.health(self)
+                elif int(ID_target) > 3000000:
+                    serv = self.getServiteur(ID_target)
+                    carte.health(serv)
+                self.consumeMana(carte.cost)
+                self.deleteCarte(ID_card);
+    
+            else:
+                isHasP, servTarget = ennemy.isHasProvocation()
+                if isHasP == True:
+                    print("Provocation " + self.name + " : attaque " + servTarget.name + " de " + str(carte.attack) + "dmg")
+                    servTarget.domage(carte.attack, carte.damageType)
                 else:
-                    servant = ennemy.getServiteur(ID_target)
-                    print(self.name + " attaque " + servant.name + " de " + str(carte.attack) + "dmg")
-                    servant.domage(carte.attack, carte.damage)
+                    if int(ID_target) > 0 and int(ID_target) < 3:
+                        print(self.name + " : attaque " + ennemy.name + " de " + str(carte.attack) + "dmg")
+                        ennemy.domage(carte.attack)
+                    else:
+                        servant = ennemy.getServiteur(ID_target)
+                        print(self.name + " attaque " + servant.name + " de " + str(carte.attack) + "dmg")
+                        servant.domage(carte.attack, carte.damageType)
                 self.mana = int(self.mana) - int(carte.cost)
                 self.deleteCarte(ID_card)
         else:
@@ -142,22 +138,49 @@ class Player(Entity):
             if int(self.mana) >= 2:
                 isHasP, servTarget = ennemy.isHasProvocation()
                 if isHasP == True:
-                    print("Provocation " + self.name + " : attaque " + servTarget.name + " de " + str(self.attack) + "dmg")
-                    servTarget.domage(self.attack, "")
+                    for serv in servTarget:
+                        if serv.ID == ID_target:
+                            #si la cible de l'attaque possede la provocation
+                            print("Provocation : " + self.name + " : attaque " + serv.name + " de " + str(self.attack) + "dmg")
+                            serv.domage(self.attack, "normal")
+                        else:
+                            print(serv)
                 else:
                     if int(ID_target) > 0 and int(ID_target) < 3:
-                        print(str(self.name) + " attaque " + str(ennemy.name) + " de " + str(self.attack) + "dmg")
+                        print(str(self.name) + " inflige " + str(self.attack) + " dmg a" + str(ennemy.name))
                         ennemy.domage(self.attack)
                     if (int(ID_target) > 3000000):
                         servant = ennemy.getServiteur(ID_target)
-                        servant.domage(int(self.attack) + 1)
+                        servant.domage((int(self.attack) + 1), "")
                         print(self.name + " attaque " + servant.name + " de " + str(self.attack + 1) + "dmg")
-                    self.action = False
-                    self.consumeMana(2)
+                self.action = False
+                self.consumeMana(2)
             else:
                 raise GameException(self.name + " : Je n'ai pas suffisamment de mana")
         else:
             raise GameException(self.name + " : Je ne peux plus attaquer")
+    
+    def fight_v2(self):
+        '''
+        '''
+    
+    def war(self, ID_attack, ID_target, ennemy):
+        '''
+        '''
+        print("THIS IS A SPARTA")
+        if self.isPlayer(ID_attack):
+            #le joueur attaque
+            self.fight(ID_target, ennemy)
+            
+        if self.isSpell(ID_attack):
+            #le joueur utilise une carte
+            self.useCarteSpell(ID_attack, ID_target, ennemy)
+            
+        if self.isServant(ID_attack):
+            #le joueur fait attaquer un serviteur
+            servant = self.getServiteur(ID_attack)
+            servant.fight(ID_target, ennemy)
+            
     
     def consumeMana(self, pMana):
         self.mana -= pMana
@@ -186,11 +209,65 @@ class Player(Entity):
         else:
             self.mana = tour
         
-        Entity.nextTour(self, tour)
+        LivingEntity.nextTour(self, tour)
         
         for key in self.fields:
             self.fields[key].nextTour(tour)
         
         if self.health <= 0:
             print(self.name + "Est mort " + self.toString())
+            
+    def isPlayer(self, ID):
+        '''
+        Verifie si l'id correspond un un joueur
+        @param ID: Id du joueur
+        '''
+        if int(ID) > 0 and int(ID) < 3:
+            return True
+        else:
+            return False
+        
+    def isSpell(self, ID):
+        '''
+        Verifie si l'id correspond a une carte sort
+        '''
+        if int(ID) > 1000000 and int(ID) < 2000000:
+            return True
+        else:
+            return False
+        
+    def isCarteServant(self, ID):
+        '''
+        Verifie si l'id correspond a une carte qui invoque un serviteur
+        '''
+        if int(ID) > 2000000 and int(ID) < 3000000:
+            return True
+        else:
+            return False
     
+    def isServant(self, ID):
+        '''
+        Verifie si l'id correspond a un serviteur
+        '''
+        if int(ID) > 3000000:
+            return True
+        else:
+            return False
+    
+    def toString(self):
+        '''
+        Affiche les informations joueur
+        '''
+        txt = "ID:" + str(self.ID) + "-" + str(self.name)
+        txt += ":[" + str(self.mana) + "pm, " + str(self.health) + "pv, a=" + str(self.action) + "] "
+        txt += "Hand = {\n"
+        for key in self.hand:
+            carte = self.hand[key]
+            txt += "\t" + str(carte) + "\n"
+        txt += "\t" + self.name + " Fields :\n"
+        for key in self.fields:
+            txt += "\t" + str(self.fields[key]) + "\n"
+        return txt + "}\n"
+    
+    def __str__(self):
+        return self.toString()
