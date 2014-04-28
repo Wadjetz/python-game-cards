@@ -68,7 +68,7 @@ class Servant(LivingEntity):
                 diff = domage - self.shield
                 self.health -= diff
                 self.health = 0
-            print("Bouclier de " + self.name + " absorbe " + self.shield + " dmg et annule les degats critiques")
+            print("Bouclier de " + self.name + " absorbe " + str(self.shield) + " dmg et annule les degats critiques")
         if self.camouflage == False:
             if self.damageType == "magic" and typeDomage == "distance":
                 print("CRITIQUE " + str(int(domage) * 2))

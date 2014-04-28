@@ -101,7 +101,7 @@
 		"name": "Sorcier",
 		"description": "chair a canon",
 		"dialog": "Je vais vous tuer lentement",
-		"health":3,
+		"health":2,
 		"cost":3,
 		"attack":6,
 		"damageType": "magic",

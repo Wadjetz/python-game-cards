@@ -66,7 +66,7 @@ class Area(object):
                 stop = True 
             
             self.playerTurn_v2(self.player1, self.player2)
-            #self.playerTurn_v2(self.player2, self.player1)
+            #self.playerTurnIA(self.player2, self.player1)
             self.playerTurnIA(self.player2, self.player1)
             self.tour = self.tour + 1
             
@@ -134,7 +134,8 @@ class Area(object):
         '''
         validator = True
         while validator:
-            
+            self.player1.enterrerServiteurs()
+            self.player2.enterrerServiteurs()
             print(self)
             try:
                 ID_attack = self.inputAction("<" + player.name + "> Id carte ou serviteur [passer=0]")
@@ -158,10 +159,20 @@ class Area(object):
                         else:
                             player.war(ID_attack, ID_target, ennemy)
                             validator = self.verifActionJoueur(player)
-                self.player1.enterrerServiteurs()
-                self.player2.enterrerServiteurs()
+                
             except GameException as e:
                 print(e)
+    
+    def choiseTargetIA(self, ennemy):
+        '''
+        Choisie le cible a attaquer
+        '''
+        ID_Target = 2
+        if len(ennemy.fields) > 0:
+            for ID_serv in ennemy.fields:
+                if ennemy.fields[ID_serv].camouflage != True:
+                    ID_Target = ID_serv
+        return ID_Target
     
     def playerTurnIA(self, player, ennemy):
         '''
@@ -169,16 +180,41 @@ class Area(object):
         @param player: Joueur
         @param ennemy: Joueur adverse
         '''
-        validator = True
+        self.player1.enterrerServiteurs()
+        self.player2.enterrerServiteurs()
+        if len(player.fields):
+            print("Attaques des serviteur")
+            for ID_serv in player.fields:
+                if player.fields[ID_serv].action == True:
+                    ID_Target = self.choiseTargetIA(ennemy)
+                    player.fields[ID_serv].fight(ID_Target, ennemy)
+                    
+        print("Attaques du joueur")
+        ID_Carte = 0
+        #go = False
+        for carte in player.hand:
+            if player.hand[carte].cost <= player.mana and player.isCarteServant(carte):
+                print("IA choisie " + carte)
+                ID_Carte = carte
+                break
+        if ID_Carte != 0:
+            print("IA utilise " + carte)
+            player.invoke(carte)
         
-        while validator:
+        ID_Carte = 0
+        ID_Target = 0
+        for carte in player.hand:
+            if player.hand[carte].cost <= player.mana:
+                #print(player.hand[carte])
+                
+                if player.isSpell(carte):
+                    ID_Target = self.choiseTargetIA(ennemy)
+                    ID_Carte = carte
+        if ID_Target != 0:
+            player.useCarteSpell(ID_Carte, ID_Target, ennemy)
+            
+            
 
-            #print(self.toString())
-            
-            
-            
-            
-            
             '''
             
             ID = self.inputAction("<" + player.name + "> Id carte ou serviteur [passer=0]")
@@ -303,8 +339,17 @@ class Area(object):
         txt += "ID=" + str(self.player2)
         return txt + "\n"
     
+    def toString_v2(self):
+        txt = "\n\n@@@@@@@@@@@@@@@ --------------- TOUR " + str(self.tour) + " --------------- @@@@@@@@@@@@@@@\n"
+        txt += "ID=" + str(self.player1)
+        txt += "ID=" + str(self.player2.ID) + ":" + str(self.player2.name) + ":[" + str(self.player2.mana) + "pm, " + str(self.player2.health) + "pv, a=" + str(self.player2.action) + "] "
+        txt += " Fields :\n"
+        for key in self.player2.fields:
+            txt += "\t" + str(self.player2.fields[key]) + "\n"
+        return txt + "}\n"
+    
     def __str__(self):
-        return self.toString()
+        return self.toString_v2()
     
     def setPlayer1(self, player1):
         self.player1 = player1
