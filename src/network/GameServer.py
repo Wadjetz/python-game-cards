@@ -32,24 +32,22 @@ class GameServer():
         '''
         data = pickle.dumps(game)
         conn[0].sendall(data)
+        conn[0].sendall(b"fin")
         return self.receive(conn)
 
         
     def receive(self, conn):
         '''
         Recoit les informations envoyé par le client
-        '''
-        import select
-        ready = select.select([conn[0]],[] ,[], 50000)
-        if  ready[0]:        
-            data = bytes()
-            while 1:
-                paquet = conn[0].recv(1024)
-                if not paquet: 
-                    break
-                data += paquet
-            game = pickle.loads(data)
-            return game
+        '''   
+        data = bytes()
+        while 1:
+            paquet = conn[0].recv(8162)
+            if paquet == b"fin": 
+                break
+            data += paquet
+        game = pickle.loads(data)
+        return game
 
     def close(self, conn):
         '''
