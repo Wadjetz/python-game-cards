@@ -11,8 +11,6 @@ from image.Animation import Animation
 from image.CardInfo import CardInfo
 from image.Sprite import Sprite
 
-
-#from image.Button import Button
 try:
     import pygame
     from scene.Scene import Scene
@@ -26,7 +24,7 @@ class GameScene(Scene):
     
     def __init__(self, l):
         '''
-        Constructeur de la class GameScene
+        Constructeur de la class LoadScene
         '''
         self.width = pygame.display.get_surface().get_width()
         self.height = pygame.display.get_surface().get_height()
@@ -41,8 +39,6 @@ class GameScene(Scene):
         
         self.player1 = Player(1, "Egor", deckPlayer1)
         self.player2 = Player(2, "Quentin", deckPlayer2)
-        
-        self.tour = 1
         
         self.lastAnimCard = None
         
@@ -118,43 +114,6 @@ class GameScene(Scene):
         anim.newPos((self.width / 2), (self.height / 2), 0, 0, 50, None)
         self.actionCallBack = False
     
-    def statusText(self, l):
-        texts = l.getFont('mainTitle')
-        
-        # PLayer 1 ( Down )
-        if len(texts) > 0:
-            sprite = Sprite(texts[0].render("VIE: " + str(self.player1.health) +  "/30", 1, (255, 255, 0)))
-            spriteBis = Sprite(texts[0].render("MANA: " + str(self.player1.mana) +  "/10", 1, (255, 255, 0)))
-            
-            animation = Animation(sprite)
-            animationBis = Animation(spriteBis)
-            
-            animation.newPos(self.width - 10, (self.height / 2 - sprite.h / 2) - 10 - (sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
-            animationBis.newPos(self.width - 10, (self.height / 2 - sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
-            
-            l.removeAnimation('infoVieP1')
-            l.addAnimation('infoVieP1', animation, level=5)
-            
-            l.removeAnimation('infoManaP1')
-            l.addAnimation('infoManaP1', animationBis, level=5)
-        
-        # PLayer 1 ( UP )
-        if len(texts) > 0:
-            sprite = Sprite(texts[0].render("VIE: " + str(self.player2.health) +  "/30", 1, (255, 255, 0)))
-            spriteBis = Sprite(texts[0].render("MANA: " + str(self.player2.mana) +  "/10", 1, (255, 255, 0)))
-            
-            animation = Animation(sprite)
-            animationBis = Animation(spriteBis)
-            
-            animation.newPos(10, (self.height / 2 - sprite.h / 2) - 10 - (sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
-            animationBis.newPos(10, (self.height / 2 - sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
-            
-            l.removeAnimation('infoVieP2')
-            l.addAnimation('infoVieP2', animation, level=5)
-            
-            l.removeAnimation('infoManaP2')
-            l.addAnimation('infoManaP2', animationBis, level=5)
-    
     def changeText(self, l, message):
         texts = l.getFont('mainTitle')
             
@@ -166,6 +125,63 @@ class GameScene(Scene):
                 
             l.removeAnimation('info')
             l.addAnimation('info', animation)
+            
+    def statusText(self, l):
+        texts = l.getFont('mainTitle')
+        
+        # PLayer 1 ( Down )
+        if len(texts) > 0:
+            sprite = Sprite(texts[0].render("VIE: " + str(self.player1.health) +  "/30", 1, (255, 255, 0)))
+            spriteBis = Sprite(texts[0].render("MANA: " + str(self.player1.mana) +  "/10", 1, (255, 255, 0)))
+            spriteTer = Sprite(texts[0].render("" + str(self.player1.name) +  "", 1, (255, 255, 0)))
+            
+            animation = Animation(sprite)
+            animationBis = Animation(spriteBis)
+            animationTer = Animation(spriteTer)
+            
+            animation.newPos(self.width - (sprite.w / 2) - 10, (self.height / 2 - sprite.h / 2) - 10 - (sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
+            animationBis.newPos(self.width - (sprite.w / 2) - 10, (self.height / 2 - sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
+            animationTer.newPos(self.width - (sprite.w / 2) - 10, (self.height / 2 - sprite.h / 2) - (10 - (sprite.h / 2) * 2), sprite.w / 2, sprite.h / 2, 0)
+            
+            l.removeAnimation('infoVieP1')
+            l.addAnimation('infoVieP1', animation, level=5)
+            
+            l.removeAnimation('infoManaP1')
+            l.addAnimation('infoManaP1', animationBis, level=5)
+            
+            l.removeAnimation('infoNameP1')
+            l.addAnimation('infoNameP1', animationTer, level=5)
+        
+        # PLayer 1 ( UP )
+        if len(texts) > 0:
+            sprite = Sprite(texts[0].render("VIE: " + str(self.player2.health) +  "/30", 1, (255, 255, 0)))
+            spriteBis = Sprite(texts[0].render("MANA: " + str(self.player2.mana) +  "/10", 1, (255, 255, 0)))
+            spriteTer = Sprite(texts[0].render("" + str(self.player2.name) +  "", 1, (255, 255, 0)))
+            
+            animation = Animation(sprite)
+            animationBis = Animation(spriteBis)
+            animationTer = Animation(spriteTer)
+            
+            animation.newPos(10, (self.height / 2 - sprite.h / 2) - 10 - (sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
+            animationBis.newPos(10, (self.height / 2 - sprite.h / 2), sprite.w / 2, sprite.h / 2, 0)
+            animationTer.newPos(10, (self.height / 2 - sprite.h / 2) - (10 - (sprite.h / 2) * 2), sprite.w / 2, sprite.h / 2, 0)
+            
+            l.removeAnimation('infoVieP2')
+            l.addAnimation('infoVieP2', animation, level=5)
+            
+            l.removeAnimation('infoManaP2')
+            l.addAnimation('infoManaP2', animationBis, level=5)
+            
+            l.removeAnimation('infoNameP2')
+            l.addAnimation('infoNameP2', animationTer, level=5)
+        
+        selection = l.getAnimation('pioche1')
+        if len(selection) > 0:
+            selection[0].newPos(self.width - 200, self.height / 2 - 105 - 110, 75, 105, 0, None)
+        
+        selection = l.getAnimation('pioche2')
+        if len(selection) > 0:
+            selection[0].newPos(self.width - 200, self.height / 2 + 105, 75, 105, 0, None)
     
     def quitterCallBack(self, nom):
         self.ReturnScene = None
@@ -178,9 +194,6 @@ class GameScene(Scene):
         x = 10
         y = 10
         for cardUpdateEnemy in self.cardEnemy:
-            if self.action == 10:
-                pass
-            
             if self.lastAnimCard != cardUpdateEnemy:
                 cardUpdateEnemy.update(e, l)
                 cardUpdateEnemy.updateResize(self.width, self.height)
@@ -212,7 +225,6 @@ class GameScene(Scene):
             self.actionCallBack = True
             self.action = 1
         elif self.action == 1:
-            
             if self.actionCallBack == False:
                 self.animDeckPlayer()
                 self.action = 2
@@ -246,6 +258,9 @@ class GameScene(Scene):
                 self.action = 30
         elif self.action == 30:
             # reset
+            
+            self.tour += 1
+            print("Tour passé : " + str(self.tour))
             self.player1.nextTour(self.tour)
             self.player2.nextTour(self.tour)
             
