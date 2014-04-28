@@ -62,7 +62,13 @@ class Servant(LivingEntity):
         Gestion des type de degats
         '''
         if self.shield > 0:
-            print("Shield")
+            if (self.shield > domage):
+                self.shield -= int(domage)
+            else:
+                diff = domage - self.shield
+                self.health -= diff
+                self.health = 0
+            print("Bouclier de " + self.name + " absorbe " + self.shield + " dmg et annule les degats critiques")
         if self.camouflage == False:
             if self.damageType == "magic" and typeDomage == "distance":
                 print("CRITIQUE " + str(int(domage) * 2))

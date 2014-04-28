@@ -42,7 +42,7 @@ class Player(LivingEntity):
         for key in self.fields:
             servant = self.fields[key]
             if servant.effect == "provocation":
-                servProvoc.append(servant)
+                servProvoc = servant
                 flag = True
         return (flag, servProvoc)
     
@@ -109,6 +109,8 @@ class Player(LivingEntity):
                 elif int(ID_target) > 3000000:
                     serv = self.getServiteur(ID_target)
                     carte.health(serv)
+                self.deleteCarte(ID_card);
+    
             else:
                 isHasP, servTarget = ennemy.isHasProvocation()
                 if isHasP == True:

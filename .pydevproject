@@ -5,7 +5,5 @@
 </pydev_pathproperty>
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python 3.0</pydev_property>
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">python</pydev_property>
-<pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
-<path>C:\Users\Damien\Documents\ESGI\python\pygame\pygame-1.9.1release</path>
-</pydev_pathproperty>
+
 </pydev_project>

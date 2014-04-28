@@ -85,8 +85,8 @@
 		"name": "Retablissement",
 		"description": "1 degats a chaque tour",
 		"dialog": "Brule",
-		"cost":7,
-		"attack":6,
+		"cost":2,
+		"attack":2,
 		"damageType": "health",
 		"effect":"health"
 	},{

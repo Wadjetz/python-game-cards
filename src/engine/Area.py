@@ -134,6 +134,7 @@ class Area(object):
         '''
         validator = True
         while validator:
+            
             print(self)
             try:
                 ID_attack = self.inputAction("<" + player.name + "> Id carte ou serviteur [passer=0]")
@@ -157,6 +158,8 @@ class Area(object):
                         else:
                             player.war(ID_attack, ID_target, ennemy)
                             validator = self.verifActionJoueur(player)
+                self.player1.enterrerServiteurs()
+                self.player2.enterrerServiteurs()
             except GameException as e:
                 print(e)
         
@@ -169,6 +172,7 @@ class Area(object):
         validator = True
         
         while validator:
+
             print(self.toString())
             
             ID = self.inputAction("<" + player.name + "> Id carte ou serviteur [passer=0]")
