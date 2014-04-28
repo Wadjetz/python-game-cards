@@ -8,8 +8,10 @@ Menu principale du jeu
 from engine.Deck import Pioche, Deck
 from engine.Player import Player
 from image.Animation import Animation
+from image.Button import Button
 from image.CardInfo import CardInfo
 from image.Sprite import Sprite
+
 
 try:
     import pygame
@@ -32,6 +34,7 @@ class GameScene(Scene):
         self.action = 0
         self.actionCallBack = False
         
+        self.nt = False
         self.tour = 1
         self.pioche = Pioche()
         deckPlayer1 = Deck("deck1", self.pioche.getDecks("deck1"))
@@ -47,6 +50,10 @@ class GameScene(Scene):
         l.addAnimationByPath('showCard', '../img/card/spellCard.jpg', self.width / 2 - 75, self.height / 2 - 105, level=4)
         l.addAnimationByPath('pioche1', '../img/card/backSpellCard.jpg', level=1)
         l.addAnimationByPath('pioche2', '../img/card/backSpellCard.jpg', level=1)
+        l.addAnimationByPath('passerTourJoueur', '../img/passer.png', self.width / 2 - 140, self.height / 2 - 50, level=1)
+        
+        self.btnPasser = Button('passerTourJoueur', '../img/passer.png', '../img/passer_select.png', self.partieSolo)
+        self.btnPasser.loadButton(self.width / 2 - 140, self.height / 2 - 50, 280, 50, self.width, self.height)
         
         selection = l.getAnimation('pioche1')
         if len(selection) > 0:
@@ -120,12 +127,15 @@ class GameScene(Scene):
         if len(texts) > 0:
             sprite = Sprite(texts[0].render(message, 1, (255, 255, 0)))
             animation = Animation(sprite)
-            animation.newPos((self.width / 2 - sprite.w / 2), (self.height / 2 - sprite.h / 2), sprite.w, sprite.h, 0)
-            animation.newPos((self.width / 2 - sprite.w / 2), (self.height / 2 - sprite.h / 2), sprite.w, sprite.h, 50, self.asyncChangeText)
+            animation.newPos((self.width / 2 - sprite.w / 2), (self.height / 2 - sprite.h / 2) + 60, sprite.w, sprite.h, 0)
+            animation.newPos((self.width / 2 - sprite.w / 2), (self.height / 2 - sprite.h / 2) + 60, sprite.w, sprite.h, 50, self.asyncChangeText)
                 
             l.removeAnimation('info')
             l.addAnimation('info', animation)
-            
+    
+    def partieSolo(self, e):
+        self.nt = True
+          
     def statusText(self, l):
         texts = l.getFont('mainTitle')
         
@@ -217,6 +227,13 @@ class GameScene(Scene):
         @param l: le gestionnaire d'image
         @return: Scene à renvoyer
         '''
+        self.btnPasser.update(e, l)
+        
+        if (e.keyboard[pygame.K_ESCAPE]):
+            e.keyboard[pygame.K_ESCAPE] = False
+            self.retourCallBack('')
+            self.loader.clearFont()
+        
         if self.action == 0:
             #Get name and random begin
             print("Choix du nom ...")
@@ -235,7 +252,8 @@ class GameScene(Scene):
                 
         elif self.action == 10:
             # Joueur 1 sur joueur 2
-            if e.keyboard[pygame.K_v]:
+            if e.keyboard[pygame.K_v] or self.nt:
+                self.nt = False
                 e.keyboard[pygame.K_v] = False
                 self.changeText(l, "" + self.player2.name + " à vous !")
                 self.action = 11
@@ -251,7 +269,8 @@ class GameScene(Scene):
                 
         elif self.action == 20:
             # Joueur 2 sur joueur 1
-            if e.keyboard[pygame.K_v]:
+            if e.keyboard[pygame.K_v] or self.nt:
+                self.nt = False
                 e.keyboard[pygame.K_v] = False
                 self.changeText(l, "" + self.player1.name + " à vous !")
                 self.actionCallBack = True
@@ -276,8 +295,9 @@ class GameScene(Scene):
         self.updateMain(e, l)
             
         if (e.quit):
-            e.quit = False
+            e.quit = True
             self.retourCallBack('')
+            self.loader.clearFont()
         
         return self.ReturnScene
     
@@ -288,6 +308,8 @@ class GameScene(Scene):
         backgrounds = l.getAnimation('bg')
         if len(backgrounds) > 0:
             backgrounds[0].newPos(0, 0, self.width, self.height, 0)
+        
+        self.btnPasser.resizeWindow(l, w, h)
         
         animation = l.getAnimation('title')
         if len(animation) > 0:

@@ -5,6 +5,8 @@ Représentation d'un bouton à l'écran
 @version: 0.1
 @author: quenti77
 '''
+from image.Animation import Animation
+from image.Sprite import Sprite
 
 
 try:
@@ -43,6 +45,14 @@ class CardInfo(object):
         self.level = level
         
         self.loader.addAnimation(self.name, None, level)
+        
+        texts = self.loader.getFont('mainTitle')
+        if len(texts) > 0:
+            self.sp = Sprite(texts[0].render("" + str(self.carte.name) +  "", 1, (255, 0, 255)))
+            self.animation = Animation(self.sp)
+            self.animation.newPos(self.swidth / 2 - 75, self.sheight / 2 - 135, 0, 0, 0, None)
+            self.loader.addAnimation('NOM_CARTE', self.animation, 6)
+        
         self.updateModif(True)
     
     def setPosition(self, x, y, t = 0, func = None):
@@ -151,6 +161,35 @@ class CardInfo(object):
             card = self.loader.getAnimation('showCard')
             if len(card) > 0:
                 card[0].newPos(self.swidth / 2 - 100, self.sheight / 2 - 140, 200, 280, 8)
+            
+            self.loader.removeAnimation('NOM_CARTE')
+            self.loader.removeAnimation('INFO_CARTE')
+            
+            texts = self.loader.getFont('mainTitle')
+            if len(texts) > 0:
+                self.sp = Sprite(texts[0].render("" + str(self.carte.name) +  "", 1, (127, 127, 255)))
+                self.animation = Animation(self.sp)
+                self.animation.newPos(self.swidth / 2 - 78, self.sheight / 2 - 125, self.width - 20, 25, 0, None)
+                self.loader.addAnimation('NOM_CARTE', self.animation, 6)
+                
+                chaine = str(self.carte.cost)
+                
+                if self.isCarteServant(self.carte.ID):
+                    chaine += "/" + str(self.carte.attack) + "/" + str(self.carte.health)
+                    
+                self.sp = Sprite(texts[0].render(chaine, 1, (127, 127, 255)))
+                self.animation = Animation(self.sp)
+                self.animation.newPos(self.swidth / 2 - 78, self.sheight / 2 - 95, self.width - 20, 25, 0, None)
+                self.loader.addAnimation('INFO_CARTE', self.animation, 6)
+    
+    def isCarteServant(self, ID):
+        '''
+        Verifie si l'id correspond a une carte qui invoque un serviteur
+        '''
+        if int(ID) > 2000000 and int(ID) < 3000000:
+            return True
+        else:
+            return False
     
     def hideInfoCard(self):
         if self.showInfo:
@@ -160,6 +199,9 @@ class CardInfo(object):
             card = self.loader.getAnimation('showCard')
             if len(card) > 0:
                 card[0].newPos(self.swidth / 2, self.sheight / 2, 0, 0, 8)
+            
+            self.loader.removeAnimation('NOM_CARTE')
+            self.loader.removeAnimation('INFO_CARTE')
 
     def mouseCheck(self, e, x, y, w, h):
         return (e.posX >= x and e.posX <= (x + w) and e.posY >= y and e.posY <= (y + h))

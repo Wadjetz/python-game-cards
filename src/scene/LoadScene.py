@@ -40,15 +40,25 @@ class LoadScene(Scene):
     
     def __load__(self):
         title = 'Vérification des fichiers :'
-        self.fileCheck.append({'title': title, 'file': 'img/background.jpg'})
-        self.fileCheck.append({'title': title, 'file': 'img/background_save.jpg'})
-        self.fileCheck.append({'title': title, 'file': 'img/solo.png'})
-        self.fileCheck.append({'title': title, 'file': 'img/multi.png'})
-        self.fileCheck.append({'title': title, 'file': 'img/options.png'})
-        self.fileCheck.append({'title': title, 'file': 'img/quitter.png'})
-        self.fileCheck.append({'title': title, 'file': 'img/LSANS.TTF'})
-        self.fileCheck.append({'title': title, 'file': 'save/db.txt'})
-        self.fileCheck.append({'title': title, 'file': 'save/Cartes'})
+        for i in range(1, 3):
+            i = i
+            self.fileCheck.append({'title': title, 'file': 'img/background.jpg'})
+            self.fileCheck.append({'title': title, 'file': 'img/background_save.jpg'})
+            self.fileCheck.append({'title': title, 'file': 'img/solo.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/multi.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/options.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/quitter.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/passer.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/card/spellCard.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/solo_select.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/multi_select.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/options_select.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/quitter_select.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/passer_select.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/card/backSpellCard.png'})
+            self.fileCheck.append({'title': title, 'file': 'img/LSANS.TTF'})
+            self.fileCheck.append({'title': title, 'file': 'save/db.txt'})
+            self.fileCheck.append({'title': title, 'file': 'save/Cartes'})
         
         self.maxCounter = len(self.fileCheck)
     

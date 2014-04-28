@@ -38,6 +38,8 @@ class Game(object):
         
         self.loader.addFont("mainTitle", "../img/LSANS.ttf", 48)
         self.loader.addFont("text", "../img/LSANS.ttf", 15)
+        
+        self.event.keyboard[pygame.K_F11] = True
     
     def play(self):
         '''

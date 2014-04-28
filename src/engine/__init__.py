@@ -9,6 +9,6 @@ from engine.Area import Area
 
 def main():
     print("Game Run")
-    area = Area("Egor", "PasQuentin")
+    area = Area("Egor", "Quentin")
     area.gameLoop()
 if __name__ == '__main__':main()

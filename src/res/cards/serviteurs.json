@@ -9,7 +9,7 @@
 		"cost":2,
 		"attack":1,
 		"damageType": "physical",
-		"effect":"normal"
+		"effect":"charge"
 	},
 	{
 		"id": 2000002,
@@ -21,7 +21,7 @@
 		"cost":2,
 		"attack":1,
 		"damageType": "distance",
-		"effect":"normal"
+		"effect":"charge"
 	},
 	{
 		"id": 2000003,
@@ -130,5 +130,17 @@
 		"attack":1,
 		"damageType": "physical",
 		"effect":"provocation"
+	},
+	{
+		"id": 2000012,
+		"type": "serv",
+		"name": "Garde directe",
+		"description": "chair a canon directe",
+		"dialog": "Je vais vous tuer instantanement",
+		"health":1,
+		"cost":1,
+		"attack":1,
+		"damageType": "physical",
+		"effect":"charge"
 	}
 ]
