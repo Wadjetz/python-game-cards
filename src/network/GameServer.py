@@ -29,7 +29,7 @@ class GameServer():
         '''
         Permet d'envoyer au client les informations sur l'état de la game
         '''
-        data = pickle.dumps(game)
+        data = pickle.dumps(game, pickle.HIGHEST_PROTOCOL)
         conn[0].sendall(data)
         conn[0].sendall(b"fin")
         return self.receive(conn)
