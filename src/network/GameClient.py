@@ -23,13 +23,13 @@ class GameClient(object):
         paquet = bytes()
         while 1:
             paquet = self.clientSocket.recv(8126)
-            print(paquet)
             if paquet == b"fin":
                 game=pickle.loads(data)
                 game = game.gameLoopNetworkClient()
-                data = pickle.dumps(game)
-                self.clientSocket.send(data)
-                self.clientSocket.send(b"fin")        
-                data = None
+                data = pickle.dumps(game, pickle.HIGHEST_PROTOCOL)
+                self.clientSocket.sendall(data)
+                self.clientSocket.sendall(b"fin")        
+                data = ''
                 data = bytes()
             data += paquet
+            paquet = ''
